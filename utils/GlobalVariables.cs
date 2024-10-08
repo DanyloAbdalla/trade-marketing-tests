@@ -1,0 +1,148 @@
+
+namespace MeuClienteWebTestProject;
+
+public class GlobalVariables
+{
+    #region Projeto
+    public static string urlPlataforma = "https://dev.meucliente.app.br/";
+    public static string emailUsuario = "daniela.sorrilha@meucliente.app.br";
+    public static string senhaUsuario = "1";
+    #endregion
+
+    #region Elementos de página - Elementos Comuns
+    public static string Mensagens { get; set; } = "//*[@class='ant-message']//*[@class='ant-message-notice']";
+    public static string NovoRegistro { get; set; } = "//button[@id='Buttonclass']";
+    public static string SalvarRegistro { get; set; } = "//button/*[text()='Salvar']";
+    public static string VoltarTela { get; set; } = "//button/*[text()='Voltar']";
+    public static string FecharTela { get; set; } = "//button/*[text()='Fechar']";
+    public static string BuscarRegistro { get; set; } = "//button/*[text()='Buscar']";
+    #endregion
+
+    #region Elementos de página - Login
+    public static string PreencherUsuarioEmail { get; set; } = "//input[@id='username']";
+    public static string PreencherUsuarioSenha { get; set; } = "//input[@id='password']";
+    public static string SubmeterLogin { get; set; } = "//button/*[text()='Login']";
+    #endregion
+
+    #region Elementos de página - HomePage
+    public static string MenuPrincipal { get; set; } = "//header/div[1]/div[1]/div/div";
+    public static string MenuVarejo { get; set; } = "//div/span[text()='Varejo']";
+    public static string MenuNegociacao { get; set; } = "//div/span[text()='Negociação']";
+    public static string MenuCadastros { get; set; } = "//div/span[text()='Cadastros']";
+    public static string CadastroPlanosContratos { get; set; } = "//div/span[text()='Plano']";
+    public static string CadastroSmartIa { get; set; } = "//div/span[text()='SmartIa']";
+    #endregion
+
+    #region Elementos de Página - Planos
+    public static string TabelaPlanos { get; set; } = "//table/tbody";
+    public static string FiltrarPlanoPorCampanha { get; set; } = "//thead//th[@title='Nome Campanha']//span[@role='button']";
+    public static string PesquisarNomeCampanha { get; set; } = "//div[@class='ant-table-filter-dropdown']//input";
+    public static string ColunaFimVigencia { get; set; } = "//*[text()='Fim Vigência']";
+    public static string StatusPlano { get; set; } = "//tbody/tr[2]/td[6]";
+    public static string FarolPlano { get; set; } = "//tbody/tr[2]/td[7]/div";
+    public static string EditarPlano { get; set; } = "//tbody/tr[2]/td[23]/div[1]/button[1]";
+    public static string ExcluirPlano { get; set; } = "//table/tbody/tr[2]/td[23]/div//button//*[@aria-label='delete']";
+    public static string ExcluirPlanoMensagemConfirmacao { get; set; } = "//*[@class='ant-modal-confirm-body']/span[2]";
+    public static string OkExclusao { get; set; } = "//*[text()='OK']";
+    #endregion
+
+    #region Elementos de página - Planos - Novo Plano
+    public static string PesquisarIndustria { get; set; } = "//div[@label='Indústria']/div/span/input[@type='search']";
+    public static string SelecionarIndustria { get; set; } = "//div[@aria-selected='false' and @title='ALIMENTOS ZAELI LTDA']";
+    public static string PreencherCampanha { get; set; } = "//input[@name='NomeCampanha']";
+    public static string InicioVigenciaNovoPlano { get; set; } = "(//form[@class='ant-form ant-form-vertical']//div[5]//div[contains(@class,'date-picker')]/div)[1]";
+    public static string FimVigenciaNovoPlano { get; set; } = "(//form[@class='ant-form ant-form-vertical']//div[5]//div[contains(@class,'date-picker')]/div)[2]";
+    public static string AvancarCalendarioMesInicioVigencia { get; set; } = "(//*[contains(@class,'header-next-btn')])[1]";
+    public static string AvancarCalendarioMesFimVigencia { get; set; } = "(//*[contains(@class,'header-next-btn')])[2]";
+    public static string FecharDetalhamento { get; set; } = "//button/*[text()='Fechar Detalhamento']";
+    public static string SelecionarAtivos { get; set; } = "//button/*[text()='Selecionar Ativos']";
+    public static string CarregarLojas { get; set; } = "//button/*[text()='Carregar Lojas, Frete, Instalação e Elétrica']";
+    public static string AlertaInventario { get; set; } = "//td[9]//button[contains(@class,'btn-dangerous')]";
+    public static string GerarPrePlano { get; set; } = "//button/*[text()='Gerar Pré-Plano']";
+    public static string MensagensDadosPlano { get; set; } = "//*[@class='form-action'][2]/span[3]";
+    #endregion
+
+    #region Elementos de página - Planos - Novo Plano - Selecionar Ativos
+    public static string FiltrarAtivos { get; set; } = "//*[contains(@style,'width: 60')]//div[@class='ant-modal-body']//div[@class='ant-tabs-content-holder']//div[@class='ant-table-wrapper']//table/thead//tr/th[2]/div/span[@role='button']";
+    public static string PesquisarAtivos { get; set; } = "//div[@class='ant-table-filter-dropdown']//span[@class='ant-input-affix-wrapper ant-table-filter-dropdown-search-input']/input";
+    public static string SelecionarAtivosFiltro { get; set; } = "//li[@class='ant-dropdown-menu-item']";
+    public static string TabelaFiltro { get; set; } = "//div[@class='ant-table-filter-dropdown-btns']";
+    public static string OkFiltroAtivos { get; set; } = "//button/*[text()='OK']";
+    public static string SelecionarTodosAtivos { get; set; } = "//*[contains(@style,'width: 60')]//div[@class='ant-modal-body']//div[@class='ant-table-wrapper']//th[1]//input[@class='ant-checkbox-input']";
+    public static string ResetarFiltroAtivo { get; set; } = "//button/*[text()='Resetar']";
+    public static string AplicarAtivos { get; set; } = "//*[contains(@style,'width: 60')]//button[@class='ant-btn ant-btn-primary']";
+    #endregion
+
+    #region Elementos de página - Planos - Novo Plano - Selecionar Lojas
+    public static string MenuLojas { get; set; } = "//div[text()='Selecione as lojas: ']";
+    public static string QuantidadeLojas { get; set; } = "//*[@class='ant-table-body']//tbody";
+    public static string SelecionarLojas { get; set; } = "//div[@class='ant-spin-container']/div[3]//div[@class='ant-collapse-content ant-collapse-content-active']//tbody/tr[2]//input";
+    #endregion
+
+    #region Elementos de página - Planos - Dados do Plano
+    public static string AbasPlano { get; set; } = "//div[@class='ant-tabs-nav-list']";
+    public static string AbaDadosPlano { get; set; } = "//div[@class='ant-tabs-nav-list']//*[contains(text(),'Dados do Plano')]";
+    public static string SituacaoPlano { get; set; } = "//*[@name='Status']";
+    public static string Desconto { get; set; } = "//*[@name='Desconto']";
+    public static string InicioVigenciaEditarPlano { get; set; } = "//form[@class='ant-form ant-form-vertical']//div[5]//div[contains(@class,'date-picker')]/div";
+    public static string FimVigenciaEditarPlano { get; set; } = "//form[@class='ant-form ant-form-vertical']//div[6]//div[contains(@class,'date-picker')]/div";
+    public static string AvancarCalendarioMes { get; set; } = "//*[contains(@class,'header-next-btn')]";
+    public static string TipoCampanha { get; set; } = "//*[@name='SubTipoFornecedorId']";
+    public static string SelecionarTipoCampanha { get; set; } = "//*[text()='SAZONAL']";
+    public static string QuantidadeParcelas { get; set; } = "//*[@name='QuantidadeParcelas']";
+    public static string Setor { get; set; } = "//*[@name='SetorId']";
+    public static string SelecionarSetor { get; set; } = "//*[text()='00']";
+    public static string Departamento { get; set; } = "//*[@name='DepartamentoId']";
+    public static string SelecionarDepartamento { get; set; } = "//*[text()='DPH']";
+    public static string Categoria { get; set; } = "//*[@name='CategoriaId']";
+    public static string SelecionarCategoria { get; set; } = "//*[text()='000000']";
+    public static string DataCancelamentoPlano { get; set; } = "//div[contains(@class,'modal-confirm-content')]//input";
+    public static string SelecionarDataCancelamentoPlano { get; set; } = "//*[text()='Today']";
+    public static string OkCancelamento { get; set; } = "//*[text()='OK']";
+    #endregion
+
+    #region Elementos de página - Planos - Ativos Alocados
+    public static string AbaAtivosAlocados { get; set; } = "//div[@class='ant-tabs-nav-list']//*[contains(text(),'Ativos Alocados')]";
+    public static string TabelaAtivosAlocados { get; set; } = "//div[@class='ant-modal-content']//tbody";
+    #endregion
+
+    #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
+    public static string BuscarAtivoAlocacao { get; set; } = "//span[contains(text(),'Selecione um Ativo')]/div/div//input";
+    public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Aplicativo']";
+    public static string IncluirAlocacaoAtivo { get; set; } = "//button/*[text()='Incluir Ativo']";
+    public static string QuantidadeLojasPorAtivo { get; set; } = "//*[contains(text(),'Total de lojas')]";
+    public static string SalvarAlocacaoLoja { get; set; } = "(//button/*[text()='Salvar'])[2]";
+    public static string FecharAlocacaoAtivoPorLoja { get; set; } = "(//button/*[text()='Fechar'])[2]";
+    public static string MensagemSucessoAlocacaoAtivo { get; set; } = "//*[contains(text(),'atualizada com sucesso!')]";
+    #endregion
+
+    #region Elementos de página - SmartIA
+    public static string StatusCampanha { get; set; } = "//tbody/tr[2]/td[7]/div";
+    public static string FiltrarCampanha { get; set; } = "//*[text()='Campanha']/following-sibling::span[@role='button']";
+    public static string PesquisarCampanha { get; set; } = "//div[@class='ant-table-filter-dropdown']//input";
+    #endregion
+
+    #region Elementos de página - SmartIA - Nova Campanha
+    public static string Campanhas { get; set; } = "//span[text()='Campanhas']";
+    public static string CarregarImagem { get; set; } = "//input[@type='file']";
+    public static string NomeCampanha { get; set; } = "//*[@name='Nome']";
+    public static string EmailResposavel { get; set; } = "//*[@name='EmailResponsavel']";
+    public static string NomeResposavel { get; set; } = "//*[@name='NomeResponsavel']";
+    public static string InicioVigenciaCampanha { get; set; } = "(//div[contains(@class,'date-picker')])[1]";
+    public static string InicioVigenciaCampanhaAvancarData { get; set; } = "(//*[contains(@class,'header-next-btn')])[1]";
+    public static string FimVigenciaCampanha { get; set; } = "(//div[contains(@class,'date-picker')])[2]";
+    public static string FimVigenciaCampanhaAvancarData { get; set; } = "(//*[contains(@class,'header-next-btn')])[2]";
+    public static string WhatsAppResposavel { get; set; } = "//*[@name='WhatsAppResponsavel']";
+    public static string DataLimiteCampanha { get; set; } = "(//div[contains(@class,'date-picker')])[3]";
+    public static string DataLimiteCampanhaAvancarData { get; set; } = "(//*[contains(@class,'header-next-btn')])[3]";
+    public static string MensagemCabecalhoCampanha { get; set; } = "//*[@name='Cabecalho']";
+    public static string PesquisarVarejo { get; set; } = "//div/*[text()='Adicionar Varejo:']/following-sibling::div//input";
+    public static string SelecionarVarejo { get; set; } = "//*[text()='Meu Cliente']";
+    public static string AdicionarVarejo { get; set;} = "(//form/div/div[2]//button)[1]";
+    public static string VarrerAtivos { get; set;} = "//*[@class='Varredura']/button";
+    #endregion
+
+    #region Elementos de página - SmartIA - Campanha
+    public static string EditarCampanha { get; set; } = "//tbody/tr[2]/td[9]/div[1]/button[1]";
+    #endregion
+}
