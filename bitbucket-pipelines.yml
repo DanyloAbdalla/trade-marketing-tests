@@ -1,0 +1,32 @@
+#  Template .NET Core build
+
+#  This template allows you to validate your .NET Core package.
+#  The workflow allows running tests and code linting on the default branch.
+
+# To run your pipeline on a Windows machine, create a self-hosted Windows runner.
+# For instructions on setting up a Windows runner, see https://support.atlassian.com/bitbucket-cloud/docs/set-up-runners-for-windows/
+
+image: mcr.microsoft.com/dotnet/sdk:8.0
+
+pipelines:
+  custom:
+    automated:
+      - step:
+          name: Setup .NET Build
+          caches:
+            - dotnetcore
+          script:
+            - echo "Starting build..."
+            - dotnet restore
+            - dotnet build --configuration Release
+
+      - step:
+          name: Run UI Tests
+          caches:
+            - dotnetcore
+          script:
+            - dotnet test MeuClienteWebTestProject.csproj
+
+definitions:
+  caches:
+    dotnetcore: ~/.nuget/packages

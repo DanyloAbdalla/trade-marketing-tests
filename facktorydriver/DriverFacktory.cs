@@ -23,21 +23,27 @@ public class DriverFactory
         switch (browserType)
         {
             case BrowserType.Chrome:
-                webDriver = new ChromeDriver();
-                break;
-            case BrowserType.Firefox:
-                webDriver = new FirefoxDriver();
-                break;
-            case BrowserType.Edge:
-                webDriver = new EdgeDriver();
+                var options = new ChromeOptions();
+                
+                if (GlobalVariables.devMode)
+                {
+                    options.AddArgument("--start-maximized");
+                }
+                else
+                {
+                    options.AddArgument("--headless"); //desativa a abertura do navegador
+                    options.AddArgument("--no-sandbox"); //desativa o recurso de segurança sandbox do Chrome para o uso do mesmo em contêineres Docker
+                    options.AddArgument("--disable-dev-shm-usage"); //direciona o Chrome a usar o diretório /tmp, previnindo falhas em ambientes com memória compartilhada limitada em contêineres Docker
+                    options.AddArgument("--window-size=1920x1080");
+                }
+
+                webDriver = new ChromeDriver(options);
+                webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                webDriver.Navigate().GoToUrl(GlobalVariables.urlPlataforma);
                 break;
             default:
                 throw new NotSupportedException($"{browserType} is not supported.");
         }
-
-        // Configurações comuns
-        webDriver.Manage().Window.Maximize();
-        webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
         return webDriver;
     }

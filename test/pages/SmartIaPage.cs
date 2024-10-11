@@ -216,7 +216,7 @@ public class SmartIaPage
     }
 
     /// <summary>
-    /// Método para realizar a varredura dos ativos que estão com disponibilidade de inventário, para possa ser reservados na campanha
+    /// Método para realizar a varredura dos ativos que estão com disponibilidade de inventário, para que possam ser reservados na campanha
     /// </summary>
     /// <returns></returns>
     public SmartIaPage RealizarVarredura()

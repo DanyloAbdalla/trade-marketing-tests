@@ -19,7 +19,6 @@ public class SmartIaTest
     public void Setup()
     {
         webDriver = DriverFactory.CreateDriver(browserType);
-        webDriver.Navigate().GoToUrl(GlobalVariables.urlPlataforma);
 
         new LoginPage(webDriver)
         .PreencherEmailUsuario(GlobalVariables.emailUsuario)
@@ -43,7 +42,7 @@ public class SmartIaTest
     /// E clicar no botão Salvar Campanha
     /// Então uma campanha será criada com Status = Criando
     /// </summary>
-    [Test]
+    [Test, Order(1)]
     public void TestCriarCampanhaSmartIA()
     {
         var contexto = "NovaCampanha";
@@ -57,7 +56,6 @@ public class SmartIaTest
         .BuscarCampanhas()
         .ValidarStatusDaCampanha(statusCampanha);
     }
-
 
     /// <summary>
     /// Testar a inclusão dos ativos na campanha
@@ -73,7 +71,7 @@ public class SmartIaTest
     /// E clicar no botão Salvar Campanha
     /// Então os ativos com disponibilidade de inventário serão reservados para a campanha, com venda por unidade OU por pacote, para o varejo selecionado
     /// </summary>
-    [Test]
+    [Test, Order(2)]
     public void TestAdicionarVarejoEAtivosNaCampanha()
     {
         var contexto = "EditarCampanha";
@@ -101,7 +99,7 @@ public class SmartIaTest
     /// E clicar no botão Salvar Campanha
     /// Então a campanha será salva com as novas quantidades
     /// </summary>
-    [Test]
+    [Test, Order(3)]
     public void TestEditarAtivosReservadosNaCampanhaExistente()
     {
         var contexto = "EditarCampanha";
@@ -128,7 +126,7 @@ public class SmartIaTest
     /// E clicar no botão Salvar Campanha
     /// Então a campanha será salva com o novo ativo
     /// </summary>
-    [Test]
+    [Test, Order(4)]
     public void TestReservarNovoAtivoNaCampanhaExistente()
     {
         var contexto = "EditarCampanha";
@@ -142,10 +140,11 @@ public class SmartIaTest
         .SalvarAtivosReservados()
         .SalvarCampanha(contexto);
     }
+
     /// <summary>
     /// Método que será executado ao final de cada teste
     /// </summary>
     [TearDown]
     public void TearDown()
-    { webDriver.Close(); }
+    { webDriver.Close(); System.Diagnostics.Process.Start("taskkill_chromedriver.bat"); }
 }

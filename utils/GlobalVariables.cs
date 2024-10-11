@@ -4,6 +4,7 @@ namespace MeuClienteWebTestProject;
 public class GlobalVariables
 {
     #region Projeto
+    public static bool devMode = false;
     public static string urlPlataforma = "https://dev.meucliente.app.br/";
     public static string emailUsuario = "daniela.sorrilha@meucliente.app.br";
     public static string senhaUsuario = "1";
