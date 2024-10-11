@@ -29,7 +29,7 @@ pipelines:
             - apt-get install -y wget unzip
             - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             - apt install -y ./google-chrome-stable_current_amd64.deb
-            - wget -q https://chromedriver.storage.googleapis.com/129.0.6668.100/chromedriver_linux64.zip
+            - wget -q https://storage.googleapis.com/chrome-for-testing-public/129.0.6668.100/linux64/chromedriver-linux64.zip
             - unzip chromedriver_linux64.zip
             - export CHROMEDRIVER_PATH="/usr/local/bin"
             - mv chromedriver $CHROMEDRIVER_PATH/
