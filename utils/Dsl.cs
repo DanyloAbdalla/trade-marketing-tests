@@ -222,6 +222,25 @@ public class Dsl
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="XPath"></param>
+    /// <param name="textoValor"></param>
+    public static void PreencherCampo(IWebDriver webDriver, string XPath, string textoValor, string nomeCampo)
+    {
+        try
+        {
+            for (int i = 0; i <= textoValor.Length; i++)
+            {
+                webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
+            }
+        }
+        catch (Exception ex)
+        {throw new Exception("Erro ao preencher campo:" + nomeCampo + ex.Message);}
+    }
+    
+    /// <summary>
     /// Método para selecionar datas em campos do tipo calendario
     /// </summary>
     /// <param name="webDriver"></param>

@@ -39,6 +39,7 @@ public class PlanosContratosPage
         webDriver.FindElement(By.XPath(GlobalVariables.PesquisarIndustria)).Click();
         webDriver.FindElement(By.XPath(GlobalVariables.PesquisarIndustria)).SendKeys("ALIMENTOS ZAELI LTDA");
         Thread.Sleep(500);
+        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.SelecionarIndustria);
 
         webDriver.FindElement(By.XPath(GlobalVariables.SelecionarIndustria)).Click();
 
