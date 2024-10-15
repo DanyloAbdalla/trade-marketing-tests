@@ -4,7 +4,7 @@ namespace MeuClienteWebTestProject;
 public class GlobalVariables
 {
     #region Projeto
-    public static bool devMode = false;
+    public static bool devMode = true;
     public static string urlPlataforma = "https://dev.meucliente.app.br/";
     public static string emailUsuario = "daniela.sorrilha@meucliente.app.br";
     public static string senhaUsuario = "1";
@@ -110,13 +110,14 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
+    public static string TabelaLojasAtivoAlocados {get; set; } = "(//tbody)[3]";
     public static string BuscarAtivoAlocacao { get; set; } = "//span[contains(text(),'Selecione um Ativo')]/div/div//input";
     public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Aplicativo']";
     public static string IncluirAlocacaoAtivo { get; set; } = "//button/*[text()='Incluir Ativo']";
     public static string QuantidadeLojasPorAtivo { get; set; } = "//*[contains(text(),'Total de lojas')]";
     public static string SalvarAlocacaoLoja { get; set; } = "(//button/*[text()='Salvar'])[2]";
     public static string FecharAlocacaoAtivoPorLoja { get; set; } = "(//button/*[text()='Fechar'])[2]";
-    public static string MensagemSucessoAlocacaoAtivo { get; set; } = "//*[contains(text(),'atualizada com sucesso!')]";
+    public static string MensagemSucessoAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Alocação atualizada')]";
     #endregion
 
     #region Elementos de página - SmartIA

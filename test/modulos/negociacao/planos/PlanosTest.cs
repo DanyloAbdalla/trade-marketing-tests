@@ -20,7 +20,6 @@ public class PlanosTest
     public void Setup()
     {
         webDriver = DriverFactory.CreateDriver(browserType);
-        webDriver.Navigate().GoToUrl(GlobalVariables.urlPlataforma);
 
         new LoginPage(webDriver)
         .PreencherEmailUsuario(GlobalVariables.emailUsuario)
@@ -171,6 +170,7 @@ public class PlanosTest
         .EditarSituacaoDoPlano(contextoSituacao)
         .SalvarPlano()
         .FecharDadosDoPlano()
+        .BuscarPlanos(nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);
     }
 
@@ -209,7 +209,7 @@ public class PlanosTest
     /// Testar cancelamento de plano
     /// 
     /// Como comercial de trade marketing
-    /// Eu quero cancelar uma plano
+    /// Eu quero cancelar um plano
     /// Para que o mesmo seja desconsiderado, gerenciando as minhas negociações
     /// 
     /// Dado que eu tenho um plano
@@ -226,20 +226,12 @@ public class PlanosTest
         var farolPlanoEsperado = "CANCELADO";
 
         new PlanosContratosPage(webDriver)
-        .NovaSimulacaoDePlano()
-        .PreencherCampoIndustria()
-        .PreencherCampoCampanha(nomeCampanha)
-        .SelecionarAtivos()
-        .PreencherQuantidadeAtivos()
-        .SelecionarLojas()
-        .GerarPrePlano()
-        .SalvarPlano()
-        .FecharDadosDoPlano()
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .EditarSituacaoDoPlano(situacaoPlano)
         .SalvarPlano()
         .FecharDadosDoPlano()
+        .BuscarPlanos(nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);
     }
 

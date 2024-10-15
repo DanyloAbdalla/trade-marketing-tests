@@ -69,12 +69,41 @@ public class Dsl
     }
 
     /// <summary>
-    /// Método para digitar nos elementos de busca pelo filtro
+    /// Método para digitar nos elementos campos de texto que possuem lista de registros
+    /// Filtrando os registros conforme o campo é preenchido
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
-    /// <exception cref="Exception"></exception>
-    public static void DigitarNoElementoFiltro(IWebDriver webDriver, string nomeAtivo)
+    /// <exception cref="WebDriverTimeoutException"></exception>
+    public static void DigitarNoCampoTextoComboList(IWebDriver webDriver, string XPath, string textoValor)
+    {
+        var fluentWait = new DefaultWait<IWebDriver>(webDriver)
+        {
+            Timeout = TimeSpan.FromSeconds(10),
+            PollingInterval = TimeSpan.FromMilliseconds(500)
+        };
+
+        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+
+        try
+        {
+            for (int i = 0; i < textoValor.Length; i++)
+            {
+                webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
+                Thread.Sleep(TimeSpan.FromMicroseconds(1000));
+            }
+        }
+        catch (WebDriverTimeoutException ex)
+        { throw new WebDriverTimeoutException(ex.Message); }
+    }
+
+    /// <summary>
+    /// Método para digitar nos elementos campos de texto
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="XPath"></param>
+    /// <exception cref="WebDriverTimeoutException"></exception>
+    public static void DigitarNoCampoTexto(IWebDriver webDriver, string XPath, string textoValor)
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
@@ -87,7 +116,7 @@ public class Dsl
         try
         {
             Actions action = new Actions(webDriver);
-            action.SendKeys(webDriver.FindElement(By.XPath(GlobalVariables.PesquisarAtivos)), nomeAtivo).Perform();
+            action.SendKeys(webDriver.FindElement(By.XPath(XPath)), textoValor).Perform();
         }
         catch (WebDriverTimeoutException ex)
         { throw new WebDriverTimeoutException(ex.Message); }
@@ -222,25 +251,6 @@ public class Dsl
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="webDriver"></param>
-    /// <param name="XPath"></param>
-    /// <param name="textoValor"></param>
-    public static void PreencherCampo(IWebDriver webDriver, string XPath, string textoValor, string nomeCampo)
-    {
-        try
-        {
-            for (int i = 0; i <= textoValor.Length; i++)
-            {
-                webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
-            }
-        }
-        catch (Exception ex)
-        {throw new Exception("Erro ao preencher campo:" + nomeCampo + ex.Message);}
-    }
-    
-    /// <summary>
     /// Método para selecionar datas em campos do tipo calendario
     /// </summary>
     /// <param name="webDriver"></param>
@@ -281,7 +291,6 @@ public class Dsl
             for (int i = 0; i < qtdAvancarMeses; i++)
             {
                 webDriver.FindElement(By.XPath(XPath)).Click();
-                Thread.Sleep(500);
             }
 
             webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[1]")).Click();
@@ -342,18 +351,25 @@ public class Dsl
     /// <returns>Retorna o texto somente com letras maiúsculas e minúsculas</returns>
     public static string RemoverNumerosEspacosDeUmTexto(IWebDriver webDriver, string XPath)
     {
-        EsperarVisibilidadeDoElemento(webDriver, XPath);
-
-        var texto = webDriver.FindElement(By.XPath(XPath)).Text;
-        var textoTratado = Regex.Replace(texto, @"[\d\s:]", "");
-
-        if (textoTratado.Any(char.IsLetter) || textoTratado.Any(char.IsPunctuation))
+        try
         {
-            return textoTratado;
+            EsperarVisibilidadeDoElemento(webDriver, XPath);
+
+            var texto = webDriver.FindElement(By.XPath(XPath)).Text;
+            var textoTratado = Regex.Replace(texto, @"[\d\s:]", "");
+
+            if (textoTratado.Any(char.IsLetter) || textoTratado.Any(char.IsPunctuation))
+            {
+                return textoTratado;
+            }
+            else
+            {
+                throw new FormatException("Texto não contém letras/pontuação");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            throw new FormatException("Texto não contém letras/pontuação");
+            throw new Exception(ex.Message);
         }
 
     }
@@ -389,7 +405,7 @@ public class Dsl
     /// <returns></returns>
     public static void ValidarMensagemDeSucessoEAlerta(string mensagemAtual, string mensagemEsperada)
     {
-        Assert.That(mensagemAtual, Does.Contain(mensagemEsperada));
+        Assert.That(mensagemAtual, Does.Contain(mensagemEsperada), "Mensagem atual não corresponde com a esperada");
     }
 
     /// <summary>
@@ -399,14 +415,12 @@ public class Dsl
     /// <param name="xPathFiltrar"></param>
     /// <param name="xPathPesquisar"></param>
     /// <param name="xPathBuscar"></param>
-    /// <param name="nomeRegistro"></param>
-    public static void BuscarRegistros(IWebDriver webDriver, string xPathFiltrar, string xPathPesquisar, string xPathBuscar, string nomeRegistro)
+    /// <param name="textoValor"></param>
+    public static void BuscarRegistros(IWebDriver webDriver, string xPathFiltrar, string xPathPesquisar, string xPathBuscar, string textoValor)
     {
-        Thread.Sleep(500);
-
         webDriver.FindElement(By.XPath(xPathFiltrar)).Click();
-        webDriver.FindElement(By.XPath(xPathPesquisar)).SendKeys(Keys.Control + "a");
-        webDriver.FindElement(By.XPath(xPathPesquisar)).SendKeys(nomeRegistro);
+        webDriver.FindElement(By.XPath(xPathPesquisar)).SendKeys(Keys.Control + "a" + Keys.Backspace);
+        DigitarNoCampoTexto(webDriver, xPathPesquisar, textoValor);
         webDriver.FindElement(By.XPath(xPathBuscar)).Click();
 
         Thread.Sleep(1000);

@@ -1,1 +1,1 @@
-taskkill /f /im chromedriver.exe
+taskkill /IM /F chromedriver.exe /T

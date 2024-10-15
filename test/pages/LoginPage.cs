@@ -22,7 +22,7 @@ public class LoginPage
     public LoginPage PreencherEmailUsuario(string emailUsuario)
     {
         webDriver.FindElement(By.XPath(GlobalVariables.PreencherUsuarioEmail)).Click();
-        webDriver.FindElement(By.XPath(GlobalVariables.PreencherUsuarioEmail)).SendKeys(emailUsuario);
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PreencherUsuarioEmail, emailUsuario);
 
         return this;
     }
@@ -35,7 +35,7 @@ public class LoginPage
     public LoginPage PreencherSenhaUsuario(string senhaUsuario)
     {
         webDriver.FindElement(By.XPath(GlobalVariables.PreencherUsuarioSenha)).Click();
-        webDriver.FindElement(By.XPath(GlobalVariables.PreencherUsuarioSenha)).SendKeys(senhaUsuario);
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PreencherUsuarioSenha, senhaUsuario);
 
         return this;
     }

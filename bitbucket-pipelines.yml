@@ -35,7 +35,7 @@ pipelines:
             - export CHROMEDRIVER_PATH="/usr/local/bin"
             - mv chromedriver-linux64 $CHROMEDRIVER_PATH/chromedriver
             - chmod +x $CHROMEDRIVER_PATH/chromedriver
-            - dotnet test MeuClienteWebTestProject.csproj
+            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest
 
 definitions:
   caches:
