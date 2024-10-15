@@ -13,10 +13,14 @@ pipelines:
   default:
     - step:
         name: Build Docker Image
+        services:
+          - docker
         script:
           - docker build -t teste-automatizado/steste-automatizado .
     
     - step:
         name: Run Tests
+        services:
+          - docker
         script:
           - docker run --rm teste-automatizado/steste-automatizado dotnet test MeuClienteWebTestProject.csproj
