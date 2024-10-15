@@ -16,11 +16,16 @@ pipelines:
         services:
           - docker
         script:
-          - docker build -t meuclientetesteautomatizado/meuclientetesteautomatizado .
+          - apt-get update && apt-get install -y awscli
+          - $(aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 131741888359.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com)
+          - docker build -t meuclientetesteautomatizado .
     
     - step:
         name: Run Tests
         services:
           - docker
         script:
-          - docker run --rm meuclientetesteautomatizado/meuclientetesteautomatizado dotnet test MeuClienteWebTestProject.csproj
+          - docker tag meuclientetesteautomatizado:latest 131741888359.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/meuclientetesteautomatizado:latest
+          - docker push 131741888359.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/meuclientetesteautomatizado:latest
+          - docker pull 131741888359.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/meuclientetesteautomatizado:latest
+          - docker run --rm 131741888359.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/meuclientetesteautomatizado:latest dotnet test MeuClienteWebTestProject.csproj
