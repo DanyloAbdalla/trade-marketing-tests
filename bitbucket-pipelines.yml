@@ -37,7 +37,9 @@ definitions:
   services:
     selenium:
       image: selenium/standalone-chrome:latest
-
+      ports:
+        - "4444:4444"
+        
   caches:
     dotnetcore: ~/.nuget/packages
     # selenium: ~/chrome
