@@ -24,8 +24,8 @@ pipelines:
       - step:
           name: Run UI Tests
           caches:
+            # - selenium
             - dotnetcore
-            - selenium
           script:
             - google-chrome --version
             - chromedriver --version
@@ -34,4 +34,4 @@ pipelines:
 definitions:
   caches:
     dotnetcore: ~/.nuget/packages
-    selenium: ~/chrome
+    # selenium: ~/chrome
