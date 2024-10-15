@@ -8,6 +8,7 @@
 
 # image: mcr.microsoft.com/dotnet/sdk:8.0
 image: selenium/standalone-chrome:latest
+image: mcr.microsoft.com/dotnet/sdk:8.0
 
 pipelines:
   custom:
@@ -33,10 +34,6 @@ pipelines:
             - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest
 
 definitions:
-  services:
-    dotnetcore:
-      image: mcr.microsoft.com/dotnet/sdk:8.0
-
   caches:
     dotnetcore: ~/.nuget/packages
     # selenium: ~/chrome
