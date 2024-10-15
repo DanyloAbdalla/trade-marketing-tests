@@ -57,7 +57,7 @@ pipelines:
             - ln -s /usr/local/bin/chrome/google-chrome /usr/bin/google-chrome
             - ln -s /usr/local/bin/chromedriver-cache/chromedriver-linux64 /usr/local/bin/chromedriver
 
-            - google-chrome --version
+            # - google-chrome --version
             - /usr/local/bin/chromedriver --version
 
             - export CHROMEDRIVER_PATH="/usr/local/bin"
