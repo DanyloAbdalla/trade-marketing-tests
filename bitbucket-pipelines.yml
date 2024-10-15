@@ -28,6 +28,7 @@ pipelines:
           services:
             - selenium
           script:
+            - export SELENIUM_URL="http://selenium:4444/wd/hub"
             - google-chrome --version
             - chromedriver --version
             - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest
@@ -36,7 +37,7 @@ definitions:
   services:
     selenium:
       image: selenium/standalone-chrome:latest
-      
+
   caches:
     dotnetcore: ~/.nuget/packages
     # selenium: ~/chrome
