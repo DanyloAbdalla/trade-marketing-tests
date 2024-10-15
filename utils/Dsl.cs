@@ -30,7 +30,7 @@ public class Dsl
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(10),
+            Timeout = TimeSpan.FromSeconds(30),
             PollingInterval = TimeSpan.FromMilliseconds(500)
         };
 
@@ -54,7 +54,7 @@ public class Dsl
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(10),
+            Timeout = TimeSpan.FromSeconds(30),
             PollingInterval = TimeSpan.FromMilliseconds(500)
         };
 
@@ -82,7 +82,7 @@ public class Dsl
             for (int i = 0; i < textoValor.Length; i++)
             {
                 webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
-                Thread.Sleep(TimeSpan.FromMilliseconds(100));
+                Thread.Sleep(TimeSpan.FromMilliseconds(500));
             }
         }
         catch (WebDriverTimeoutException ex)
@@ -117,7 +117,7 @@ public class Dsl
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(10),
+            Timeout = TimeSpan.FromSeconds(30),
             PollingInterval = TimeSpan.FromMilliseconds(500)
         };
 
