@@ -6,7 +6,6 @@
 # To run your pipeline on a Windows machine, create a self-hosted Windows runner.
 # For instructions on setting up a Windows runner, see https://support.atlassian.com/bitbucket-cloud/docs/set-up-runners-for-windows/
 
-image: selenium/standalone-chrome:latest
 image: mcr.microsoft.com/dotnet/sdk:8.0
 
 pipelines:
@@ -24,14 +23,19 @@ pipelines:
       - step:
           name: Run UI Tests
           caches:
-            # - selenium
             - dotnetcore
+          services:
+            -selenium-chrome
           script:
             - google-chrome --version
             - chromedriver --version
             - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest
 
 definitions:
+  services:
+    selenium-chrome:
+      image: selenium/standalone-chrome:latest
+
   caches:
     dotnetcore: ~/.nuget/packages
     # selenium: ~/chrome
