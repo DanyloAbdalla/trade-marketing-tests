@@ -9,6 +9,16 @@
 # image: mcr.microsoft.com/dotnet/sdk:8.0
 image: mcr.microsoft.com/dotnet/sdk:8.0
 
+definitions:
+  services:
+    selenium:
+      image: selenium/standalone-chrome:latest
+      ports:
+        - "4444:4444"
+
+  caches:
+    dotnetcore: ~/.nuget/packages
+
 pipelines:
   custom:
     automated:
@@ -32,14 +42,3 @@ pipelines:
             - google-chrome --version
             - chromedriver --version
             - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest
-
-definitions:
-  services:
-    selenium:
-      image: selenium/standalone-chrome:latest
-      ports:
-        - "4444:4444"
-        
-  caches:
-    dotnetcore: ~/.nuget/packages
-    # selenium: ~/chrome
