@@ -7,8 +7,8 @@
 # For instructions on setting up a Windows runner, see https://support.atlassian.com/bitbucket-cloud/docs/set-up-runners-for-windows/
 
 # image: mcr.microsoft.com/dotnet/sdk:8.0
-image: mcr.microsoft.com/dotnet/sdk:8.0
 image: selenium/standalone-chrome:latest
+image: mcr.microsoft.com/dotnet/sdk:8.0
 
 pipelines:
   custom:
