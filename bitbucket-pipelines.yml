@@ -33,10 +33,10 @@ pipelines:
      
       - step:
           name: Run UI Tests
-          caches:
-            - dotnetcore
           services:
             - selenium
+          caches:
+            - dotnetcore
           script:
             - export SELENIUM_URL="http://selenium:4444/wd/hub"
             - google-chrome --version
