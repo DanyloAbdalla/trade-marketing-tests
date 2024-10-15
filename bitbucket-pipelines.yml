@@ -7,8 +7,8 @@
 # For instructions on setting up a Windows runner, see https://support.atlassian.com/bitbucket-cloud/docs/set-up-runners-for-windows/
 
 # image: mcr.microsoft.com/dotnet/sdk:8.0
-image: selenium/standalone-chrome:latest
 image: mcr.microsoft.com/dotnet/sdk:8.0
+image: selenium/standalone-chrome:latest
 
 pipelines:
   custom:
@@ -26,6 +26,8 @@ pipelines:
           name: Run UI Tests
           caches:
             - dotnetcore
+          services:
+            - standalone-chrome
           script:
             - google-chrome --version
             - chromedriver --version
