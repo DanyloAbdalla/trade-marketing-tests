@@ -25,17 +25,17 @@ pipelines:
           name: Run UI Tests
           caches:
             - dotnetcore
-          # services:
-          #   - selenium-chrome
+          services:
+            - dotnetcore
           script:
             - google-chrome --version
             - chromedriver --version
             - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest
 
 definitions:
-  # services:
-  #   selenium-chrome:
-  #     image: selenium/standalone-chrome:latest
+  services:
+    dotnetcore:
+      image: mcr.microsoft.com/dotnet/sdk:8.0
 
   caches:
     dotnetcore: ~/.nuget/packages
