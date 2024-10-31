@@ -5,9 +5,13 @@ public class GlobalVariables
 {
     #region Projeto
     public static bool devMode = true;
-    public static string urlPlataforma = "https://dev.meucliente.app.br/";
-    public static string emailUsuario = "daniela.sorrilha@meucliente.app.br";
-    public static string senhaUsuario = "1";
+    public static bool hmlMode = true;
+    public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
+    public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
+    public static string emailUsuario = "homologacao@meucliente.app.br";
+    public static string senhaUsuario = "Meucliente@hml@123";
+    
+    public static string nomeIndustria = "";
     #endregion
 
     #region Elementos de página - Elementos Comuns
@@ -51,7 +55,7 @@ public class GlobalVariables
 
     #region Elementos de página - Planos - Novo Plano
     public static string PesquisarIndustria { get; set; } = "//div[@label='Indústria']/div/span/input[@type='search']";
-    public static string SelecionarIndustria { get; set; } = "//div[@title='ALIMENTOS ZAELI LTDA']";
+    public static string SelecionarIndustria { get; set; } = "//div[@title='Indústria 01 F']";
     public static string PreencherCampanha { get; set; } = "//input[@name='NomeCampanha']";
     public static string InicioVigenciaNovoPlano { get; set; } = "(//form[@class='ant-form ant-form-vertical']//div[5]//div[contains(@class,'date-picker')]/div)[1]";
     public static string FimVigenciaNovoPlano { get; set; } = "(//form[@class='ant-form ant-form-vertical']//div[5]//div[contains(@class,'date-picker')]/div)[2]";
@@ -91,14 +95,14 @@ public class GlobalVariables
     public static string FimVigenciaEditarPlano { get; set; } = "//form[@class='ant-form ant-form-vertical']//div[6]//div[contains(@class,'date-picker')]/div";
     public static string AvancarCalendarioMes { get; set; } = "//*[contains(@class,'header-next-btn')]";
     public static string TipoCampanha { get; set; } = "//*[@name='SubTipoFornecedorId']";
-    public static string SelecionarTipoCampanha { get; set; } = "//*[text()='SAZONAL']";
+    public static string SelecionarTipoCampanha { get; set; } = "//*[text()='Tipo Campanha 01']";
     public static string QuantidadeParcelas { get; set; } = "//*[@name='QuantidadeParcelas']";
-    public static string Setor { get; set; } = "//*[@name='SetorId']";
-    public static string SelecionarSetor { get; set; } = "//*[text()='00']";
-    public static string Departamento { get; set; } = "//*[@name='DepartamentoId']";
-    public static string SelecionarDepartamento { get; set; } = "//*[text()='DPH']";
-    public static string Categoria { get; set; } = "//*[@name='CategoriaId']";
-    public static string SelecionarCategoria { get; set; } = "//*[text()='000000']";
+    public static string Setor { get; set; } = "//*[@name='SetorId']//input";
+    public static string SelecionarSetor { get; set; } = "(//*[text()='Geral'])[1]";
+    public static string Departamento { get; set; } = "//*[@name='DepartamentoId']//input";
+    public static string SelecionarDepartamento { get; set; } = "(//*[text()='Geral'])[3]";
+    public static string Categoria { get; set; } = "//*[@name='CategoriaId']//input";
+    public static string SelecionarCategoria { get; set; } = "(//*[text()='Geral'])[5]";
     public static string DataCancelamentoPlano { get; set; } = "//div[contains(@class,'modal-confirm-content')]//input";
     public static string SelecionarDataCancelamentoPlano { get; set; } = "//*[text()='Today']";
     public static string OkCancelamento { get; set; } = "//*[text()='OK']";
@@ -112,7 +116,7 @@ public class GlobalVariables
     #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
     public static string TabelaLojasAtivoAlocados {get; set; } = "(//tbody)[3]";
     public static string BuscarAtivoAlocacao { get; set; } = "//span[contains(text(),'Selecione um Ativo')]/div/div//input";
-    public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Aplicativo']";
+    public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Cestão 01']";
     public static string IncluirAlocacaoAtivo { get; set; } = "//button/*[text()='Incluir Ativo']";
     public static string QuantidadeLojasPorAtivo { get; set; } = "//*[contains(text(),'Total de lojas')]";
     public static string SalvarAlocacaoLoja { get; set; } = "(//button/*[text()='Salvar'])[2]";

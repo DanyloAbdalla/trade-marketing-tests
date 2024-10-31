@@ -136,7 +136,7 @@ public class PlanosTest
     [Test, Order(4)]
     public void TestIncluirNovoAtivoDisponivelNoPlanoExistente()
     {
-        var nomeAtivo = "Aplicativo";
+        var nomeAtivo = "Cestão 01";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
@@ -264,5 +264,5 @@ public class PlanosTest
     /// </summary>
     [TearDown]
     public void TearDown()
-    { webDriver.Close(); }
+    { webDriver.Close(); System.Diagnostics.Process.Start("taskkill_chromedriver.bat"); }
 }

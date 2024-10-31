@@ -10,7 +10,7 @@ namespace MeuClienteWebTestProject;
 public class PlanosContratosPage
 {
     private IWebDriver webDriver;
-    private string[] nomesAtivos = { "Display de Chão", "Woobler", "Ponta de Gôndola" };
+    private string[] nomesAtivos = { "Adesivo de Check Out", "Ponta de Gôndola 02", "Woobler" };
     private string[] abasPlano = { "Dados do Plano", "Ativos Alocados", "Preços Serviços", "Fluxo de Pagamentos", "Histórico", "Anexos", "Book Fotográfico", "Painel da indústria" };
 
     public PlanosContratosPage(IWebDriver webDriver)
@@ -38,7 +38,7 @@ public class PlanosContratosPage
     {
         webDriver.FindElement(By.XPath(GlobalVariables.PesquisarIndustria)).Click();
         Dsl.Esperar1Segundo();
-        Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PesquisarIndustria, "ALIMENTOS ZAELI LTDA");
+        Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PesquisarIndustria, "Indústria 01 F");
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.SelecionarIndustria);
 
         webDriver.FindElement(By.XPath(GlobalVariables.SelecionarIndustria)).Click();
@@ -65,6 +65,7 @@ public class PlanosContratosPage
     public PlanosContratosPage SelecionarAtivos()
     {
         webDriver.FindElement(By.XPath(GlobalVariables.SelecionarAtivos)).Click();
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.FiltrarAtivos);
         webDriver.FindElement(By.XPath(GlobalVariables.FiltrarAtivos)).Click();
 
         foreach (var nomeAtivo in nomesAtivos)
@@ -396,6 +397,8 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage EditarSituacaoDoPlano(string contextoSituacao)
     {
+        var valorSetorDepartamentoCategoria = "Geral";
+        
         if (contextoSituacao.Equals("Contrato Aprovado"))
         {
             var mensagemAlertaParcelaEsperado = "Salveasparcelascomostatusdoplanosimuladoparaaprovaroplano!";
@@ -413,15 +416,18 @@ public class PlanosContratosPage
             ValidarMensagemDeSucessoEAlerta(mensagemAlertaParcelaAtual, mensagemAlertaParcelaEsperado);
 
             webDriver.FindElement(By.XPath(GlobalVariables.Setor)).Click();
-            webDriver.FindElement(By.XPath(GlobalVariables.SelecionarSetor)).Click();
-
-            webDriver.FindElement(By.XPath(GlobalVariables.Setor)).Click();
+            Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Setor, valorSetorDepartamentoCategoria);
+            Dsl.Esperar1Segundo();
             webDriver.FindElement(By.XPath(GlobalVariables.SelecionarSetor)).Click();
 
             webDriver.FindElement(By.XPath(GlobalVariables.Departamento)).Click();
+            Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Departamento, valorSetorDepartamentoCategoria);
+            Dsl.Esperar1Segundo();
             webDriver.FindElement(By.XPath(GlobalVariables.SelecionarDepartamento)).Click();
 
             webDriver.FindElement(By.XPath(GlobalVariables.Categoria)).Click();
+            Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Categoria, valorSetorDepartamentoCategoria);
+            Dsl.Esperar1Segundo();
             webDriver.FindElement(By.XPath(GlobalVariables.SelecionarCategoria)).Click();
 
             Dsl.Esperar1Segundo();
@@ -501,6 +507,7 @@ public class PlanosContratosPage
         var mensagemAlertaEsperada = "Algumaslojasnãoteminventáriosuficientedisponível";
         var quantidadeAlertas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AlertaInventario);
         var quantidadeLojas = Dsl.ObterQuantidadeLinhasNoElementoTabelaComLinhaInvisivel(webDriver, GlobalVariables.QuantidadeLojas);
+
 
         Debug.Assert(quantidadeAlertas == quantidadeLojas, "Quantidade de alertas não foram apresentadas corretamente");
 

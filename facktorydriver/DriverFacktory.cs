@@ -24,7 +24,7 @@ public class DriverFactory
         {
             case BrowserType.Chrome:
                 var options = new ChromeOptions();
-                
+
                 if (GlobalVariables.devMode)
                 {
                     options.AddArgument("--start-maximized");
@@ -39,7 +39,14 @@ public class DriverFactory
 
                 webDriver = new ChromeDriver(options);
                 webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-                webDriver.Navigate().GoToUrl(GlobalVariables.urlPlataforma);
+                if (GlobalVariables.hmlMode)
+                {
+                    webDriver.Navigate().GoToUrl(GlobalVariables.urlHmlPlataforma);
+                }
+                else
+                {
+                    webDriver.Navigate().GoToUrl(GlobalVariables.urlDevPlataforma);
+                }
                 break;
             default:
                 throw new NotSupportedException($"{browserType} is not supported.");

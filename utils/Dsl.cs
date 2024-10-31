@@ -82,7 +82,6 @@ public class Dsl
             for (int i = 0; i < textoValor.Length; i++)
             {
                 webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
-                Thread.Sleep(TimeSpan.FromMilliseconds(500));
             }
         }
         catch (WebDriverTimeoutException ex)
@@ -304,7 +303,17 @@ public class Dsl
                 webDriver.FindElement(By.XPath(XPath)).Click();
             }
 
-            webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
+            var qtdDiasCalendario = Dsl.ContarExistenciaDoElemento(webDriver, $"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])");
+
+            if (qtdDiasCalendario > 1)
+            {
+                webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[2]")).Click();
+            }
+            else 
+            {
+                webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
+            }
+
         }
     }
 
