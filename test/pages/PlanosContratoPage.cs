@@ -10,7 +10,7 @@ namespace MeuClienteWebTestProject;
 public class PlanosContratosPage
 {
     private IWebDriver webDriver;
-    private string[] nomesAtivos = { "Adesivo de Check Out", "Ponta de Gôndola 02", "Woobler" };
+    private string[] nomesAtivos = { "Adesivo de Check Out", "Ponta de Gôndola", "Woobler" };
     private string[] abasPlano = { "Dados do Plano", "Ativos Alocados", "Preços Serviços", "Fluxo de Pagamentos", "Histórico", "Anexos", "Book Fotográfico", "Painel da indústria" };
 
     public PlanosContratosPage(IWebDriver webDriver)
@@ -91,7 +91,8 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage PreencherQuantidadeAtivos()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.FecharDetalhamento)).Click();
+        if(Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.FecharDetalhamento) > 0)
+            webDriver.FindElement(By.XPath(GlobalVariables.FecharDetalhamento)).Click();
 
         Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
 
@@ -159,19 +160,19 @@ public class PlanosContratosPage
             var tituloAbaAtual = webDriver.FindElement(By.XPath($"//div[@class='ant-tabs-nav-list']/div[{qtdAbasPlanos}]")).Text;
             var tituloAbaEsperado = abaPlano;
 
-            Assert.That(tituloAbaAtual, Does.Contain(tituloAbaEsperado));
-            Thread.Sleep(500);
+            Assert.That(tituloAbaAtual, Does.Contain(tituloAbaEsperado));  
+             Thread.Sleep(500);
+ 
+             qtdAbasPlanos++;
+         }
 
-            qtdAbasPlanos++;
-        }
-
-        return this;
-    }
-
-    /// <summary>
+           return this;
+    } 
+ 
+     /// <summary>
     /// Método para validar status e farol na lista de planos, após criação ou alteração
-    /// </summary>
-    /// <returns></returns>
+     /// </summary>
+     /// <returns></returns>
     public PlanosContratosPage ValidarStatusFarolDoPlano(string statusPlanoEsperado, string farolPlanoEsperado)
     {
         Thread.Sleep(500);
@@ -324,7 +325,7 @@ public class PlanosContratosPage
 
             var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo);
             Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
-            Dsl.Esperar1Segundo();
+            Thread.Sleep(2000);
         }
 
         return this;

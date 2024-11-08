@@ -136,7 +136,7 @@ public class PlanosTest
     [Test, Order(4)]
     public void TestIncluirNovoAtivoDisponivelNoPlanoExistente()
     {
-        var nomeAtivo = "Cestão 01";
+        var nomeAtivo = "Cestão 01 - ";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)

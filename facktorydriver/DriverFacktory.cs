@@ -25,28 +25,26 @@ public class DriverFactory
             case BrowserType.Chrome:
                 var options = new ChromeOptions();
 
-                if (GlobalVariables.devMode)
+                if (!GlobalVariables.handLessMode)
                 {
                     options.AddArgument("--start-maximized");
                 }
                 else
                 {
                     options.AddArgument("--headless"); //desativa a abertura do navegador
-                    options.AddArgument("--no-sandbox"); //desativa o recurso de segurança sandbox do Chrome para o uso do mesmo em contêineres Docker
-                    options.AddArgument("--disable-dev-shm-usage"); //direciona o Chrome a usar o diretório /tmp, previnindo falhas em ambientes com memória compartilhada limitada em contêineres Docker
-                    options.AddArgument("--start-maximized");
+                    options.AddArgument("--no-sandbox"); //desativa o recurso de segurança sandbox do Browser para o uso do mesmo em contêineres Docker
+                    options.AddArgument("--disable-dev-shm-usage"); //direciona o Browser a usar o diretório /tmp, previnindo falhas em ambientes com memória compartilhada limitada em contêineres Docker
+                    options.AddArgument("--start-maximized"); //inicia com o Browser maximizado
                 }
 
                 webDriver = new ChromeDriver(options);
                 webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-                if (GlobalVariables.hmlMode)
-                {
-                    webDriver.Navigate().GoToUrl(GlobalVariables.urlHmlPlataforma);
-                }
-                else
-                {
+                if(GlobalVariables.devMode)
                     webDriver.Navigate().GoToUrl(GlobalVariables.urlDevPlataforma);
-                }
+                if (GlobalVariables.hmlMode)
+                    webDriver.Navigate().GoToUrl(GlobalVariables.urlHmlPlataforma);
+                if (GlobalVariables.prodMode)
+                    webDriver.Navigate().GoToUrl(GlobalVariables.urlPrdPlataforma);
                 break;
             default:
                 throw new NotSupportedException($"{browserType} is not supported.");

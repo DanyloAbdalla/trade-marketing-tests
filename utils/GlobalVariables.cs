@@ -4,10 +4,13 @@ namespace MeuClienteWebTestProject;
 public class GlobalVariables
 {
     #region Projeto
+    public static bool handLessMode = false; //Executa o Browser em tela se false
     public static bool devMode = true;
-    public static bool hmlMode = true;
+    public static bool hmlMode = false;
+    public static bool prodMode = false;
     public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
+    public static string urlPrdPlataforma = "https://login.meucliente.app.br/";
     public static string emailUsuario = "homologacao@meucliente.app.br";
     public static string senhaUsuario = "Meucliente@hml@123";
     
@@ -116,7 +119,7 @@ public class GlobalVariables
     #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
     public static string TabelaLojasAtivoAlocados {get; set; } = "(//tbody)[3]";
     public static string BuscarAtivoAlocacao { get; set; } = "//span[contains(text(),'Selecione um Ativo')]/div/div//input";
-    public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Cestão 01']";
+    public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Cestão 01 - ']";
     public static string IncluirAlocacaoAtivo { get; set; } = "//button/*[text()='Incluir Ativo']";
     public static string QuantidadeLojasPorAtivo { get; set; } = "//*[contains(text(),'Total de lojas')]";
     public static string SalvarAlocacaoLoja { get; set; } = "(//button/*[text()='Salvar'])[2]";
