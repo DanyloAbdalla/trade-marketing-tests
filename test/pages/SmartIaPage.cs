@@ -223,7 +223,7 @@ public class SmartIaPage
     {
         var mensagemSucessoEsperada = "Campanhaeditadacomsucesso!";
 
-        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.VarrerAtivos);
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.VarrerAtivos, "Botão Executar Varredura de Ativos");
         webDriver.FindElement(By.XPath(GlobalVariables.VarrerAtivos)).Click();
 
         var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens);
@@ -297,7 +297,7 @@ public class SmartIaPage
     public SmartIaPage AbrirSelecaoDeAtivosReservados()
     {
         webDriver.FindElement(By.XPath(GlobalVariables.SelecionarAtivosCampanha)).Click();
-        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.SalvarAtivosCampanha);
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAtivosCampanha, "Botão Salvar Ativos na Campanha");
 
         return this;
     }
@@ -308,7 +308,7 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage ReservarAtivoPorLojas(int quantidadeReserva)
     {
-        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.ReservarAtivoLojasCampanha);
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar");
 
         var quantidadeLojas = Dsl.ObterQuantidadeLinhasNoElementoTabelaSemLinhaInvisivel(webDriver, GlobalVariables.QuantidadeLojasReservaCampanha);
         var valorReservaEsperado = quantidadeLojas * quantidadeReserva;
