@@ -40,8 +40,8 @@ public class Dsl
         {
             fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
         }
-        catch (WebDriverTimeoutException ex)
-        { throw new WebDriverTimeoutException(ex.Message); }
+        catch (WebDriverTimeoutException)
+        { Console.WriteLine("Elemento não localizado na página"); }
     }
 
     /// <summary>
@@ -79,6 +79,8 @@ public class Dsl
     {
         try
         {
+            EsperarVisibilidadeDoElemento(webDriver, XPath);
+
             for (int i = 0; i < textoValor.Length; i++)
             {
                 webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
@@ -98,6 +100,7 @@ public class Dsl
     {
         try
         {
+            EsperarVisibilidadeDoElemento(webDriver, XPath);
             Actions action = new Actions(webDriver);
             action.SendKeys(webDriver.FindElement(By.XPath(XPath)), textoValor).Perform();
         }
@@ -106,13 +109,13 @@ public class Dsl
     }
 
     /// <summary>
-    /// Método para esperar ate que um elemento esteja apto a receber um clique
+    /// Método que espera o elemento ficar disponível para o click
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="xpath"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static void EsperarElementoFicarClicavel(IWebDriver webDriver, string xpath)
+    public static void EsperarElementoFicarClicavel(IWebDriver webDriver, string XPath, string nomeElemento)
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
@@ -124,47 +127,103 @@ public class Dsl
 
         try
         {
-            fluentWait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(xpath)));
+            fluentWait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(XPath)));
+        }
+        catch (Exception ex)
+        { throw new Exception(ex.Message + "\n" + nomeElemento); }
+    }
+
+    /// <summary>
+    /// Método que espera o elemento para receber o clique
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="xpath"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static void EsperarElementoParaClicar(IWebDriver webDriver, string XPath, string nomeElemento)
+    {
+        var fluentWait = new DefaultWait<IWebDriver>(webDriver)
+        {
+            Timeout = TimeSpan.FromSeconds(30),
+            PollingInterval = TimeSpan.FromMilliseconds(500)
+        };
+
+        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+
+        try
+        {
+            fluentWait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(XPath))).Click();
+        }
+        catch (Exception ex)
+        { throw new Exception(ex.Message + "\n" + nomeElemento); }
+    }
+
+    /// <summary>
+    /// Método para clicar em um elemento
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="xpath"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static void Clicar(IWebDriver webDriver, string XPath, string nomeElemento)
+    {
+        try
+        {
+            webDriver.FindElement(By.XPath(XPath)).Click();
+        }
+        catch (Exception ex)
+        { throw new Exception(ex.Message + "\n" + nomeElemento); }
+    }
+
+    /// <summary>
+    /// Método para contar quantas vezes o elemento existe na tela
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="XPath"></param>
+    /// <exception cref="Exception"></exception>
+    public static long ContarExistenciaDoElemento(IWebDriver webDriver, string XPath)
+    {
+        try
+        {
+            // Definindo o script JavaScript usando XPath para consultar os elementos
+            string script = $@"
+                var xpath = ""{XPath.Replace("\"", "\\\"")}"";
+                var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                return elements.snapshotLength;";
+
+            // Executando o script JavaScript para contar os elementos
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)webDriver;
+            long elementCount = (long)jsExecutor.ExecuteScript(script);
+
+            return elementCount;
         }
         catch (WebDriverTimeoutException ex)
         { throw new WebDriverTimeoutException(ex.Message); }
     }
 
     /// <summary>
-    /// Método para identificar a existência de um elemento
+    /// Método para contar quantas vezes o elemento existe em um modal
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
     /// <exception cref="Exception"></exception>
-    public static bool ValidarExistenciaDoElemento(IWebDriver webDriver, string XPath)
+    public static long ContarExistenciaDoElementoEmModal(IWebDriver webDriver, string XPathModal, string XPathElement)
     {
-        webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(100);
-
         try
         {
-            IList<IWebElement> elements = webDriver.FindElements(By.XPath(XPath));
+            EsperarVisibilidadeDoElemento(webDriver, XPathModal);
 
-            return elements.Count > 0;
-        }
-        catch (WebDriverTimeoutException ex)
-        { throw new WebDriverTimeoutException(ex.Message); }
-    }
+            // Definindo o script JavaScript usando XPath para consultar os elementos
+            string script = $@"
+                var xpath = '{XPathElement}';
+                var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                return elements.snapshotLength;";
 
-    /// <summary>
-    /// Método para contar quantas vezes o elemento é apresentado
-    /// </summary>
-    /// <param name="webDriver"></param>
-    /// <param name="XPath"></param>
-    /// <exception cref="Exception"></exception>
-    public static int ContarExistenciaDoElemento(IWebDriver webDriver, string XPath)
-    {
-        webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(100);
+            // Executando o script JavaScript para contar os elementos
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)webDriver;
+            long elementCount = (long)jsExecutor.ExecuteScript(script);
 
-        try
-        {
-            IList<IWebElement> elements = webDriver.FindElements(By.XPath(XPath));
-
-            return elements.Count;
+            return elementCount;
         }
         catch (WebDriverTimeoutException ex)
         { throw new WebDriverTimeoutException(ex.Message); }
@@ -177,6 +236,8 @@ public class Dsl
     /// <param name="XPath"></param>
     public static void ScrollParaElemento(IWebDriver webDriver, string XPath)
     {
+        EsperarVisibilidadeDoElemento(webDriver, XPath);
+
         IWebElement webElement = webDriver.FindElement(By.XPath(XPath));
 
         Actions action = new Actions(webDriver);
@@ -191,8 +252,6 @@ public class Dsl
     /// <returns>Retorna um número inteiro</returns>
     public static int ObterQuantidadeLinhasNoElementoTabelaComLinhaInvisivel(IWebDriver webDriver, string XPath)
     {
-        EsperarVisibilidadeDoElemento(webDriver, XPath);
-
         IWebElement tabela = webDriver.FindElement(By.XPath(XPath));
         IList<IWebElement> linhas = tabela.FindElements(By.XPath("tr"));
 
@@ -229,28 +288,10 @@ public class Dsl
     /// <returns>Retorna os dados contidos no atributo como uma string</returns>
     public static string ObterDadosDoAtributoValueDoElemento(IWebDriver webDriver, string XPath)
     {
+        EsperarVisibilidadeDoElemento(webDriver, XPath);
         var dados = webDriver.FindElement(By.XPath(XPath)).GetAttribute("value");
+
         return dados;
-    }
-
-    /// <summary>
-    /// Método para selecionar datas em campos do tipo calendario
-    /// </summary>
-    /// <param name="webDriver"></param>
-    /// <param name="XPath"></param>
-    /// <param name="qtdAvancarMeses"></param>
-    public static void PreencherCalendarios(IWebDriver webDriver, string XPath, int qtdAvancarMes)
-    {
-        DateTime dataCorrente = DateTime.Now;
-        var diaCorrente = dataCorrente.Day;
-
-        for (int i = 0; i < qtdAvancarMes; i++)
-        {
-            webDriver.FindElement(By.XPath(XPath)).Click();
-            Thread.Sleep(500);
-        }
-
-        webDriver.FindElement(By.XPath($"//div[@class='ant-picker-body']/table/tbody/tr/td/div[text()='{diaCorrente}']")).Click();
     }
 
     /// <summary>
@@ -264,6 +305,8 @@ public class Dsl
     {
         DateTime dataAtual = DateTime.Now;
         var diaAtual = dataAtual.Day;
+
+        EsperarVisibilidadeDoElemento(webDriver, XPath);
 
         if (qtdAvancarMeses == 0)
         {
@@ -292,6 +335,8 @@ public class Dsl
         DateTime dataAtual = DateTime.Now;
         var diaAtual = dataAtual.Day;
 
+        EsperarVisibilidadeDoElemento(webDriver, XPath);
+
         if (qtdAvancarMeses == 0)
         {
             webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
@@ -303,37 +348,18 @@ public class Dsl
                 webDriver.FindElement(By.XPath(XPath)).Click();
             }
 
-            var qtdDiasCalendario = Dsl.ContarExistenciaDoElemento(webDriver, $"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])");
+            var qtdDiasCalendario = Dsl.ContarExistenciaDoElemento(webDriver, $"(//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}']");
 
             if (qtdDiasCalendario > 1)
             {
                 webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[2]")).Click();
             }
-            else 
+            else
             {
                 webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
             }
 
         }
-    }
-
-    /// <summary>
-    /// Método para selecionar a data de inicio vigência, quando for criado um novo plano
-    /// </summary>
-    /// <param name="webDriver"></param>
-    /// <param name="XPath"></param>
-    /// <param name="qtdAvancarMes"></param>
-    public static void PreencherCalendarioInicioVigencia(IWebDriver webDriver, string XPath, int qtdAvancarMes)
-    {
-        DateTime dataAtual = DateTime.Now;
-        var diaAtual = dataAtual.Day;
-
-        for (int i = 0; i < qtdAvancarMes; i++)
-        {
-            webDriver.FindElement(By.XPath(XPath)).Click();
-        }
-
-        webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
     }
 
     /// <summary>
@@ -411,26 +437,12 @@ public class Dsl
     /// <param name="textoValor"></param>
     public static void BuscarRegistros(IWebDriver webDriver, string xPathFiltrar, string xPathPesquisar, string xPathBuscar, string textoValor)
     {
-        webDriver.FindElement(By.XPath(xPathFiltrar)).Click();
+        Esperar1Segundo();
+        Clicar(webDriver, xPathFiltrar, "Botão Filtrar Plano");
         webDriver.FindElement(By.XPath(xPathPesquisar)).SendKeys(Keys.Control + "a" + Keys.Backspace);
         DigitarNoCampoTexto(webDriver, xPathPesquisar, textoValor);
-        webDriver.FindElement(By.XPath(xPathBuscar)).Click();
+        Clicar(webDriver, xPathBuscar, "Botão Buscar Plano");
 
         Thread.Sleep(1000);
-    }
-
-    /// <summary>
-    /// Método para esperar até que um único registro seja retornado na tabela de registros
-    /// </summary>
-    /// <param name="webDriver"></param>
-    public static void EsperarBuscaPorUmRegistro(IWebDriver webDriver)
-    {
-        var qtdRegistros = 0;
-
-        do
-        {
-            qtdRegistros = Dsl.ObterQuantidadeLinhasNoElementoTabelaComLinhaInvisivel(webDriver, GlobalVariables.TabelaRegistros);
-
-        } while (qtdRegistros > 1);
     }
 }

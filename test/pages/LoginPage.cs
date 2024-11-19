@@ -21,7 +21,7 @@ public class LoginPage
     /// <returns></returns>
     public LoginPage PreencherEmailUsuario(string emailUsuario)
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.PreencherUsuarioEmail)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.PreencherUsuarioEmail, "Campo Email Usuário");
         Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PreencherUsuarioEmail, emailUsuario);
 
         return this;
@@ -34,7 +34,7 @@ public class LoginPage
     /// <returns></returns>
     public LoginPage PreencherSenhaUsuario(string senhaUsuario)
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.PreencherUsuarioSenha)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.PreencherUsuarioSenha, "Campo Usuário Senha");
         Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PreencherUsuarioSenha, senhaUsuario);
 
         return this;
@@ -46,7 +46,7 @@ public class LoginPage
     /// <returns></returns>
     public HomePage SubmeterLogin()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.SubmeterLogin)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.SubmeterLogin, "Botão Login");
 
         return new HomePage(webDriver);
     }

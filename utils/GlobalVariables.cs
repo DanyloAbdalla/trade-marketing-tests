@@ -1,4 +1,6 @@
 
+using System.Runtime.InteropServices;
+
 namespace MeuClienteWebTestProject;
 
 public class GlobalVariables
@@ -22,7 +24,7 @@ public class GlobalVariables
     public static string NovoRegistro { get; set; } = "//button[@id='Buttonclass']";
     public static string SalvarRegistro { get; set; } = "//button/*[text()='Salvar']";
     public static string VoltarTela { get; set; } = "//button/*[text()='Voltar']";
-    public static string FecharTela { get; set; } = "//button/*[text()='Fechar']";
+    public static string FecharPlano { get; set; } = "//button/*[text()='Fechar']";
     public static string PreencherFiltro { get; set; } = "//*[@class='ant-table-filter-dropdown']//input";
     public static string BuscarRegistro { get; set; } = "//button/*[text()='Buscar']";
     public static string TabelaRegistros { get; set; } = "//tbody";
@@ -44,7 +46,7 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de Página - Planos
-    public static string TabelaPlanos { get; set; } = "//table/tbody";
+    public static string TabelaPlanos { get; set; } = "//table/tbody/tr";
     public static string FiltrarPlanoPorCampanha { get; set; } = "//thead//th[@title='Nome Campanha']//span[@role='button']";
     public static string PesquisarNomeCampanha { get; set; } = "//div[@class='ant-table-filter-dropdown']//input";
     public static string ColunaFimVigencia { get; set; } = "//*[text()='Fim Vigência']";
@@ -57,11 +59,12 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos - Novo Plano
+    public static string CampoIndustria { get; set; } = "//div[@label='Indústria']";
     public static string PesquisarIndustria { get; set; } = "//div[@label='Indústria']//input[@type='search']";
     public static string SelecionarIndustria { get; set; } = "//div[@title='Indústria 01 F']";
     public static string PreencherCampanha { get; set; } = "//input[@name='NomeCampanha']";
-    public static string InicioVigenciaNovoPlano { get; set; } = "(//form[@class='ant-form ant-form-vertical']//div[5]//div[contains(@class,'date-picker')]/div)[1]";
-    public static string FimVigenciaNovoPlano { get; set; } = "(//form[@class='ant-form ant-form-vertical']//div[5]//div[contains(@class,'date-picker')]/div)[2]";
+    public static string InicioVigenciaNovoPlano { get; set; } = "(//div[contains(@class,'date-picker')]//input)[1]";
+    public static string FimVigenciaNovoPlano { get; set; } = "(//div[contains(@class,'date-picker')]//input)[2]";
     public static string AvancarCalendarioMesInicioVigencia { get; set; } = "(//*[contains(@class,'header-next-btn')])[1]";
     public static string AvancarCalendarioMesFimVigencia { get; set; } = "(//*[contains(@class,'header-next-btn')])[2]";
     public static string FecharDetalhamento { get; set; } = "//button/*[text()='Fechar Detalhamento']";
@@ -76,16 +79,16 @@ public class GlobalVariables
     public static string FiltrarAtivos { get; set; } = "//*[contains(@style,'width: 60')]//div[@class='ant-modal-body']//div[@class='ant-tabs-content-holder']//div[@class='ant-table-wrapper']//table/thead//tr/th[2]/div/span[@role='button']";
     public static string PesquisarAtivos { get; set; } = "//div[@class='ant-table-filter-dropdown']//span[@class='ant-input-affix-wrapper ant-table-filter-dropdown-search-input']/input";
     public static string SelecionarAtivosFiltro { get; set; } = "//li[@class='ant-dropdown-menu-item']";
-    public static string TabelaFiltro { get; set; } = "//div[@class='ant-table-filter-dropdown-btns']";
+    public static string TelaFiltrarAtivo { get; set; } = "//div[@class='ant-table-filter-dropdown-btns']";
     public static string OkFiltroAtivos { get; set; } = "//button/*[text()='OK']";
-    public static string SelecionarTodosAtivos { get; set; } = "//*[contains(@style,'width: 60')]//div[@class='ant-modal-body']//div[@class='ant-table-wrapper']//th[1]//input[@class='ant-checkbox-input']";
+    public static string SelecionarTodosAtivos { get; set; } = "(//span[@class='ant-checkbox'])[1]";
     public static string ResetarFiltroAtivo { get; set; } = "//button/*[text()='Resetar']";
     public static string AplicarAtivos { get; set; } = "//*[contains(@style,'width: 60')]//button[@class='ant-btn ant-btn-primary']";
     #endregion
 
     #region Elementos de página - Planos - Novo Plano - Selecionar Lojas
     public static string MenuLojas { get; set; } = "//div[text()='Selecione as lojas: ']";
-    public static string QuantidadeLojas { get; set; } = "//*[@class='ant-table-body']//tbody";
+    public static string TabelaLojasPlano { get; set; } = "(//table/tbody)[3]/tr";
     public static string SelecionarLojas { get; set; } = "//div[@class='ant-spin-container']/div[3]//div[@class='ant-collapse-content ant-collapse-content-active']//tbody/tr[2]//input";
     #endregion
 
@@ -101,7 +104,7 @@ public class GlobalVariables
     public static string SelecionarTipoCampanha { get; set; } = "//*[text()='Tipo Campanha 01']";
     public static string QuantidadeParcelas { get; set; } = "//*[@name='QuantidadeParcelas']";
     public static string Setor { get; set; } = "//*[@name='SetorId']//input";
-    public static string SelecionarSetor { get; set; } = "(//*[text()='Geral'])[1]";
+    public static string SelecionarSetor { get; set; } = "(//*[text()='Geral'])[2]";
     public static string Departamento { get; set; } = "//*[@name='DepartamentoId']//input";
     public static string SelecionarDepartamento { get; set; } = "(//*[text()='Geral'])[3]";
     public static string Categoria { get; set; } = "//*[@name='CategoriaId']//input";
@@ -109,6 +112,7 @@ public class GlobalVariables
     public static string DataCancelamentoPlano { get; set; } = "//div[contains(@class,'modal-confirm-content')]//input";
     public static string SelecionarDataCancelamentoPlano { get; set; } = "//*[text()='Today']";
     public static string OkCancelamento { get; set; } = "//*[text()='OK']";
+    public static string FecharPlanoConfirmacao { get; set; } = "//button/*[text()='Fechar mesmo assim']";
     #endregion
 
     #region Elementos de página - Planos - Ativos Alocados
@@ -117,7 +121,8 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
-    public static string TabelaLojasAtivoAlocados {get; set; } = "(//tbody)[3]";
+    public static string TabelaLojasAtivoAlocados {get; set; } = "(//tbody)[3]/tr[3]";
+    public static string AplicarDadosLojas { get; set; } = "(//button/*[text()='Aplicar'])[2]";
     public static string BuscarAtivoAlocacao { get; set; } = "//span[contains(text(),'Selecione um Ativo')]/div/div//input";
     public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Cestão 01 - ']";
     public static string IncluirAlocacaoAtivo { get; set; } = "//button/*[text()='Incluir Ativo']";

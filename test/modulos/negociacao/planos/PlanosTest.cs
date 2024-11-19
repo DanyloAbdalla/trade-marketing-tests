@@ -228,12 +228,13 @@ public class PlanosTest
         var situacaoPlano = "Cancelado";
         var statusPlanoEsperado = "Cancelado";
         var farolPlanoEsperado = "CANCELADO";
+        var contexto = "CancelarPlano";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .EditarSituacaoDoPlano(situacaoPlano)
-        .SalvarPlano()
+        .SalvarPlano(contexto)
         .FecharDadosDoPlano()
         .BuscarPlanos(nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);

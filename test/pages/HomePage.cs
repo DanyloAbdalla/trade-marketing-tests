@@ -22,12 +22,14 @@ public class HomePage
     {
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MenuPrincipal);
         webDriver.FindElement(By.XPath(GlobalVariables.MenuPrincipal)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuPrincipal, "Menu Principal Superior Esquerdo");
 
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuVarejo)).Click();
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuNegociacao)).Click();
-        webDriver.FindElement(By.XPath(GlobalVariables.CadastroPlanosContratos)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuVarejo, "Menu Varejo");
+        Dsl.Clicar(webDriver, GlobalVariables.MenuNegociacao, "Menu Negociação");
+        Dsl.Clicar(webDriver, GlobalVariables.CadastroPlanosContratos, "Cadastro de Planos");
 
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.NovoRegistro);
+        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
 
         return new PlanosContratosPage(webDriver);
     }
