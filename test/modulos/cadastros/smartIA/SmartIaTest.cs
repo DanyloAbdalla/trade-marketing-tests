@@ -26,7 +26,7 @@ public class SmartIaTest
         .SubmeterLogin();
 
         new HomePage(webDriver)
-        .AbrirCadastroSmartIa();
+        .AcessarCadastroSmartIa();
     }
 
     /// <summary>

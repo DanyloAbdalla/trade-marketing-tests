@@ -15,16 +15,28 @@ public class HomePage
     }
 
     /// <summary>
-    /// Método para acessar a tela de cadastro de Planos, acessando o mesmo pelo menu suspenso no canto superior esquerdo
+    /// Método para acessar a tela do DashBoard de Operações, acessando o mesmo pelo menu suspenso no canto superior esquerdo
     /// </summary>
     /// <returns></returns>
-    public PlanosContratosPage AbrirCadastroPlanos()
+    public DashboardOperacoesPage AcessarDashBoardOperacoes()
     {
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MenuPrincipal);
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuPrincipal)).Click();
-        Dsl.Clicar(webDriver, GlobalVariables.MenuPrincipal, "Menu Principal Superior Esquerdo");
+        AbrirMenuVarejo();
 
-        Dsl.Clicar(webDriver, GlobalVariables.MenuVarejo, "Menu Varejo");
+        Dsl.Clicar(webDriver, GlobalVariables.MenuGestao, "Menu Gestão");
+        Dsl.Clicar(webDriver, GlobalVariables.DashboardOperacoes, "Tela DashBoard de Operações");
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados);
+        
+        return new DashboardOperacoesPage(webDriver);
+    }
+
+    /// <summary>
+    /// Método para acessar a tela de Cadastro de Planos, acessando o mesmo pelo menu suspenso no canto superior esquerdo
+    /// </summary>
+    /// <returns></returns>
+    public PlanosContratosPage AcessarCadastroPlanos()
+    {
+        AbrirMenuVarejo();
+
         Dsl.Clicar(webDriver, GlobalVariables.MenuNegociacao, "Menu Negociação");
         Dsl.Clicar(webDriver, GlobalVariables.CadastroPlanosContratos, "Cadastro de Planos");
 
@@ -34,7 +46,11 @@ public class HomePage
         return new PlanosContratosPage(webDriver);
     }
 
-    public SmartIaPage AbrirCadastroSmartIa()
+    /// <summary>
+    /// Método para acessar a tela de Cadastro de Campanhas (smartIA), acessando o mesmo pelo menu suspenso no canto superior esquerdo
+    /// </summary>
+    /// <returns></returns>
+    public SmartIaPage AcessarCadastroSmartIa()
     {
         AbrirMenuVarejo();
 
@@ -46,12 +62,17 @@ public class HomePage
         return new SmartIaPage(webDriver);
     }
 
+    /// <summary>
+    /// Método para acessar o menu Varejo, acessando o mesmo pelo menu suspenso no canto superior esquerdo
+    /// </summary>
+    /// <returns></returns>
     public HomePage AbrirMenuVarejo()
     {
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MenuPrincipal);
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuPrincipal)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuPrincipal, "Menu Principal Superior Esquerdo");
 
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuVarejo)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuVarejo, "Menu Varejo");
+
         return this;
     }
 }

@@ -1,10 +1,9 @@
-using System.Runtime.CompilerServices;
 using OpenQA.Selenium;
 
 namespace MeuClienteWebTestProject;
 
 /// <summary>
-/// Classe com os testes do cadastro de planos\contratos
+/// Classe com os testes para o Cadastro de Planos\Contratos
 /// </summary>
 [TestFixture]
 public class PlanosTest
@@ -27,7 +26,7 @@ public class PlanosTest
         .SubmeterLogin();
 
         new HomePage(webDriver)
-        .AbrirCadastroPlanos();
+        .AcessarCadastroPlanos();
     }
 
     /// <summary>

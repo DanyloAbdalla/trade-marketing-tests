@@ -25,7 +25,7 @@ public class PlanosContratosPage
     public PlanosContratosPage NovaSimulacaoDePlano()
     {
         Dsl.Clicar(webDriver, GlobalVariables.NovoRegistro, "Botão Nova Simulação");
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.FecharPlano);
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.FecharTela);
 
         return this;
     }
@@ -276,7 +276,7 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage FecharDadosDoPlano()
     {
-        Dsl.Clicar(webDriver, GlobalVariables.FecharPlano, "Botão Fechar Plano");
+        Dsl.Clicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Plano");
         Dsl.Esperar1Segundo();
 
         if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.FecharPlanoConfirmacao) > 0)

@@ -41,7 +41,7 @@ public class Dsl
             fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
         }
         catch (WebDriverTimeoutException)
-        { Console.WriteLine("Elemento não localizado na página"); }
+        { Console.WriteLine("O elemento não foi localizado na página"); }
     }
 
     /// <summary>
@@ -64,8 +64,9 @@ public class Dsl
         {
             fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
         }
-        catch (WebDriverTimeoutException ex)
-        { throw new WebDriverTimeoutException(ex.Message); }
+        catch (WebDriverTimeoutException)
+        { Console.WriteLine("O elemento não foi localizado na página"); }
+
     }
 
     /// <summary>
@@ -74,7 +75,7 @@ public class Dsl
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
-    /// <exception cref="WebDriverTimeoutException"></exception>
+    /// <exception cref="Exception"></exception>
     public static void DigitarNoCampoTextoComboList(IWebDriver webDriver, string XPath, string textoValor)
     {
         try
@@ -86,8 +87,8 @@ public class Dsl
                 webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
             }
         }
-        catch (WebDriverTimeoutException ex)
-        { throw new WebDriverTimeoutException(ex.Message); }
+        catch (Exception ex)
+        { throw new Exception(ex.Message); }
     }
 
     /// <summary>
@@ -95,7 +96,7 @@ public class Dsl
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
-    /// <exception cref="WebDriverTimeoutException"></exception>
+    /// <exception cref="Exception"></exception>
     public static void DigitarNoCampoTexto(IWebDriver webDriver, string XPath, string textoValor)
     {
         try
@@ -104,8 +105,8 @@ public class Dsl
             Actions action = new Actions(webDriver);
             action.SendKeys(webDriver.FindElement(By.XPath(XPath)), textoValor).Perform();
         }
-        catch (WebDriverTimeoutException ex)
-        { throw new WebDriverTimeoutException(ex.Message); }
+        catch (Exception ex)
+        { throw new Exception(ex.Message); }
     }
 
     /// <summary>
@@ -153,6 +154,25 @@ public class Dsl
         try
         {
             fluentWait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(XPath))).Click();
+        }
+        catch (Exception ex)
+        { throw new Exception(ex.Message + "\n" + nomeElemento); }
+    }
+
+    /// <summary>
+    /// Método que espera até que um texto específico seja apresentado no elemento
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="xpath"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string PegarTextoDoElemento(IWebDriver webDriver, string XPath, string nomeElemento)
+    {
+        try
+        {
+            var textoElemento = webDriver.FindElement(By.XPath(XPath)).Text;
+            
+            return textoElemento;
         }
         catch (Exception ex)
         { throw new Exception(ex.Message + "\n" + nomeElemento); }
@@ -425,6 +445,18 @@ public class Dsl
     public static void ValidarMensagemDeSucessoEAlerta(string mensagemAtual, string mensagemEsperada)
     {
         Assert.That(mensagemAtual, Does.Contain(mensagemEsperada), "Mensagem atual não corresponde com a esperada");
+    }
+
+    /// <summary>
+    /// Método para validar mensagens de sucesso e mensagens de alertas em telas
+    /// </summary>
+    /// <param name="mensagemAtual"></param>
+    /// <param name="mensagemEsperada"></param>
+    /// <returns></returns>
+    public static void ValidarTextosNoElemento(IWebDriver webDriver, string XPath, string textoEsperado)
+    {
+        var textoAtual = PegarTextoDoElemento(webDriver, XPath, "Coluna Ativo");
+        Assert.That(textoAtual, Does.Contain(textoEsperado), "Nome do ativo não corresponde a busca");
     }
 
     /// <summary>

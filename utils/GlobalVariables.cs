@@ -15,8 +15,6 @@ public class GlobalVariables
     public static string urlPrdPlataforma = "https://login.meucliente.app.br/";
     public static string emailUsuario = "homologacao@meucliente.app.br";
     public static string senhaUsuario = "Meucliente@hml@123";
-    
-    public static string nomeIndustria = "";
     #endregion
 
     #region Elementos de página - Elementos Comuns
@@ -24,10 +22,13 @@ public class GlobalVariables
     public static string NovoRegistro { get; set; } = "//button[@id='Buttonclass']";
     public static string SalvarRegistro { get; set; } = "//button/*[text()='Salvar']";
     public static string VoltarTela { get; set; } = "//button/*[text()='Voltar']";
-    public static string FecharPlano { get; set; } = "//button/*[text()='Fechar']";
+    public static string FecharTela { get; set; } = "//button/*[text()='Fechar']";
     public static string PreencherFiltro { get; set; } = "//*[@class='ant-table-filter-dropdown']//input";
     public static string BuscarRegistro { get; set; } = "//button/*[text()='Buscar']";
     public static string TabelaRegistros { get; set; } = "//tbody";
+    public static string PaginacaoTela { get; set; } = "//ul[contains(@class,'ant-pagination')]//li[2]";
+    public static string PrimeiraLinhaTabelaColuna1 {get; set; } = "(//tbody)[9]/tr[2]/td[1]";
+    public static string PrimeiraLinhaTabelaColuna2 {get; set; } = "(//tbody)[9]/tr[2]/td[2]";
     #endregion
 
     #region Elementos de página - Login
@@ -39,10 +40,32 @@ public class GlobalVariables
     #region Elementos de página - HomePage
     public static string MenuPrincipal { get; set; } = "//header/div[1]/div[1]/div/div";
     public static string MenuVarejo { get; set; } = "//div/span[text()='Varejo']";
+    public static string MenuGestao { get; set; } = "//div/span[text()='Gestão']";
+    public static string DashboardOperacoes { get; set; } = "//div/span[text()='Dashboard Operação']";
     public static string MenuNegociacao { get; set; } = "//div/span[text()='Negociação']";
-    public static string MenuCadastros { get; set; } = "//div/span[text()='Cadastros']";
     public static string CadastroPlanosContratos { get; set; } = "//div/span[text()='Plano']";
+    public static string MenuCadastros { get; set; } = "//div/span[text()='Cadastros']";
     public static string CadastroSmartIa { get; set; } = "//div/span[text()='SmartIa']";
+    #endregion
+
+    #region Elemetos de Página - Dashboard de Operações
+    public static string TextoCardAtivosAlocados { get; set; } = "//div[@class='DashBoardCards']//*[contains(text(),'Índice de Aproveitamento')]";
+    public static string DetalhesLojasAtivas {  get; set; } = "//span[text()='Lojas Ativas']/following-sibling::div//button";
+    public static string TabelaListagemLojasAtivas {get; set; } = "(//tbody)[9]/tr";
+    public static string DetalhesDisponibilidadeAtivos {  get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[1]";
+    public static string DetalhesNegociacaoAtivos {  get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[2]";
+    public static string DetalhesPotencialReceitaAtivos {  get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[3]";
+    public static string FiltrarAtivoPorNome { get; set; } = "//span[text()='Ativo']/following-sibling::span[@role='button']";
+    public static string FiltrarAtivoPorNomePotencialReceita { get; set; } = "//th[@aria-label='Nome']/div/span[@role='button']";
+    public static string ContratosVinculados {get; set; } = "(//tbody)[9]/tr[2]/td[10]/button";
+    public static string FecharTelaContratosEAtivosVinculados { get; set; } = "(//button/*[text()='Fechar'])[2]";
+    public static string DetalhesContratosAtivosContratosVigentes {  get; set; } = "//*[contains(text(),'Contratos Vigentes')]/following-sibling::div//button[1]";
+    public static string DetalhesContratosVencendo {  get; set; } = "//*[contains(text(),'Contratos Vigentes')]/following-sibling::div//button[2]";
+    public static string FiltrarContratoPorCampanha { get; set; } = "//span[text()='Contrato']/following-sibling::span[@role='button']";
+    public static string AtivosVinculados {get; set; } = "(//tbody)[9]/tr[2]/td[9]/button";
+    public static string DetalhesContratosAtivosTotalReceita {  get; set; } = "//*[contains(text(),'Total de Receita')]/following-sibling::div//button[1]";
+    public static string TextoCardTotalReceita { get; set; } = "//div[@class='DashBoardCards']//*[contains(text(),'índice de Crescimento')]";
+    public static string DetalhesAterrissagemReceita {  get; set; } = "(//*[contains(text(),'Evolução Perfomance Receita')]/following-sibling::div//button[1])[1]";
     #endregion
 
     #region Elementos de Página - Planos
