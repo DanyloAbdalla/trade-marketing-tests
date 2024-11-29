@@ -235,7 +235,7 @@ public class Dsl
 
             // Definindo o script JavaScript usando XPath para consultar os elementos
             string script = $@"
-                var xpath = '{XPathElement}';
+                var xpath = ""{XPathElement.Replace("\"", "\\\"")}"";
                 var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
                 return elements.snapshotLength;";
 

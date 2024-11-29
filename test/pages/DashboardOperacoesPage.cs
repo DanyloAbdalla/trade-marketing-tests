@@ -44,7 +44,7 @@ public class DashboardOperacoesPage
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNome, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
-        Thread.Sleep(2000);
+        Thread.Sleep(3000);
         Dsl.ValidarTextosNoElemento(webDriver, GlobalVariables.PrimeiraLinhaTabelaColuna1, nomeAtivo);
 
         return new DashboardOperacoesPage(webDriver);
@@ -60,7 +60,7 @@ public class DashboardOperacoesPage
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNome, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
-        Thread.Sleep(2000);
+        Thread.Sleep(3000);
         Dsl.ValidarTextosNoElemento(webDriver, GlobalVariables.PrimeiraLinhaTabelaColuna1, nomeAtivo);
 
         Dsl.Clicar(webDriver, GlobalVariables.ContratosVinculados, "Botão Visualizar Contratos Vinculados");
@@ -80,7 +80,7 @@ public class DashboardOperacoesPage
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNomePotencialReceita, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNomePotencialReceita, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
-        Thread.Sleep(2000);
+        Thread.Sleep(3000);
         Dsl.ValidarTextosNoElemento(webDriver, GlobalVariables.PrimeiraLinhaTabelaColuna1, nomeAtivo);
 
         return new DashboardOperacoesPage(webDriver);
@@ -137,7 +137,7 @@ public class DashboardOperacoesPage
     }
 
     /// <summary>
-    /// Método para acessar a tela de Detalhes de Aterrissagem de Receita no card Evolução Performance Receita
+    /// Método para acessar a tela de Detalhes de Aterrissagem de Receita no card Evolução Performance Receita, Evolução Performance Receita Bandeira e Evolução Performance Receita Tipo Fornecedor
     /// </summary>
     /// <returns></returns>
     public DashboardOperacoesPage AcessarDetalhesDeAterrissagemReceita(string card)
@@ -149,13 +149,13 @@ public class DashboardOperacoesPage
         }
         else if (card.Contains("EvolucaoReceitaBandeira"))
         {
-            Dsl.ScrollParaElemento(webDriver, GlobalVariables.DetalhesListaParceiros);
-            Dsl.Clicar(webDriver, GlobalVariables.DetalhesAterrissagemReceitaBandeira, "Botão Visualizar Listagem de Aterrisagem Receita");
+            Dsl.ScrollParaElemento(webDriver, GlobalVariables.DetalhesListaParceirosPerformance);
+            Dsl.Clicar(webDriver, GlobalVariables.DetalhesAterrissagemReceitaPorBandeira, "Botão Visualizar Listagem de Aterrisagem Receita");
         }
         else if (card.Contains("EvolucaoReceitaTipoFornecedor"))
         {
-            Dsl.ScrollParaElemento(webDriver, GlobalVariables.DetalhesListaParceiros);
-            Dsl.Clicar(webDriver, GlobalVariables.DetalhesAterrissagemReceitaBandeira, "Botão Visualizar Listagem de Aterrisagem Receita");
+            Dsl.ScrollParaElemento(webDriver, GlobalVariables.DetalhesListaParceirosPerformance);
+            Dsl.Clicar(webDriver, GlobalVariables.DetalhesAterrissagemReceitaPorTipoFornecedor, "Botão Visualizar Listagem de Aterrisagem Receita");
         }
 
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
@@ -163,6 +163,67 @@ public class DashboardOperacoesPage
         //Validando se a tabela é apresentada em tela
         webDriver.FindElement(By.XPath("//*[@role='tabpanel']/div/div"));
         webDriver.FindElement(By.XPath("//*[text()='JANEIRO']"));
+
+        return new DashboardOperacoesPage(webDriver);
+    }
+
+    /// <summary>
+    /// Método para acessar a tela de Detalhes de Lista Parceiros no card Evolução Performance Parceiro e Investimento por Parceiro
+    /// </summary>
+    /// <returns></returns>
+    public DashboardOperacoesPage AcessarDetalhesDeListaParceiros(string card)
+    {
+        if (card.Contains("EvolucaoPerformanceParceiros"))
+        {
+            Dsl.ScrollParaElemento(webDriver, GlobalVariables.FiltrarNegociacoes);
+            Dsl.Clicar(webDriver, GlobalVariables.DetalhesListaParceirosPerformance, "Botão Visualizar Lista Parceiro");
+        }
+        else if (card.Contains("InvestimentoParceiro"))
+        {
+            Dsl.ScrollParaElemento(webDriver, GlobalVariables.DetalhesDesempenhoDosAtivos);
+            Dsl.Clicar(webDriver, GlobalVariables.DetalhesListaParceirosInvestimento, "Botão Visualizar Lista Parceiro");
+        }
+
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados);
+
+        if (!(Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0))
+            Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
+
+        //Validando se a tabela é apresentada em tela
+        webDriver.FindElement(By.XPath("//*[@role='tabpanel']/div/div"));
+        webDriver.FindElement(By.XPath("//*[text()='Indústria/Parceiro']"));
+
+        return new DashboardOperacoesPage(webDriver);
+    }
+
+    /// <summary>
+    /// Método para acessar a tela de Detalhes de Desempenho por Loja
+    /// </summary>
+    /// <returns></returns>
+    public DashboardOperacoesPage AcessarDetalhesDesempenhoPorLoja()
+    {
+        Dsl.ScrollParaElemento(webDriver, GlobalVariables.DetalhesDesempenhoDosAtivos);
+        Dsl.Clicar(webDriver, GlobalVariables.DetalhesDesempenhoPorLoja, "Botão Visualizar Desempenho por Loja");
+
+        //Validando se o gráfico é apresentado em tela, com o campo filtro
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.GraficoDesempenhoLoja);
+        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltroDesempenhoLoja, "Filtro Desempenho por Loja");
+
+        return new DashboardOperacoesPage(webDriver);
+    }
+
+    /// <summary>
+    /// Método para acessar a tela de Detalhes de Desempenho por Ativo
+    /// </summary>
+    /// <returns></returns>
+    public DashboardOperacoesPage AcessarDetalhesDesempenhoDeAtivo()
+    {
+        Dsl.ScrollParaElemento(webDriver, GlobalVariables.TextoCardMaisVendidosDepartamento);
+        Dsl.Clicar(webDriver, GlobalVariables.DetalhesDesempenhoDosAtivos, "Botão Visualizar Desempenho dos Ativos");
+
+        //Validando se o gráfico é apresentado em tela, com o campo filtro
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.GraficoDesempenhoAtivo);
+        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltroDesempenhoAtivo, "Filtro Desempenho por Ativo");
 
         return new DashboardOperacoesPage(webDriver);
     }
