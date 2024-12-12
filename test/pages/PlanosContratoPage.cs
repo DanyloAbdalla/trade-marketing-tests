@@ -1,7 +1,5 @@
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 namespace MeuClienteWebTestProject;
 
@@ -88,6 +86,7 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para preencher as quantidades dos ativos por loja
     /// </summary>
+    /// <param name="contextoDeTestes"></param>
     /// <returns></returns>
     public PlanosContratosPage PreencherQuantidadeAtivos(string contextoDeTestes)
     {
@@ -179,6 +178,8 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para validar status e farol na lista de planos, após criação ou alteração
     /// </summary>
+    /// <param name="statusPlanoEsperado"></param>
+    /// <param name="farolPlanoEsperado"></param>
     /// <returns></returns>
     public PlanosContratosPage ValidarStatusFarolDoPlano(string statusPlanoEsperado, string farolPlanoEsperado)
     {
@@ -238,6 +239,7 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para preencher o campo Inicio Vigencia
     /// </summary>
+    /// <param name="contextoDeExecucao"></param>
     /// <returns></returns>
     public PlanosContratosPage EditarInicioVigencia(string contextoDeExecucao)
     {
@@ -258,6 +260,7 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para preencher o campo Fim vigencia
     /// </summary>
+    /// <param name="contextoDeExecucao"></param>
     /// <returns></returns>
     public PlanosContratosPage EditarFimVigencia(string contextoDeExecucao)
     {
@@ -278,6 +281,8 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para salvar os dados plano com diferentes status
     /// </summary>
+    /// <param name="contextoDeExecucao"></param>
+    /// <param name="contextoDeTeste"></param>
     /// <returns></returns>
     public PlanosContratosPage SalvarPlano(string contextoDeExecucao, [Optional] string contextoDeTeste)
     {
@@ -320,6 +325,7 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para editar as quantidades dos ativos por loja
     /// </summary>
+    /// <param name="contextoDeTestes"></param>
     /// <returns></returns>
     public PlanosContratosPage EditarQuantidadesDosAtivosNoPlano(string contextoDeTestes)
     {
@@ -379,7 +385,7 @@ public class PlanosContratosPage
 
                 var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo, "Mensagem Salvar Alocação Ativo");
                 Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
-                Dsl.Esperar(4000);
+                Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
             }
         }
 
@@ -401,7 +407,7 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para alocar um novo ativo para as lojas do plano
     /// </summary>
-    /// <param name="nomeAtivo"></param>
+    /// <param name="contextoDeTeste"></param>
     /// <returns></returns>
     public PlanosContratosPage AlocarNovosAtivosNoPlano(string contextoDeTeste)
     {
@@ -434,8 +440,7 @@ public class PlanosContratosPage
 
             foreach (var nome in nomeAtivo)
             {
-                Dsl.ScrollParaElemento(webDriver, GlobalVariables.IncluirAlocacaoAtivo);
-
+                Dsl.ScrollModalElemento(webDriver, GlobalVariables.ModalPlanos);
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.IncluirAlocacaoAtivo, "Botão Incluir Ativo");
                 Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.BuscarAtivoAlocacao, nome);
 
@@ -453,7 +458,7 @@ public class PlanosContratosPage
 
                 var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo, "Mensagem Alocação Ativo");
                 Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
-                Dsl.Esperar();
+                Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
             }
         }
 
@@ -482,7 +487,10 @@ public class PlanosContratosPage
         }
         else if (contextoDeTeste.Contains("ComPlantaLoja"))
         {
-
+            Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadePorLojaAtivosAlocados, "1");
+            Dsl.Clicar(webDriver, GlobalVariables.AplicarQuantidadePorLojaMassivamenteAtivosAlocados, "Botão Aplicar Quantidade para Todas as Lojas");
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemAvisoEditarQuantidadeAlocacaoAtivo);
+            Dsl.Esperar();
         }
 
         return this;

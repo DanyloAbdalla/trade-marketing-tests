@@ -124,5 +124,8 @@ public class SmartIaTest
     /// </summary>
     [TearDown]
     public void TearDown()
-    { webDriver.Close(); System.Diagnostics.Process.Start("taskkill_chromedriver.bat"); }
+    {
+        webDriver.Close();
+        System.Diagnostics.Process.Start("taskkill_chromedriver.bat");
+    }
 }

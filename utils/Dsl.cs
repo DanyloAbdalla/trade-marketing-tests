@@ -9,7 +9,7 @@ namespace MeuClienteWebTestProject;
 
 /// <summary>
 /// Classe que contem métodos para ajudar na manipulação\interação dos elementos
-/// Que compartilham o mesmo funcionamento, em diferentes telas da plataforma
+/// E que compartilham do mesmo funcionamento, em diferentes telas da plataforma
 /// /// </summary>
 public class Dsl
 {
@@ -406,7 +406,6 @@ public class Dsl
         {
             throw new Exception(ex.Message);
         }
-
     }
 
     /// <summary>
@@ -532,7 +531,7 @@ public class Dsl
         DigitarNoCampoTexto(webDriver, xPathPreencherFiltro, textoValor);
         Clicar(webDriver, xPathBuscar, "Botão Buscar");
 
-        Thread.Sleep(1000);
+        Esperar();
     }
 
     /// <summary>
@@ -550,5 +549,16 @@ public class Dsl
         action.MoveToElement(webElement).Perform();
     }
 
+    /// <summary>
+    /// Método para realizar scroll para baixo em uma modal
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="XPath"></param>
+    public static void ScrollModalElemento(IWebDriver webDriver, string XPath)
+    {
+        IWebElement modalElement = webDriver.FindElement(By.XPath(XPath));
 
+        IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)webDriver;
+        jsExecutor.ExecuteScript("arguments[0].scrollHeight = arguments[0].scrollHeight;", modalElement);
+    }
 }

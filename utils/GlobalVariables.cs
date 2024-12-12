@@ -1,6 +1,4 @@
 
-using System.Security;
-
 namespace MeuClienteWebTestProject;
 
 public class GlobalVariables
@@ -99,6 +97,7 @@ public class GlobalVariables
     public static string ExcluirPlano { get; set; } = "//thead/tr/th[text()='Ações']/ancestor::table/tbody/tr[2]//td//button//*[@aria-label='delete']";
     public static string ExcluirPlanoMensagemConfirmacao { get; set; } = "//*[@class='ant-modal-confirm-body']/span[2]";
     public static string OkExclusao { get; set; } = "//*[text()='OK']";
+    public static string ModalPlanos { get; set; } = "//*[@class='ant-modal-body' and @style='overflow-x: hidden; height: 85vh;']";
     #endregion
 
     #region Elementos de página - Planos - Novo Plano
@@ -184,6 +183,7 @@ public class GlobalVariables
     public static string FecharAlocacaoAtivoPorLoja { get; set; } = "(//button/*[text()='Fechar'])[2]";
     public static string MensagemSucessoAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Alocação atualizada')]";
     public static string MensagemSucessoEditarQuantidadeAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Produtos atualizados')]";
+    public static string MensagemAvisoEditarQuantidadeAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Salve suas informações')]";
     #endregion
 
     #region Elementos de página - SmartIA
