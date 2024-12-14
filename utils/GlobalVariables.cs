@@ -50,7 +50,7 @@ public class GlobalVariables
     public static string CadastroSmartIa { get; set; } = "//div/span[text()='SmartIa']";
     #endregion
 
-    #region Elemetos de Página - Dashboard de Operações
+    #region Elementos de página - Dashboard de Operações
     public static string TextoCardAtivosAlocados { get; set; } = "//div[@class='DashBoardCards']//*[contains(text(),'Índice de Aproveitamento')]";
     public static string DetalhesLojasAtivas {  get; set; } = "//span[text()='Lojas Ativas']/following-sibling::div//button";
     public static string TabelaListagemLojasAtivas {get; set; } = "(//tbody)[9]/tr";
@@ -86,7 +86,7 @@ public class GlobalVariables
     public static string TextoCardMaisVendidosDepartamento { get; set; } = "//*[text()='Mais vendidos do Departamento']";
     #endregion
 
-    #region Elementos de Página - Planos
+    #region Elementos de página - Planos
     public static string TabelaPlanos { get; set; } = "//table/tbody/tr";
     public static string FiltrarPlanoPorCampanha { get; set; } = "//thead//th[@title='Nome Campanha']//span[@role='button']";
     public static string PesquisarNomeCampanha { get; set; } = "//div[@class='ant-table-filter-dropdown']//input";
@@ -114,8 +114,8 @@ public class GlobalVariables
     public static string QuantidadePorLoja { get; set; } = "//*[@title='Qtd por Loja']/parent::div/parent::div/div[2]//input";
     public static string AplicarQuantidadePorLojaMassivamente { get; set; } = "//button/*[text()='Aplicar']";
     public static string CarregarLojas { get; set; } = "//button/*[text()='Carregar Lojas']";
-    public static string CheckInInventarioAlerta { get; set; } = "//td[9]//button[contains(@class,'btn-dangerous')]";
-    public static string CheckInInventarioOk { get; set; } = "//td[9]//span[contains(@class,'check-inventario')]";
+    public static string InventarioAlerta { get; set; } = "//td[9]//button[contains(@class,'btn-dangerous')]";
+    public static string InventarioOk { get; set; } = "//td[9]//span[contains(@class,'check-inventario')]";
     public static string GerarPrePlano { get; set; } = "//button/*[text()='Gerar Pré-Plano']";
     public static string MensagensDadosPlano { get; set; } = "//*[@class='form-action'][2]/span[3]";
     #endregion

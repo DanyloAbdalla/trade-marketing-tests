@@ -5,8 +5,8 @@ namespace MeuClienteWebTestProject;
 /// <summary>
 /// Classe com os testes para o Cadastro de Planos\Contratos
 /// </summary>
-[TestFixture("SemPlantaLoja")]
-[TestFixture("ComPlantaLoja")]
+[TestFixture("SemPlantaLoja", Category = "SemPlantaDeLoja")]
+[TestFixture("ComPlantaLoja", Category = "ComPlantaDeLoja")]
 public class PlanosTest
 {
     private IWebDriver webDriver;
@@ -289,11 +289,10 @@ public class PlanosTest
     [TearDown]
     public void TearDown()
     {
-        HomePage homePage= new HomePage(webDriver);
+        HomePage homePage = new HomePage(webDriver);
         homePage.AcessarDashBoardOperacoes();
         Dsl.Esperar();
 
         webDriver.Close();
-        System.Diagnostics.Process.Start("taskkill_chromedriver.bat");
     }
 }

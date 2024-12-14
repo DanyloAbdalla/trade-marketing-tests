@@ -21,7 +21,7 @@ pipelines:
             - dotnet build --configuration Release
 
       - step:
-          name: UI Test
+          name: DashboardOperacoesTest
           caches:
             - dotnetcore
           script:
@@ -35,7 +35,28 @@ pipelines:
             - export CHROMEDRIVER_PATH="/usr/local/bin"
             - mv chromedriver-linux64 $CHROMEDRIVER_PATH/chromedriver
             - chmod +x $CHROMEDRIVER_PATH/chromedriver
-            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest
+            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.DashboardOperacoesTest
+
+      - step:
+          name: PlanosTest("SemPlantaLoja")
+          caches:
+            - dotnetcore
+          script:
+            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest("SemPlantaLoja")
+
+      - step:
+          name: PlanosTest("ComPlantaLoja")
+          caches:
+            - dotnetcore
+          script:
+            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest("ComPlantaLoja")
+
+      - step:
+          name: SmartIaTest
+          caches:
+            - dotnetcore
+          script:
+            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.SmartIaTest
 
 definitions:
   caches:

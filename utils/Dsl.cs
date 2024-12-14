@@ -470,7 +470,7 @@ public class Dsl
     /// <param name="webDriver"></param>
     /// <param name="XPathInventario"></param>
     /// <param name="XPathCheckLojas"></param>
-    public static void ValidarCheckInDaDisponbilidadeDeInventarioParaLoja(IWebDriver webDriver, string XPathCheckInventario, string XPathLojasPlano)
+    public static void ValidarDisponbilidadeDeInventarioParaLoja(IWebDriver webDriver, string XPathCheckInventario, string XPathLojasPlano)
     {
         var quantidadeCheck = ContarExistenciaDoElemento(webDriver, XPathCheckInventario);
         var quantidadeLojas = ContarExistenciaDoElemento(webDriver, XPathLojasPlano) - 1; //Contar linhas no elemento tbody da listagem de lojas na simulação do plano, ignorando a tag tr sem dados

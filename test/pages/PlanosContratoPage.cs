@@ -131,8 +131,6 @@ public class PlanosContratosPage
             webDriver.FindElement(By.XPath($"//tbody/tr[{i + 1}]/td[9]//input[@class='ant-checkbox-input']")).Click();
         }
 
-        Dsl.ValidarCheckInDaDisponbilidadeDeInventarioParaLoja(webDriver, GlobalVariables.CheckInInventarioOk, GlobalVariables.TabelaLojasPlano);
-
         return this;
     }
 
@@ -432,7 +430,7 @@ public class PlanosContratosPage
 
             var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo, "Mensagem Alocação Ativo");
             Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
-            Dsl.Esperar();
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo);
         }
         else if (contextoDeTeste.Contains("ComPlantaLoja"))
         {
@@ -606,7 +604,7 @@ public class PlanosContratosPage
         var mensagemAlertaEsperada = "Algumaslojasnãoteminventáriosuficientedisponível";
         var mensagemAlertaAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.MensagensDadosPlano, "Mensagem Inventário Loja");
 
-        Dsl.ValidarCheckInDaDisponbilidadeDeInventarioParaLoja(webDriver, GlobalVariables.CheckInInventarioAlerta, GlobalVariables.TabelaLojasPlano);
+        Dsl.ValidarDisponbilidadeDeInventarioParaLoja(webDriver, GlobalVariables.InventarioAlerta, GlobalVariables.TabelaLojasPlano);
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemAlertaAtual, mensagemAlertaEsperada);
 
         return this;

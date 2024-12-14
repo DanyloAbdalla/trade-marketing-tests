@@ -229,7 +229,6 @@ public class DashboardOperacoesTest
     {
         Dsl.Esperar();
         webDriver.Close();
-        System.Diagnostics.Process.Start("taskkill_chromedriver.bat");
     }
 
 }
