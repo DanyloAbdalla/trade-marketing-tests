@@ -5,8 +5,8 @@ namespace MeuClienteWebTestProject;
 /// <summary>
 /// Classe com os testes para o Cadastro de Planos\Contratos
 /// </summary>
-[TestFixture("SemPlantaLoja", Category = "SemPlantaDeLoja")]
-[TestFixture("ComPlantaLoja", Category = "ComPlantaDeLoja")]
+[TestFixture("SemPlantaLoja", Category = "PlanosSemPlantaDeLoja")]
+[TestFixture("ComPlantaLoja", Category = "PlanosComPlantaDeLoja")]
 public class PlanosTest
 {
     private IWebDriver webDriver;
@@ -131,7 +131,7 @@ public class PlanosTest
     [Test, Order(3)]
     public void TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel()
     {
-        var contextoDeExecucao = "EditarPlanoAlterandoAtivo";
+        var contextoDeExecucao = "EditarPlanoAlterandoQuantidadeAtivo";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)

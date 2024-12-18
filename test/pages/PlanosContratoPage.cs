@@ -649,6 +649,20 @@ public class PlanosContratosPage
                     Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaAtivos, valorReceitaAtivosEsperado, "Campo Receita Ativos");
                     Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaPlano, valorReceitaPlanoEsperado, "Campo Receita Plano");
                 }
+                else if (contextoDeExecucao.Contains("EditarPlanoAlterandoQuantidadeAtivo"))
+                {
+                    var valorReceitaAtivosEsperado = 3200.00;
+                    var valorReceitaPlanoEsperado = 3520.00;
+                    Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaAtivos, valorReceitaAtivosEsperado, "Campo Receita Ativos");
+                    Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaPlano, valorReceitaPlanoEsperado, "Campo Receita Plano");
+                }
+                else if (contextoDeExecucao.Contains("EditarPlanoIncluindoAtivo"))
+                {
+                    var valorReceitaAtivosEsperado = 3800.00;
+                    var valorReceitaPlanoEsperado = 4140.00;
+                    Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaAtivos, valorReceitaAtivosEsperado, "Campo Receita Ativos");
+                    Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaPlano, valorReceitaPlanoEsperado, "Campo Receita Plano");
+                }
                 break;
         }
 

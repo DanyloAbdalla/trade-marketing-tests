@@ -42,14 +42,14 @@ pipelines:
           caches:
             - dotnetcore
           script:
-            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest("SemPlantaLoja")
+            - dotnet test --filter TestCategory=PlanosSemPlantaDeLoja
 
       - step:
           name: PlanosTest("ComPlantaLoja")
           caches:
             - dotnetcore
           script:
-            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.PlanosTest("ComPlantaLoja")
+            - dotnet test --filter TestCategory=PlanosComPlantaDeLoja
 
       - step:
           name: SmartIaTest
