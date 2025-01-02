@@ -4,7 +4,7 @@ namespace MeuClienteWebTestProject;
 public class GlobalVariables
 {
     #region Projeto
-    public static bool handLessMode = false; //Executa, mostrando o Browser na tela, se a variável for = false
+    public static bool handLessMode = true; //Executa, mostrando o Browser na tela, se a variável for = false
     public static bool devMode = false;
     public static bool hmlMode = true;
     public static bool prodMode = false;
