@@ -56,14 +56,14 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar a criação de um plano, estando o cliente sem permissão de planta de loja
+    /// Testar a criação de um plano
     /// 
     /// Como comercial de trade marketing
     /// Eu quero criar um novo plano
     /// E inicar uma nova negociação
     /// Para enviar a proposta para o cliente
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
+    /// Dado que eu tenho uma nova negociação
     /// E que eu tenho disponibilidade de inventário, em um determinado período de vigência
     /// Quando eu simular um novo plano
     /// E escolher os ativos, colocar as quantidades, selecionar as lojas
@@ -121,14 +121,13 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar edição das quantidades dos ativos alocados em um plano existente, estando o cliente sem permissão de planta de loja
+    /// Testar edição das quantidades dos ativos alocados em um plano existente
     /// 
     /// Como comercial de trade marketing
     /// Eu quero alterar as quantidades dos ativos alocados por loja
     /// Para negociar a alocação de mais espaços
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
-    /// E que eu tenho um plano criado, contendo um ativo com disponibilidade de inventário
+    /// Dado que eu tenho um plano criado, contendo um ativo com disponibilidade de inventário
     /// Quando eu acessar a tela de edição do plano
     /// E alterar a quantidade do ativo
     /// E clicar no botão Salvar Plano
@@ -149,14 +148,13 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar alocação de um novo ativo em um plano existente, estando o cliente sem permissão de planta de loja
+    /// Testar alocação de um novo ativo em um plano existente
     /// 
     /// Como comercial de trade marketing
     /// Eu quero alocar um novo ativo para as lojas
     /// Para atualizar meu plano com um novo ativo
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
-    /// E que eu tenho um plano criado
+    /// Dado que eu tenho um plano criado
     /// Quando eu acessar a tela de edição do plano
     /// E incluir um novo ativo para a loja com disponibilidade de inventário
     /// Então o plano será salvo com sucesso com o novo ativo
@@ -191,10 +189,10 @@ public class PlanosTest
     [Test, Order(5)]
     public void TestAprovarPlano()
     {
-        var contextoDeExecucao = "EditarPlano";
         var situacaoPlano = "Contrato Aprovado";
         var statusPlanoEsperado = "Aprovado";
         var farolPlanoEsperado = "APROVADO";
+        var contextoDeExecucao = "EditarPlano";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
@@ -207,14 +205,13 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar alerta de inventário na criação de planos, estando o cliente sem permissão de planta de loja
+    /// Testar alerta de inventário na criação de planos
     /// 
     /// Como comercial de trade marketing
     /// Eu quero selecionar ativos sem indisponibilidade de alocação
     /// Para que eu seja informado de que não há quantidade suficente no inventário
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
-    /// E que eu não tenho disponibilidade de inventário, em um determinado período de vigência
+    /// Dado que eu não tenho disponibilidade de inventário, em um determinado período de vigência
     /// Quando eu simular um novo plano
     /// E escolher os ativos, colocar as quantidades, selecionar as lojas
     /// Então será apresentado o botão de alerta para as lojas com indisponibilidade
