@@ -21,7 +21,7 @@ pipelines:
             - dotnet build --configuration Release
 
       - step:
-          name: DashboardOperacoesTest
+          name: Setup Selenium Environment
           caches:
             - dotnetcore
           script:
@@ -35,28 +35,35 @@ pipelines:
             - export CHROMEDRIVER_PATH="/usr/local/bin"
             - mv chromedriver-linux64 $CHROMEDRIVER_PATH/chromedriver
             - chmod +x $CHROMEDRIVER_PATH/chromedriver
-            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.DashboardOperacoesTest
 
-      - step:
-          name: PlanosTest("SemPlantaLoja")
-          caches:
-            - dotnetcore
-          script:
-            - dotnet test --filter TestCategory=PlanosSemPlantaDeLoja
+      - parallel:
+        - step:
+            name: PlanosTest (SemPlantaLoja)
+            caches:
+              - dotnetcore
+            script:
+              - dotnet test --filter TestCategory=PlanosSemPlantaDeLoja
 
-      - step:
-          name: PlanosTest("ComPlantaLoja")
-          caches:
-            - dotnetcore
-          script:
-            - dotnet test --filter TestCategory=PlanosComPlantaDeLoja
+        - step:
+            name: PlanosTest (ComPlantaLoja)
+            caches:
+              - dotnetcore
+            script:
+              - dotnet test --filter TestCategory=PlanosComPlantaDeLoja
+        
+        - step:
+            name: DashboardOperacoesTest
+            caches:
+              - dotnetcore
+            script:
+              - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.DashboardOperacoesTest
 
-      - step:
-          name: SmartIaTest
-          caches:
-            - dotnetcore
-          script:
-            - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.SmartIaTest
+        #- step:
+            #name: SmartIaTest
+            #caches:
+              #- dotnetcore
+            #script:
+              #- dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.SmartIaTest
 
 definitions:
   caches:
