@@ -32,7 +32,7 @@ public class Dsl
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
             Timeout = TimeSpan.FromSeconds(40),
-            PollingInterval = TimeSpan.FromMilliseconds(500)
+            PollingInterval = TimeSpan.FromMilliseconds(100)
         };
 
         fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
@@ -41,8 +41,8 @@ public class Dsl
         {
             fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
         }
-        catch (WebDriverTimeoutException)
-        { Console.WriteLine("O elemento não foi localizado na página"); }
+        catch (Exception ex)
+        { Console.WriteLine("Erro ao esperar o elemento na página" + ex.Message); }
 
         return false;
     }
@@ -59,15 +59,15 @@ public class Dsl
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
             Timeout = TimeSpan.FromSeconds(40),
-            PollingInterval = TimeSpan.FromMilliseconds(500)
+            PollingInterval = TimeSpan.FromMilliseconds(100)
         };
 
         fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
 
         try
         {
-            //IWebElement element = webDriver.FindElement(By.XPath(XPath));
-            fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
+            IWebElement element = webDriver.FindElement(By.XPath(XPath));
+            fluentWait.Until(ExpectedConditions.StalenessOf(element));
         }
         catch (Exception)
         { Console.WriteLine("Erro ao processar a invisibilidade do elemento"); }
@@ -85,7 +85,7 @@ public class Dsl
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
             Timeout = TimeSpan.FromSeconds(30),
-            PollingInterval = TimeSpan.FromMilliseconds(500)
+            PollingInterval = TimeSpan.FromMilliseconds(100)
         };
 
         fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
@@ -111,7 +111,7 @@ public class Dsl
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
             Timeout = TimeSpan.FromSeconds(30),
-            PollingInterval = TimeSpan.FromMilliseconds(500)
+            PollingInterval = TimeSpan.FromMilliseconds(100)
         };
 
         fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
@@ -129,10 +129,10 @@ public class Dsl
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="xpath"></param>*
-    public static void EsperarLoadDaTela(IWebDriver webDriver, string xpath)
+    public static void EsperarLoadDaTela(IWebDriver webDriver, string XPath)
     {
-        EsperarVisibilidadeDoElemento(webDriver, xpath);
-        EsperarInvisibilidadeDoElemento(webDriver, xpath);
+        EsperarVisibilidadeDoElemento(webDriver, XPath);
+        EsperarInvisibilidadeDoElemento(webDriver, XPath);
     }
 
     /// <summary>
@@ -179,6 +179,18 @@ public class Dsl
         }
         catch (WebDriverTimeoutException ex)
         { throw new WebDriverTimeoutException(ex.Message); }
+    }
+
+    public static bool VerificarExistenciaDoElemento(IWebDriver webDriver, string XPath)
+    {
+        try
+        {
+            if (webDriver.FindElement(By.XPath(XPath)).Enabled || webDriver.FindElement(By.XPath(XPath)).Displayed) return true;
+        }
+        catch (Exception ex)
+        { throw new Exception(ex.Message); }
+
+        return false;
     }
 
     /// <summary>
@@ -341,7 +353,12 @@ public class Dsl
                 webDriver.FindElement(By.XPath(XPath)).Click();
             }
 
-            webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[1]")).Click();
+            var classAttribute = webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[2]/ancestor::td")).GetAttribute("class");
+
+            if (classAttribute.Contains("ant-picker-cell-in-view"))
+                webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[2]")).Click();
+            else
+                webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[1]")).Click();
         }
     }
 
@@ -370,16 +387,13 @@ public class Dsl
                 webDriver.FindElement(By.XPath(XPath)).Click();
             }
 
-            var quantiadadedDiasCalendario = Dsl.ContarExistenciaDoElemento(webDriver, $"(//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}']");
+            //var quantiadadedDiasCalendario = Dsl.ContarExistenciaDoElemento(webDriver, $"(//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}']");
+            var classAttribute = webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[2]/ancestor::td")).GetAttribute("class");
 
-            if (quantiadadedDiasCalendario > 1)
-            {
+            if (classAttribute.Contains("ant-picker-cell-in-view"))
                 webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[2]")).Click();
-            }
             else
-            {
                 webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
-            }
 
         }
     }

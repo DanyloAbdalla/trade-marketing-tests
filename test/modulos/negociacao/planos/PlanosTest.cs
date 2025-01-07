@@ -29,7 +29,7 @@ public class PlanosTest
     [SetUp]
     public void Setup()
     {
-        if(_previousTestFalied) Assert.Ignore("Pular os próximos teste, pois o teste anterior falhou");
+        if(_previousTestFalied) Assert.Ignore("Pular o próximo teste, pois o teste anterior falhou");
 
         webDriver = DriverFactory.CreateDriver(browserType);
 
@@ -143,7 +143,7 @@ public class PlanosTest
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
         .EditarQuantidadesDosAtivosNoPlano(_contextoDeTeste)
-        .SalvarPlano(contextoDeExecucao)
+        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
         .FecharDadosDoPlano();
     }
 
@@ -169,7 +169,7 @@ public class PlanosTest
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
         .AlocarNovosAtivosNoPlano(_contextoDeTeste)
-        .SalvarPlano(contextoDeExecucao)
+        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
         .FecharDadosDoPlano();
     }
 

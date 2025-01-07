@@ -48,12 +48,11 @@ public class HomePage
         Dsl.Clicar(webDriver, GlobalVariables.CadastroPlanosContratos, "Cadastro de Planos");
 
         Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-        Dsl.Esperar(2000);
-        
-        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela) > 0)
+
+        if(Dsl.VerificarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados))
+            return new PlanosContratosPage(webDriver);        
+        else if (Dsl.VerificarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela))
             Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
-        else
-            Dsl.Esperar();
 
         return new PlanosContratosPage(webDriver);
     }
