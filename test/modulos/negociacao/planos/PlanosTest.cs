@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 
 namespace MeuClienteWebTestProject;
@@ -5,12 +7,21 @@ namespace MeuClienteWebTestProject;
 /// <summary>
 /// Classe com os testes para o Cadastro de Planos\Contratos
 /// </summary>
-[TestFixture]
+[TestFixture("SemPlantaLoja", Category = "PlanosSemPlantaDeLoja")]
+[TestFixture("ComPlantaLoja", Category = "PlanosComPlantaDeLoja")]
+[Parallelizable(ParallelScope.Fixtures)]
 public class PlanosTest
 {
     private IWebDriver webDriver;
     private readonly BrowserType browserType = BrowserType.Chrome;
+    private bool _previousTestFalied;
     private string nomeCampanha = "MassaAutomatizada";
+    private string _contextoDeTeste = "";
+
+    public PlanosTest(string contextoDeTeste)
+    {
+        _contextoDeTeste = contextoDeTeste;
+    }
 
     /// <summary>
     /// Método que será executado antes de cada teste
@@ -18,26 +29,41 @@ public class PlanosTest
     [SetUp]
     public void Setup()
     {
+        if(_previousTestFalied) Assert.Ignore("Pular o próximo teste, pois o teste anterior falhou");
+
         webDriver = DriverFactory.CreateDriver(browserType);
 
-        new LoginPage(webDriver)
-        .PreencherEmailUsuario(GlobalVariables.emailUsuario)
-        .PreencherSenhaUsuario(GlobalVariables.senhaUsuario)
-        .SubmeterLogin();
+        if (_contextoDeTeste.Contains("SemPlantaLoja"))
+        {
+            new LoginPage(webDriver)
+            .PreencherEmailUsuario(GlobalVariables.emailUsuarioSemPlanta)
+            .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioSemPlanta)
+            .SubmeterLogin();
 
-        new HomePage(webDriver)
-        .AcessarCadastroPlanos();
+            new HomePage(webDriver)
+            .AcessarCadastroPlanos();
+        }
+        else if (_contextoDeTeste.Contains("ComPlantaLoja"))
+        {
+            new LoginPage(webDriver)
+            .PreencherEmailUsuario(GlobalVariables.emailUsuarioComPlanta)
+            .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioComPlanta)
+            .SubmeterLogin();
+
+            new HomePage(webDriver)
+            .AcessarCadastroPlanos();
+        }
     }
 
     /// <summary>
-    /// Testar a criação de um plano, estando o cliente sem permissão de planta de loja
+    /// Testar a criação de um plano
     /// 
     /// Como comercial de trade marketing
     /// Eu quero criar um novo plano
     /// E inicar uma nova negociação
     /// Para enviar a proposta para o cliente
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
+    /// Dado que eu tenho uma nova negociação
     /// E que eu tenho disponibilidade de inventário, em um determinado período de vigência
     /// Quando eu simular um novo plano
     /// E escolher os ativos, colocar as quantidades, selecionar as lojas
@@ -50,16 +76,17 @@ public class PlanosTest
     {
         var statusPlanoEsperado = "Simulado";
         var farolPlanoEsperado = "PLANEJADO";
+        var contextoDeExecucao = "NovoPlano";
 
         new PlanosContratosPage(webDriver)
         .NovaSimulacaoDePlano()
         .PreencherCampoIndustria()
         .PreencherCampoCampanha(nomeCampanha)
         .SelecionarAtivos()
-        .PreencherQuantidadeAtivos()
+        .PreencherQuantidadeAtivos(_contextoDeTeste)
         .SelecionarLojas()
         .GerarPrePlano()
-        .SalvarPlano()
+        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
         .ValidarPlanoCriado()
         .FecharDadosDoPlano()
         .BuscarPlanos(nomeCampanha)
@@ -80,69 +107,69 @@ public class PlanosTest
     /// Então um o plano será salvo com a nova vigência
     /// </summary>
     [Test, Order(2)]
-    public void TestEditarVigenciaNoPlanoExistente()
+    public void TestEditarPlanoExistenteAlterandoVigencia()
     {
-        var contexto = "EditarPlano";
+        var contextoDeExecucao = "EditarPlano";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
-        .EditarInicioVigencia(contexto)
-        .EditarFimVigencia(contexto)
-        .SalvarPlano()
+        .EditarInicioVigencia(contextoDeExecucao)
+        .EditarFimVigencia(contextoDeExecucao)
+        .SalvarPlano(contextoDeExecucao)
         .FecharDadosDoPlano();
     }
 
     /// <summary>
-    /// Testar edição das quantidades dos ativos alocados em um plano existente, estando o cliente sem permissão de planta de loja
+    /// Testar edição das quantidades dos ativos alocados em um plano existente
     /// 
     /// Como comercial de trade marketing
     /// Eu quero alterar as quantidades dos ativos alocados por loja
     /// Para negociar a alocação de mais espaços
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
-    /// E que eu tenho um plano criado, contendo um ativo com disponibilidade de inventário
+    /// Dado que eu tenho um plano criado, contendo um ativo com disponibilidade de inventário
     /// Quando eu acessar a tela de edição do plano
     /// E alterar a quantidade do ativo
     /// E clicar no botão Salvar Plano
     /// Então o plano será salvo com sucesso com a nova quantidade
     /// </summary>
     [Test, Order(3)]
-    public void TestEditarAtivoDisponivelAlocadoNoPlanoExistente()
+    public void TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel()
     {
+        var contextoDeExecucao = "EditarPlanoAlterandoQuantidadeAtivo";
+
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .EditarQuantidadesDosAtivosNoPlano()
-        .SalvarPlano()
+        .EditarQuantidadesDosAtivosNoPlano(_contextoDeTeste)
+        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
         .FecharDadosDoPlano();
     }
 
     /// <summary>
-    /// Testar alocação de um novo ativo em um plano existente, estando o cliente sem permissão de planta de loja
+    /// Testar alocação de um novo ativo em um plano existente
     /// 
     /// Como comercial de trade marketing
     /// Eu quero alocar um novo ativo para as lojas
     /// Para atualizar meu plano com um novo ativo
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
-    /// E que eu tenho um plano criado
+    /// Dado que eu tenho um plano criado
     /// Quando eu acessar a tela de edição do plano
     /// E incluir um novo ativo para a loja com disponibilidade de inventário
     /// Então o plano será salvo com sucesso com o novo ativo
     /// </summary>
     [Test, Order(4)]
-    public void TestIncluirNovoAtivoDisponivelNoPlanoExistente()
+    public void TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel()
     {
-        var nomeAtivo = "Cestão 01 - ";
+        var contextoDeExecucao = "EditarPlanoIncluindoAtivo";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .AlocarNovosAtivosNoPlano(nomeAtivo)
-        .SalvarPlano()
+        .AlocarNovosAtivosNoPlano(_contextoDeTeste)
+        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
         .FecharDadosDoPlano();
     }
 
@@ -162,29 +189,29 @@ public class PlanosTest
     [Test, Order(5)]
     public void TestAprovarPlano()
     {
-        var contextoSituacao = "Contrato Aprovado";
+        var situacaoPlano = "Contrato Aprovado";
         var statusPlanoEsperado = "Aprovado";
         var farolPlanoEsperado = "APROVADO";
+        var contextoDeExecucao = "EditarPlano";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
-        .EditarSituacaoDoPlano(contextoSituacao)
-        .SalvarPlano()
+        .EditarSituacaoDoPlano(situacaoPlano)
+        .SalvarPlano(contextoDeExecucao)
         .FecharDadosDoPlano()
         .BuscarPlanos(nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);
     }
 
     /// <summary>
-    /// Testar alerta de inventário na criação de planos, estando o cliente sem permissão de planta de loja
+    /// Testar alerta de inventário na criação de planos
     /// 
     /// Como comercial de trade marketing
     /// Eu quero selecionar ativos sem indisponibilidade de alocação
     /// Para que eu seja informado de que não há quantidade suficente no inventário
     /// 
-    /// Dado que eu não tenho permissão de planta de loja
-    /// E que eu não tenho disponibilidade de inventário, em um determinado período de vigência
+    /// Dado que eu não tenho disponibilidade de inventário, em um determinado período de vigência
     /// Quando eu simular um novo plano
     /// E escolher os ativos, colocar as quantidades, selecionar as lojas
     /// Então será apresentado o botão de alerta para as lojas com indisponibilidade
@@ -193,16 +220,16 @@ public class PlanosTest
     [Test, Order(6)]
     public void TestCriarPlanoComAlertaDeInventario()
     {
-        var contexto = "NovoPlano";
+        var contextoDeExecucao = "NovoPlano";
 
         new PlanosContratosPage(webDriver)
         .NovaSimulacaoDePlano()
         .PreencherCampoIndustria()
         .PreencherCampoCampanha(nomeCampanha)
-        .EditarInicioVigencia(contexto)
-        .EditarFimVigencia(contexto)
+        .EditarInicioVigencia(contextoDeExecucao)
+        .EditarFimVigencia(contextoDeExecucao)
         .SelecionarAtivos()
-        .PreencherQuantidadeAtivos()
+        .PreencherQuantidadeAtivos(_contextoDeTeste)
         .SelecionarLojas()
         .ValidarAlertaInventario()
         .FecharDadosDoPlano();
@@ -227,13 +254,13 @@ public class PlanosTest
         var situacaoPlano = "Cancelado";
         var statusPlanoEsperado = "Cancelado";
         var farolPlanoEsperado = "CANCELADO";
-        var contexto = "CancelarPlano";
+        var contextoDeExecucao = "CancelarPlano";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .EditarSituacaoDoPlano(situacaoPlano)
-        .SalvarPlano(contexto)
+        .SalvarPlano(contextoDeExecucao)
         .FecharDadosDoPlano()
         .BuscarPlanos(nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);
@@ -264,5 +291,13 @@ public class PlanosTest
     /// </summary>
     [TearDown]
     public void TearDown()
-    { webDriver.Close(); System.Diagnostics.Process.Start("taskkill_chromedriver.bat"); }
+    {
+        if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed) _previousTestFalied = true;
+        
+        HomePage homePage = new HomePage(webDriver);
+        homePage.AcessarDashBoardOperacoes();
+        Dsl.Esperar();
+
+        webDriver.Close();
+    }
 }

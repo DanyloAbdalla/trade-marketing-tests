@@ -39,7 +39,7 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage PreencherCamposCampanha()
     {
-        Dsl.Esperar1Segundo();
+        Dsl.Esperar();
         webDriver.FindElement(By.XPath(GlobalVariables.Campanhas)).Click();
 
         CarregarImagemCampanha();
@@ -226,7 +226,7 @@ public class SmartIaPage
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.VarrerAtivos, "Botão Executar Varredura de Ativos");
         webDriver.FindElement(By.XPath(GlobalVariables.VarrerAtivos)).Click();
 
-        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens);
+        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Realizar Varredura");
 
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
 
@@ -317,7 +317,7 @@ public class SmartIaPage
         webDriver.FindElement(By.XPath(GlobalVariables.ReservarAtivoLojasCampanha)).Click();
         webDriver.FindElement(By.XPath(GlobalVariables.FecharReservaAtivoLojaCampanha)).Click();
 
-        var valor = Dsl.ObterDadosDoAtributoValueDoElemento(webDriver, GlobalVariables.QuantidadeReservadaAtivoCampanha);
+        var valor = Dsl.ObterDadosDoAtributoValueDoElemento(webDriver, GlobalVariables.QuantidadeReservadaAtivoCampanha, "Campo Quantidade Reserva Ativo");
         var valorReservaAtual = Convert.ToInt16(valor);
 
         Debug.Assert(valorReservaAtual == valorReservaEsperado, "Quantidade de reservas calculada incorretamente");
@@ -367,9 +367,8 @@ public class SmartIaPage
             mensagemSucessoEsperada = "Campanhaeditadacomsucesso!";
 
         webDriver.FindElement(By.XPath(GlobalVariables.SalvarRegistro)).Click();
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
 
-        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens);
+        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar/Editar Campanha");
 
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
 
@@ -385,9 +384,8 @@ public class SmartIaPage
         var mensagemSucessoEsperada = "AtivosSelecionadoscomSucesso!";
 
         webDriver.FindElement(By.XPath(GlobalVariables.SalvarAtivosCampanha)).Click();
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
 
-        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens);
+        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar Ativos Reservados");
 
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);

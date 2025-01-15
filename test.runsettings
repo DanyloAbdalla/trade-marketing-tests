@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!-- Define o número máximo de CPUs a serem utilizadas para testes paralelos -->
+    <MaxCpuCount>4</MaxCpuCount>
+  </RunConfiguration>
+  <NUnit>
+    <!-- Define o número de workers de teste paralelos a serem utilizados -->
+    <NumberOfTestWorkers>4</NumberOfTestWorkers>
+    <!-- Define o tempo limite padrão para cada caso de teste -->
+    <DefaultTestCaseTimeout>60000</DefaultTestCaseTimeout> <!-- em milissegundos -->
+  </NUnit>
+</RunSettings>

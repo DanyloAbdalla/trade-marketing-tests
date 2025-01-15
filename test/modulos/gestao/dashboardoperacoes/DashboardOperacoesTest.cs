@@ -21,12 +21,11 @@ public class DashboardOperacoesTest
         webDriver = DriverFactory.CreateDriver(browserType);
 
         new LoginPage(webDriver)
-        .PreencherEmailUsuario(GlobalVariables.emailUsuario)
-        .PreencherSenhaUsuario(GlobalVariables.senhaUsuario)
+        .PreencherEmailUsuario(GlobalVariables.emailUsuarioSemPlanta)
+        .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioSemPlanta)
         .SubmeterLogin();
 
-        new HomePage(webDriver)
-        .AcessarDashBoardOperacoes();
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados);
     }
 
     /// <summary>
@@ -95,10 +94,10 @@ public class DashboardOperacoesTest
     [Test, Order(3)]
     public void TestAcessarVisãoDetalhadaDeContratosVigentes()
     {
-        var contexto = "ContratosVigentes";
+        var card = "ContratosVigentes";
 
         new DashboardOperacoesPage(webDriver)
-        .AcessarDetalhesDeContratosAtivos(contexto)
+        .AcessarDetalhesDeContratosAtivos(card)
         .FecharDetalhes()
         .AcessarDetalhesDeContratosVencendo()
         .FecharDetalhes();
@@ -119,10 +118,10 @@ public class DashboardOperacoesTest
     [Test, Order(4)]
     public void TestAcessarVisãoDetalhadaTotalReceita()
     {
-        var contexto = "TotalReceita";
+        var card = "TotalReceita";
 
         new DashboardOperacoesPage(webDriver)
-        .AcessarDetalhesDeContratosAtivos(contexto)
+        .AcessarDetalhesDeContratosAtivos(card)
         .FecharDetalhes();
     }
 
@@ -229,6 +228,9 @@ public class DashboardOperacoesTest
     /// </summary>
     [TearDown]
     public void TearDown()
-    { Dsl.Esperar1Segundo(); webDriver.Close(); System.Diagnostics.Process.Start("taskkill_chromedriver.bat"); }
+    {
+        Dsl.Esperar();
+        webDriver.Close();
+    }
 
 }

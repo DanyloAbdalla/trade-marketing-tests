@@ -1,7 +1,5 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Edge;
 
 namespace MeuClienteWebTestProject;
 
@@ -10,6 +8,9 @@ namespace MeuClienteWebTestProject;
 /// </summary>
 public class DriverFactory
 {
+    [ThreadStatic]
+    private static IWebDriver webDriver;
+
     /// <summary>
     /// Método para criação do WebDriver para múltiplos browsers
     /// </summary>
@@ -18,8 +19,6 @@ public class DriverFactory
     /// <exception cref="NotSupportedException"></exception>
     public static IWebDriver CreateDriver(BrowserType browserType)
     {
-        IWebDriver webDriver;
-
         switch (browserType)
         {
             case BrowserType.Chrome:
@@ -38,8 +37,8 @@ public class DriverFactory
                 }
 
                 webDriver = new ChromeDriver(options);
-                webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-                if(GlobalVariables.devMode)
+                webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                if (GlobalVariables.devMode)
                     webDriver.Navigate().GoToUrl(GlobalVariables.urlDevPlataforma);
                 if (GlobalVariables.hmlMode)
                     webDriver.Navigate().GoToUrl(GlobalVariables.urlHmlPlataforma);

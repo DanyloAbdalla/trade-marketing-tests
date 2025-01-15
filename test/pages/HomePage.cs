@@ -24,8 +24,7 @@ public class HomePage
 
         Dsl.Clicar(webDriver, GlobalVariables.MenuGestao, "Menu Gestão");
         Dsl.Clicar(webDriver, GlobalVariables.DashboardOperacoes, "Tela DashBoard de Operações");
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados);
-        
+
         return new DashboardOperacoesPage(webDriver);
     }
 
@@ -35,13 +34,26 @@ public class HomePage
     /// <returns></returns>
     public PlanosContratosPage AcessarCadastroPlanos()
     {
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado);
+        var ultimoCadastroAcessado = Dsl.PegarTextoDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
+        Dsl.Esperar();
+
+        if (!ultimoCadastroAcessado.Contains("Dashboard Opera..."))
+            AcessarDashBoardOperacoes();
+
+        Dsl.Esperar();
         AbrirMenuVarejo();
 
         Dsl.Clicar(webDriver, GlobalVariables.MenuNegociacao, "Menu Negociação");
         Dsl.Clicar(webDriver, GlobalVariables.CadastroPlanosContratos, "Cadastro de Planos");
 
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.NovoRegistro);
-        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.Esperar(2000);
+
+        if(Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
+            return new PlanosContratosPage(webDriver);        
+        else if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela) > 0)
+            Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
 
         return new PlanosContratosPage(webDriver);
     }
@@ -68,9 +80,7 @@ public class HomePage
     /// <returns></returns>
     public HomePage AbrirMenuVarejo()
     {
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MenuPrincipal);
         Dsl.Clicar(webDriver, GlobalVariables.MenuPrincipal, "Menu Principal Superior Esquerdo");
-
         Dsl.Clicar(webDriver, GlobalVariables.MenuVarejo, "Menu Varejo");
 
         return this;

@@ -21,8 +21,8 @@ public class SmartIaTest
         webDriver = DriverFactory.CreateDriver(browserType);
 
         new LoginPage(webDriver)
-        .PreencherEmailUsuario(GlobalVariables.emailUsuario)
-        .PreencherSenhaUsuario(GlobalVariables.senhaUsuario)
+        .PreencherEmailUsuario(GlobalVariables.emailUsuarioSemPlanta)
+        .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioSemPlanta)
         .SubmeterLogin();
 
         new HomePage(webDriver)
@@ -46,8 +46,8 @@ public class SmartIaTest
     [Test, Order(1)]
     public void TestCriarCampanhaSmartIA()
     {
-        var contexto = "NovaCampanha";
-        var statusCampanha = "Criando";
+        var contextoDeExecucao = "NovaCampanha";
+        var statusCampanhaEsperado = "Criando";
 
         new SmartIaPage(webDriver)
         .NovaCampanhaSmartIA()
@@ -56,10 +56,10 @@ public class SmartIaTest
         .RealizarVarredura()
         .SelecionarEReservarAtivos()
         .SalvarAtivosReservados()
-        .SalvarCampanha(contexto)
+        .SalvarCampanha(contextoDeExecucao)
         .FecharCampanha()
         .BuscarCampanhas()
-        .ValidarStatusDaCampanha(statusCampanha);
+        .ValidarStatusDaCampanha(statusCampanhaEsperado);
     }
 
     /// <summary>
@@ -124,5 +124,8 @@ public class SmartIaTest
     /// </summary>
     [TearDown]
     public void TearDown()
-    { webDriver.Close(); System.Diagnostics.Process.Start("taskkill_chromedriver.bat"); }
+    {
+        webDriver.Close();
+        System.Diagnostics.Process.Start("taskkill_chromedriver.bat");
+    }
 }
