@@ -202,14 +202,14 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - SmartIA - Nova Campanha
-    public static string Campanhas { get; set; } = "//span[text()='Campanhas']";
-    public static string CarregarImagem { get; set; } = "//input[@type='file']";
+    public static string MenuCampanhas { get; set; } = "//span[text()='Campanhas']";
+    public static string ImagemCampanha { get; set; } = "//input[@type='file']";
     public static string NomeCampanha { get; set; } = "//*[@name='Nome']";
-    public static string EmailResposavel { get; set; } = "//*[@name='EmailResponsavel']";
-    public static string NomeResposavel { get; set; } = "//*[@name='NomeResponsavel']";
-    public static string InicioVigenciaCampanha { get; set; } = "(//div[contains(@class,'date-picker')])[1]";
+    public static string EmailResposavelCampanha { get; set; } = "//*[@name='EmailResponsavel']";
+    public static string NomeResposavelCampanha { get; set; } = "//*[@name='NomeResponsavel']";
+    public static string InicioVigenciaCampanha { get; set; } = "//label[text()='Inicio Vigência']/following-sibling::div/div/input";
     public static string InicioVigenciaCampanhaAvancarData { get; set; } = "(//*[contains(@class,'header-next-btn')])[1]";
-    public static string FimVigenciaCampanha { get; set; } = "(//div[contains(@class,'date-picker')])[2]";
+    public static string FimVigenciaCampanha { get; set; } = "//label[text()='Fim Vigência']/following-sibling::div/div/input";
     public static string FimVigenciaCampanhaAvancarData { get; set; } = "(//*[contains(@class,'header-next-btn')])[2]";
     public static string WhatsAppResposavel { get; set; } = "//*[@name='WhatsAppResponsavel']";
     public static string DataLimiteCampanha { get; set; } = "(//div[contains(@class,'date-picker')])[3]";
@@ -223,19 +223,19 @@ public class GlobalVariables
     public static string PesquisarVarejo { get; set; } = "//div/*[text()='Adicionar Varejo:']/following-sibling::div//input";
     public static string SelecionarVarejo { get; set; } = "//div[@title='Meu Cliente']";
     public static string AdicionarVarejo { get; set; } = "(//form/div/div[2]//button)[1]";
-    public static string VarejoSelecionado { get; set; } = "//div[contains(@style,'display')]//span[text()='Meu Cliente']";
-    public static string VarrerAtivos { get; set; } = "//*[@class='button-varredura-ativo']";
+    public static string DisplayVarejoSelecionado { get; set; } = "//div[contains(@style,'display')]//span[text()='HOMOLOGAÇÃO SP']";
+    public static string VarrerAtivos { get; set; } = "//button[@class='button-varredura-ativo']";
     #endregion
 
     #region Elementos de página - SmartIA - Nova Campanha - Selecionar Ativos
-    public static string SelecionarAtivosCampanha { get; set; } = "//div[contains(@style,'display')]//span[text()='Meu Cliente']/../..//*[@aria-label='appstore']";
+    public static string ReservarAtivosCampanha { get; set; } = "//div[contains(@style,'display')]//span[text()='HOMOLOGAÇÃO SP']/../..//*[@aria-label='appstore']";
     public static string SalvarAtivosCampanha { get; set; } = "(//button/*[text()='Salvar'])[2]";
     public static string FiltrarAtivosCampanha { get; set; } = "(//*[text()='Ativo'])[3]/..//*[@aria-label='search']";
     public static string PreencherFiltroAtivosCampanha { get; set; } = "(//*[text()='Ativo'])[3]/..//*[@aria-label='search']";
     public static string BuscarAtivosCampanha { get; set; } = "(//*[text()='Ativo'])[3]/..//*[@aria-label='search']";
     public static string SelecionarAtivoCampanha { get; set; } = "(//input[@class='ant-checkbox-input'])[2]";
     public static string ReservarQuantidadeAtivoLojasCampanha { get; set; } = "//tbody/tr/td[4]/span";
-    public static string PreencherReservarTodasLojasCampanha { get; set; } = "//*[text()='Reservar para Todos:']/../input";
+    public static string QuantidadeReservaLojasCampanha { get; set; } = "//*[text()='Reservar para Todos:']/../input";
     public static string ReservarAtivoLojasCampanha { get; set; } = "//button/*[text()='Reservar']";
     public static string FecharReservaAtivoLojaCampanha { get; set; } = "(//button/*[text()='Fechar'])[2]";
     public static string QuantidadeReservadaAtivoCampanha { get; set; } = "//tbody/tr/td[5]/input";

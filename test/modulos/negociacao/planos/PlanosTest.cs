@@ -15,8 +15,8 @@ public class PlanosTest
     private IWebDriver webDriver;
     private readonly BrowserType browserType = BrowserType.Chrome;
     private bool _previousTestFalied;
-    private string nomeCampanha = "MassaAutomatizada";
     private string _contextoDeTeste = "";
+    private string nomeCampanha = "MassaAutomatizada";
 
     public PlanosTest(string contextoDeTeste)
     {
@@ -295,7 +295,7 @@ public class PlanosTest
         if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed) _previousTestFalied = true;
         
         HomePage homePage = new HomePage(webDriver);
-        homePage.AcessarDashBoardOperacoes();
+        homePage.AcessarDashboardOperacoes();
         Dsl.Esperar();
 
         webDriver.Close();

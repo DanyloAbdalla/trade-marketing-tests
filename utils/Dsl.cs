@@ -601,4 +601,11 @@ public class Dsl
         IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)webDriver;
         jsExecutor.ExecuteScript("arguments[0].scrollHeight = arguments[0].scrollHeight;", modalElement);
     }
+
+    public static void CarregarImagens(IWebDriver webDriver, string XPath)
+    {
+        IWebElement imageInput = webDriver.FindElement(By.XPath(XPath));
+
+        imageInput.SendKeys("C:\\TestProjectMeuCliente\\logomeucliente.png");
+    }
 }

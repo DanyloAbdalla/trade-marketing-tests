@@ -18,7 +18,7 @@ public class HomePage
     /// Método para acessar a tela do DashBoard de Operações, acessando o mesmo pelo menu suspenso no canto superior esquerdo
     /// </summary>
     /// <returns></returns>
-    public DashboardOperacoesPage AcessarDashBoardOperacoes()
+    public DashboardOperacoesPage AcessarDashboardOperacoes()
     {
         AbrirMenuVarejo();
 
@@ -34,12 +34,7 @@ public class HomePage
     /// <returns></returns>
     public PlanosContratosPage AcessarCadastroPlanos()
     {
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado);
-        var ultimoCadastroAcessado = Dsl.PegarTextoDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
-        Dsl.Esperar();
-
-        if (!ultimoCadastroAcessado.Contains("Dashboard Opera..."))
-            AcessarDashBoardOperacoes();
+        VoltarParaDashboardOperacoes();
 
         Dsl.Esperar();
         AbrirMenuVarejo();
@@ -64,12 +59,15 @@ public class HomePage
     /// <returns></returns>
     public SmartIaPage AcessarCadastroSmartIa()
     {
+        VoltarParaDashboardOperacoes();
+
+        Dsl.Esperar();
         AbrirMenuVarejo();
 
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuCadastros)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuCadastros, "Menu Cadastros");
 
         Dsl.ScrollParaElemento(webDriver, GlobalVariables.CadastroSmartIa);
-        webDriver.FindElement(By.XPath(GlobalVariables.CadastroSmartIa)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.CadastroSmartIa, "Cadastro de Campanhas SmartIA");
 
         return new SmartIaPage(webDriver);
     }
@@ -82,6 +80,22 @@ public class HomePage
     {
         Dsl.Clicar(webDriver, GlobalVariables.MenuPrincipal, "Menu Principal Superior Esquerdo");
         Dsl.Clicar(webDriver, GlobalVariables.MenuVarejo, "Menu Varejo");
+
+        return this;
+    }
+
+    /// <summary>
+    /// Método para retonar ao Dashboard de Operacoes, ponto de partida de todos os testes
+    /// </summary>
+    /// <returns></returns>
+    public HomePage VoltarParaDashboardOperacoes()
+    {
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado);
+        var ultimoCadastroAcessado = Dsl.PegarTextoDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
+        Dsl.Esperar();
+
+        if (!ultimoCadastroAcessado.Contains("Dashboard Opera..."))
+            AcessarDashboardOperacoes();
 
         return this;
     }

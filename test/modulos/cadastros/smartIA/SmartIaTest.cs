@@ -11,6 +11,10 @@ public class SmartIaTest
 {
     private IWebDriver webDriver;
     private readonly BrowserType browserType = BrowserType.Chrome;
+    private string nomeCampanha = "MassaAutomatizada";
+    private string whatsAppResponsavel = "15988086091";
+    private string nomeResponsavel = "Usuário Homologacao";
+    private string mensagemCabecalho = "Massa Automatizada";
 
     /// <summary>
     /// Método que será executado antes de cada teste
@@ -51,14 +55,14 @@ public class SmartIaTest
 
         new SmartIaPage(webDriver)
         .NovaCampanhaSmartIA()
-        .PreencherCamposCampanha()
-        .AdicionarVarejo()
+        .PreencherCamposCampanha(nomeCampanha, whatsAppResponsavel, nomeResponsavel, mensagemCabecalho)
+        .ValidarVarejoSelecionado()
         .RealizarVarredura()
         .SelecionarEReservarAtivos()
         .SalvarAtivosReservados()
         .SalvarCampanha(contextoDeExecucao)
         .FecharCampanha()
-        .BuscarCampanhas()
+        .BuscarCampanhas(nomeCampanha)
         .ValidarStatusDaCampanha(statusCampanhaEsperado);
     }
 
