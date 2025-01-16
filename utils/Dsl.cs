@@ -266,6 +266,7 @@ public class Dsl
     /// <param name="XPath"></param>
     /// <param name="nomeElemento"></param>
     /// <returns>Retorna os dados contidos no atributo como uma string</returns>
+    /// <exception cref="Exception"></exception>
     public static string ObterDadosDoAtributoValueDoElemento(IWebDriver webDriver, string XPath, string nomeElemento)
     {
         try
@@ -424,6 +425,8 @@ public class Dsl
     /// <param name="XPath"></param>
     /// <param name="nomeElemento"></param>
     /// <returns>Retorna o texto somente com letras maiúsculas ou minúsculas</returns>
+    /// <exception cref="FormatException"></exception>
+    /// <exception cref="Exception"></exception>
     public static string RemoverNumerosEspacosDeUmTexto(IWebDriver webDriver, string XPath, string nomeElemento)
     {
         try
@@ -449,13 +452,15 @@ public class Dsl
     }
 
     /// <summary>
-    /// Método para remover lestras maiúsculas, minúsculas, caracteres especiais e espaços em branco de um valor numérico int ou double
+    /// Método para remover lestras maiúsculas, minúsculas, caracteres especiais e espaços em branco de um texto que contêm números inteiros ou com casas decimais
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
     /// <param name="nomeElemento"></param>
     /// <param name="captura">0: atributo value do elemento OU 1: texto no elemento</param>
     /// <returns>Retorna o valor numérico</returns>
+    /// <exception cref="FormatException"></exception>
+    /// <exception cref="Exception"></exception>
     public static object RemoverLetrasEspacosDeUmTexto(IWebDriver webDriver, string XPath, string nomeElemento, int captura)
     {
         object retorno = null;
@@ -602,6 +607,11 @@ public class Dsl
         jsExecutor.ExecuteScript("arguments[0].scrollHeight = arguments[0].scrollHeight;", modalElement);
     }
 
+    /// <summary>
+    /// Método para carregar uma imagem em um campo do tipo file 
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="XPath"></param>
     public static void CarregarImagens(IWebDriver webDriver, string XPath)
     {
         IWebElement imageInput = webDriver.FindElement(By.XPath(XPath));

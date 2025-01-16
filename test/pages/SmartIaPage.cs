@@ -10,7 +10,7 @@ namespace MeuClienteWebTestProject;
 public class SmartIaPage
 {
     private IWebDriver webDriver;
-    private string[] nomesAtivos = { "Display de Chão", "Woobler", "Ponta de Gôndola" };
+    private string[] nomesAtivos = { "Adesivo de Check Out", "Woobler", "Ponta de Gôndola" };
 
     public SmartIaPage(IWebDriver webDriver)
     {
@@ -206,11 +206,12 @@ public class SmartIaPage
     {
         var mensagemSucessoEsperada = "Campanhacriadacomsucesso!";
 
+        Dsl.Esperar();
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.VarrerAtivos, "Botão Executar Varredura de Ativos");
 
         var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Realizar Varredura");
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
-        
+
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
 
@@ -281,7 +282,8 @@ public class SmartIaPage
     public SmartIaPage AbrirSelecaoDeAtivosReservados()
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ReservarAtivosCampanha, "Botão Reservar Ativos na Campanha");
-        //Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAtivosCampanha, "Botão Salvar Ativos na Campanha");
+        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados);
 
         return this;
     }
@@ -294,9 +296,11 @@ public class SmartIaPage
     {
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar Quantidade");
 
-        var quantidadeLojas = Dsl.ObterQuantidadeLinhasNoElementoTabelaSemLinhaInvisivel(webDriver, GlobalVariables.QuantidadeLojasReservaCampanha);
+        var quantidadeLojas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.QuantidadeLojasReservaCampanha);
         var valorReservaEsperado = quantidadeLojas * quantidadeReserva;
 
+        Dsl.Clicar(webDriver, GlobalVariables.QuantidadeReservaLojasCampanha, "Campo Reservar Quantidade");
+        Dsl.Esperar();
         Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadeReservaLojasCampanha, quantidadeReserva.ToString());
         Dsl.Clicar(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar Quandtidade");
         Dsl.Clicar(webDriver, GlobalVariables.FecharReservaAtivoLojaCampanha, "Botão Fechar Reserva");

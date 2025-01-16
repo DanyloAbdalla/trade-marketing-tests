@@ -239,6 +239,6 @@ public class GlobalVariables
     public static string ReservarAtivoLojasCampanha { get; set; } = "//button/*[text()='Reservar']";
     public static string FecharReservaAtivoLojaCampanha { get; set; } = "(//button/*[text()='Fechar'])[2]";
     public static string QuantidadeReservadaAtivoCampanha { get; set; } = "//tbody/tr/td[5]/input";
-    public static string QuantidadeLojasReservaCampanha { get; set; } = "(//tbody)[2]";
+    public static string QuantidadeLojasReservaCampanha { get; set; } = "(//*[@class='ant-modal-content'])[2]//tbody/tr";
     #endregion
 }
