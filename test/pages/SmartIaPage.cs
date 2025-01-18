@@ -297,18 +297,16 @@ public class SmartIaPage
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar Quantidade");
 
         var quantidadeLojas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.QuantidadeLojasReservaCampanha);
-        var valorReservaEsperado = quantidadeLojas * quantidadeReserva;
+        var valorReservadoEsperado = quantidadeLojas * quantidadeReserva;
 
         Dsl.Clicar(webDriver, GlobalVariables.QuantidadeReservaLojasCampanha, "Campo Reservar Quantidade");
         Dsl.Esperar();
         Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadeReservaLojasCampanha, quantidadeReserva.ToString());
         Dsl.Clicar(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar Quandtidade");
-        Dsl.Clicar(webDriver, GlobalVariables.FecharReservaAtivoLojaCampanha, "Botão Fechar Reserva");
+        Dsl.Clicar(webDriver, GlobalVariables.FecharReservaAtivoLojasCampanha, "Botão Fechar Reserva");
 
-        var valor = Dsl.ObterDadosDoAtributoValueDoElemento(webDriver, GlobalVariables.QuantidadeReservadaAtivoCampanha, "Campo Quantidade Reserva Ativo");
-        var valorReservaAtual = Convert.ToInt16(valor);
-
-        Debug.Assert(valorReservaAtual == valorReservaEsperado, "Quantidade de reservas calculada incorretamente");
+        var valorReservadoAtual = Convert.ToInt16(Dsl.ObterDadosDoAtributoValueDoElemento(webDriver, GlobalVariables.QuantidadeReservadaAtivoCampanha, "Campo Quantidade Reservada Ativo"));
+        Debug.Assert(valorReservadoAtual == valorReservadoEsperado, "Quantidade de reservas calculada incorretamente");
 
         return this;
     }

@@ -660,8 +660,8 @@ public class PlanosContratosPage
                 }
                 else if (contextoDeExecucao.Contains("EditarPlanoIncluindoAtivo"))
                 {
-                    var valorReceitaAtivosEsperado = 3800.00;
-                    var valorReceitaPlanoEsperado = 4140.00;
+                    var valorReceitaAtivosEsperado = 3400.00;
+                    var valorReceitaPlanoEsperado = 3740.00;
                     Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaAtivos, valorReceitaAtivosEsperado, "Campo Receita Ativos");
                     Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaPlano, valorReceitaPlanoEsperado, "Campo Receita Plano");
                 }

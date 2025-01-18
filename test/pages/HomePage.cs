@@ -34,6 +34,7 @@ public class HomePage
     /// <returns></returns>
     public PlanosContratosPage AcessarCadastroPlanos()
     {
+        //Retorna para o Dashboard de Operações, se no último logout a plataforma parou em outra tela
         VoltarParaDashboardOperacoes();
 
         Dsl.Esperar();
@@ -45,8 +46,8 @@ public class HomePage
         Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
         Dsl.Esperar(2000);
 
-        if(Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
-            return new PlanosContratosPage(webDriver);        
+        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
+            return new PlanosContratosPage(webDriver);
         else if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela) > 0)
             Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
 
@@ -96,6 +97,21 @@ public class HomePage
 
         if (!ultimoCadastroAcessado.Contains("Dashboard Opera..."))
             AcessarDashboardOperacoes();
+
+        return this;
+    }
+
+    /// <summary>
+    /// Método para realizar o logout do usuário da plataforma
+    /// </summary>
+    /// <returns></returns>
+    public HomePage RealizarLogout()
+    {
+        Dsl.Clicar(webDriver, GlobalVariables.MenuUsuarioLogado, "Botão Usuário Logado");
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SairConta, "Botão Sair da Conta");
+
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioEmail);
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioSenha);
 
         return this;
     }

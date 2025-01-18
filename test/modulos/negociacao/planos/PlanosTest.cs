@@ -29,7 +29,7 @@ public class PlanosTest
     [SetUp]
     public void Setup()
     {
-        if(_previousTestFalied) Assert.Ignore("Pular o próximo teste, pois o teste anterior falhou");
+        if (_previousTestFalied) Assert.Ignore("Pular o próximo teste, pois o teste anterior falhou");
 
         webDriver = DriverFactory.CreateDriver(browserType);
 
@@ -292,10 +292,12 @@ public class PlanosTest
     [TearDown]
     public void TearDown()
     {
-        if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed) _previousTestFalied = true;
-        
-        HomePage homePage = new HomePage(webDriver);
-        homePage.AcessarDashboardOperacoes();
+        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed) _previousTestFalied = true;
+
+        //Retorna para o Dashboard de Operações no final de cada teste, realizando logout
+        new HomePage(webDriver).AcessarDashboardOperacoes();
+        new HomePage(webDriver).RealizarLogout();
+
         Dsl.Esperar();
 
         webDriver.Close();

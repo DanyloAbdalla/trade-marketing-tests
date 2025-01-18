@@ -25,6 +25,10 @@ public class DashboardOperacoesTest
         .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioSemPlanta)
         .SubmeterLogin();
 
+        //Retorna para o Dashboard de Operações, se no último logout a plataforma parou em outra tela
+        new HomePage(webDriver)
+        .VoltarParaDashboardOperacoes();
+
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados);
     }
 
@@ -229,6 +233,8 @@ public class DashboardOperacoesTest
     [TearDown]
     public void TearDown()
     {
+        new HomePage(webDriver).RealizarLogout();
+
         Dsl.Esperar();
         webDriver.Close();
     }

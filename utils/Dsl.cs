@@ -67,7 +67,7 @@ public class Dsl
         try
         {
             IWebElement element = webDriver.FindElement(By.XPath(XPath));
-            if(fluentWait.Until(ExpectedConditions.StalenessOf(element)) || fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)))){}
+            if (fluentWait.Until(ExpectedConditions.StalenessOf(element)) || fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)))) { }
             //fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
             //fluentWait.Until(ExpectedConditions.StalenessOf(element));
         }

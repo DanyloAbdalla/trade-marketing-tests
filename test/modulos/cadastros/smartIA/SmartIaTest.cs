@@ -129,7 +129,10 @@ public class SmartIaTest
     [TearDown]
     public void TearDown()
     {
+        //Retorna para o Dashboard de Operações no final de cada teste, realizando logout
+        new HomePage(webDriver).AcessarDashboardOperacoes();
+        new HomePage(webDriver).RealizarLogout();
+
         webDriver.Close();
-        System.Diagnostics.Process.Start("taskkill_chromedriver.bat");
     }
 }

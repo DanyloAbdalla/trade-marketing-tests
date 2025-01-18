@@ -5,7 +5,7 @@ public class GlobalVariables
 {
     #region Projeto
     //Executa, mostrando o Browser na tela, se handLessMode igual false
-    public static bool handLessMode = false;
+    public static bool handLessMode = true;
     public static bool devMode = false;
     public static bool hmlMode = true;
     public static bool prodMode = false;
@@ -19,6 +19,8 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Elementos Comuns
+    public static string MenuUsuarioLogado { get; set; } = "//header/div[@class='Log']/div[2]";
+    public static string SairConta { get; set; } = "//*[contains(@class,'logout')]/ancestor::a/*[text()='Sair']";
     public static string Mensagens { get; set; } = "//*[@class='ant-message-notice']";
     public static string NovoRegistro { get; set; } = "//button[@id='Buttonclass']";
     public static string SalvarRegistro { get; set; } = "//button/*[text()='Salvar']";
@@ -27,8 +29,8 @@ public class GlobalVariables
     public static string PreencherFiltro { get; set; } = "//*[@class='ant-table-filter-dropdown']//input";
     public static string BuscarRegistro { get; set; } = "//button/*[text()='Buscar']";
     public static string PaginacaoTela { get; set; } = "//ul[contains(@class,'ant-pagination')]//li[2]";
-    public static string PrimeiraLinhaTabelaColuna1 {get; set; } = "(//tbody)[9]/tr[2]/td[1]";
-    public static string PrimeiraLinhaTabelaColuna2 {get; set; } = "(//tbody)[9]/tr[2]/td[2]";
+    public static string PrimeiraLinhaTabelaColuna1 { get; set; } = "(//tbody)[9]/tr[2]/td[1]";
+    public static string PrimeiraLinhaTabelaColuna2 { get; set; } = "(//tbody)[9]/tr[2]/td[2]";
     public static string AvisoInexistenciaDados { get; set; } = "//*[text()='Não há dados']";
     public static string LoadDeTela { get; set; } = "(//*[contains(@class,'ant-spin-dot-item')])[1]";
     #endregion
@@ -53,43 +55,43 @@ public class GlobalVariables
 
     #region Elementos de página - Dashboard de Operações
     public static string TextoCardAtivosAlocados { get; set; } = "//div[@class='DashBoardCards']//*[contains(text(),'Índice de Aproveitamento')]";
-    public static string DetalhesLojasAtivas {  get; set; } = "//span[text()='Lojas Ativas']/following-sibling::div//button";
-    public static string TabelaListagemLojasAtivas {get; set; } = "//*[contains(text(),'Listagem de Lojas')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr";
-    public static string DetalhesDisponibilidadeAtivos {  get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[1]";
-    public static string ColunaAtivoListagemDisponibilidadeAtivos {get; set; } = "//*[contains(text(),'Disponibilidade de Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
-    public static string DetalhesNegociacaoAtivos {  get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[2]";
-    public static string ColunaAtivoListagemAtivosNegociados {get; set; } = "//*[contains(text(),'Ativos Negociados')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
-    public static string ColunaDetalhesBotaoContratosVinculado {  get; set; } = "//*[contains(text(),'Ativos Negociados')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[10]/button";
+    public static string DetalhesLojasAtivas { get; set; } = "//span[text()='Lojas Ativas']/following-sibling::div//button";
+    public static string TabelaListagemLojasAtivas { get; set; } = "//*[contains(text(),'Listagem de Lojas')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr";
+    public static string DetalhesDisponibilidadeAtivos { get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[1]";
+    public static string ColunaAtivoListagemDisponibilidadeAtivos { get; set; } = "//*[contains(text(),'Disponibilidade de Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
+    public static string DetalhesNegociacaoAtivos { get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[2]";
+    public static string ColunaAtivoListagemAtivosNegociados { get; set; } = "//*[contains(text(),'Ativos Negociados')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
+    public static string ColunaDetalhesBotaoContratosVinculado { get; set; } = "//*[contains(text(),'Ativos Negociados')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[10]/button";
     public static string FiltrarAtivoPorNome { get; set; } = "//span[text()='Ativo']/following-sibling::span[@role='button']";
-    public static string DetalhesPotencialReceitaAtivos {  get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[3]";
+    public static string DetalhesPotencialReceitaAtivos { get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[3]";
     public static string FiltrarAtivoPorNomePotencialReceita { get; set; } = "//th[@aria-label='Nome']/div/span[@role='button']";
-    public static string ColunaNomeListagemPotencialReceita {get; set; } = "//*[contains(text(),'Potencial Receita')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
-    public static string ColunaDetalhesListagemPotencialReceita {get; set; } = "(//tbody)[9]/tr[2]/td[10]/button";
+    public static string ColunaNomeListagemPotencialReceita { get; set; } = "//*[contains(text(),'Potencial Receita')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
+    public static string ColunaDetalhesListagemPotencialReceita { get; set; } = "(//tbody)[9]/tr[2]/td[10]/button";
     public static string FecharTelaContratosEAtivosVinculados { get; set; } = "(//button/*[text()='Fechar'])[2]";
-    public static string DetalhesContratosAtivos {  get; set; } = "//*[contains(text(),'Contratos Vigentes')]/following-sibling::div//button[1]";
-    public static string TabelaListagemContratosAtivos {get; set; } = "//*[contains(text(),'Contratos Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr";
-    public static string ColunaContratoListagemContratosAtivos {get; set; } = "//*[contains(text(),'Contratos Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[2]";
-    public static string ColunaAcoesBotaoListagemContratosAtivos {get; set; } = "//*[contains(text(),'Contratos Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[9]";
-    public static string DetalhesContratosVencendo {  get; set; } = "//*[contains(text(),'Contratos Vigentes')]/following-sibling::div//button[2]";
-    public static string ColunaContratoListagemContratosVencendo {get; set; } = "//*[contains(text(),'Contratos Vencendo')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[2]";
-    public static string ColunaAcoesBotaoListagemContratosVencendo {get; set; } = "//*[contains(text(),'Contratos Vencendo')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[9]";
+    public static string DetalhesContratosAtivos { get; set; } = "//*[contains(text(),'Contratos Vigentes')]/following-sibling::div//button[1]";
+    public static string TabelaListagemContratosAtivos { get; set; } = "//*[contains(text(),'Contratos Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr";
+    public static string ColunaContratoListagemContratosAtivos { get; set; } = "//*[contains(text(),'Contratos Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[2]";
+    public static string ColunaAcoesBotaoListagemContratosAtivos { get; set; } = "//*[contains(text(),'Contratos Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[9]";
+    public static string DetalhesContratosVencendo { get; set; } = "//*[contains(text(),'Contratos Vigentes')]/following-sibling::div//button[2]";
+    public static string ColunaContratoListagemContratosVencendo { get; set; } = "//*[contains(text(),'Contratos Vencendo')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[2]";
+    public static string ColunaAcoesBotaoListagemContratosVencendo { get; set; } = "//*[contains(text(),'Contratos Vencendo')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[9]";
     public static string FiltrarContratoPorCampanha { get; set; } = "//span[text()='Contrato']/following-sibling::span[@role='button']";
-    public static string DetalhesContratosAtivosTotalReceita {  get; set; } = "//*[contains(text(),'Total de Receita')]/following-sibling::div//button[1]";
+    public static string DetalhesContratosAtivosTotalReceita { get; set; } = "//*[contains(text(),'Total de Receita')]/following-sibling::div//button[1]";
     public static string TextoCardTotalReceita { get; set; } = "//div[@class='DashBoardCards']//*[contains(text(),'índice de Crescimento')]";
     public static string TabelaListagemAterrissagem { get; set; } = "//*[@role='tabpanel']/div/div";
-    public static string ColunaMesAterrissagem {get; set; } = "//*[text()='JANEIRO']";
-    public static string DetalhesAterrissagemReceita {  get; set; } = "(//*[contains(text(),'Perfomance Receita')]/following-sibling::div//button[1])[1]";
-    public static string DetalhesAterrissagemReceitaPorBandeira {  get; set; } = "(//*[contains(text(),'Receita Bandeira')]/following-sibling::div//button[1])[1]";
-    public static string DetalhesAterrissagemReceitaPorTipoFornecedor {  get; set; } = "(//*[contains(text(),'Receita Tipo Fornecedor')]/following-sibling::div//button[1])[1]";
+    public static string ColunaMesAterrissagem { get; set; } = "//*[text()='JANEIRO']";
+    public static string DetalhesAterrissagemReceita { get; set; } = "(//*[contains(text(),'Perfomance Receita')]/following-sibling::div//button[1])[1]";
+    public static string DetalhesAterrissagemReceitaPorBandeira { get; set; } = "(//*[contains(text(),'Receita Bandeira')]/following-sibling::div//button[1])[1]";
+    public static string DetalhesAterrissagemReceitaPorTipoFornecedor { get; set; } = "(//*[contains(text(),'Receita Tipo Fornecedor')]/following-sibling::div//button[1])[1]";
     public static string TabelaListagemParceiros { get; set; } = "//*[@role='tabpanel']/div/div";
-    public static string ColunaIndustriaParcerio {get; set; } = "//*[text()='Indústria/Parceiro']";
-    public static string DetalhesListaParceirosPerformance {  get; set; } = "(//*[contains(text(),'Perfomance Parceiro')]/following-sibling::div//button[1])[1]";
+    public static string ColunaIndustriaParcerio { get; set; } = "//*[text()='Indústria/Parceiro']";
+    public static string DetalhesListaParceirosPerformance { get; set; } = "(//*[contains(text(),'Perfomance Parceiro')]/following-sibling::div//button[1])[1]";
     public static string FiltrarNegociacoes { get; set; } = "//button/span[text()='Filtrar']";
-    public static string DetalhesListaParceirosInvestimento {  get; set; } = "(//*[contains(text(),'Investimento por Parceiro')]/following-sibling::div//button[1])[1]";
-    public static string DetalhesDesempenhoPorLoja {  get; set; } = "(//*[contains(text(),'Desempenho por Loja')]/following-sibling::div//button[1])[1]";
+    public static string DetalhesListaParceirosInvestimento { get; set; } = "(//*[contains(text(),'Investimento por Parceiro')]/following-sibling::div//button[1])[1]";
+    public static string DetalhesDesempenhoPorLoja { get; set; } = "(//*[contains(text(),'Desempenho por Loja')]/following-sibling::div//button[1])[1]";
     public static string GraficoDesempenhoLoja { get; set; } = "//*[@class='ant-modal-content']//*[@class='Chart']";
     public static string FiltroDesempenhoLoja { get; set; } = "//*[@class='ant-modal-content']//*[text()='Maior Retorno']";
-    public static string DetalhesDesempenhoDosAtivos {  get; set; } = "(//*[contains(text(),'Desempenho de Ativos')]/following-sibling::div//button[1])[1]";
+    public static string DetalhesDesempenhoDosAtivos { get; set; } = "(//*[contains(text(),'Desempenho de Ativos')]/following-sibling::div//button[1])[1]";
     public static string GraficoDesempenhoAtivo { get; set; } = "//*[@class='ant-modal-content']//*[@class='Chart']";
     public static string FiltroDesempenhoAtivo { get; set; } = "//*[@class='ant-modal-content']//*[text()='Maior Retorno']";
     public static string TextoCardMaisVendidosDepartamento { get; set; } = "//*[text()='Mais vendidos do Departamento']";
@@ -182,7 +184,7 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
-    public static string TabelaLojasAtivoAlocados {get; set; } = "(//tbody)[3]/tr[3]";
+    public static string TabelaLojasAtivoAlocados { get; set; } = "(//tbody)[3]/tr[3]";
     public static string AplicarDadosLojas { get; set; } = "(//button/*[text()='Aplicar'])[2]";
     public static string BuscarAtivoAlocacao { get; set; } = "//span[contains(text(),'Selecione um Ativo')]/div/div//input";
     public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Cestão 01 - ']";
@@ -237,7 +239,7 @@ public class GlobalVariables
     public static string ReservarQuantidadeAtivoLojasCampanha { get; set; } = "//tbody/tr/td[4]/span";
     public static string QuantidadeReservaLojasCampanha { get; set; } = "//*[text()='Reservar para Todos:']/../input";
     public static string ReservarAtivoLojasCampanha { get; set; } = "//button/*[text()='Reservar']";
-    public static string FecharReservaAtivoLojaCampanha { get; set; } = "(//button/*[text()='Fechar'])[2]";
+    public static string FecharReservaAtivoLojasCampanha { get; set; } = "(//button/*[text()='Fechar'])[2]";
     public static string QuantidadeReservadaAtivoCampanha { get; set; } = "//tbody/tr/td[5]/input";
     public static string QuantidadeLojasReservaCampanha { get; set; } = "(//*[@class='ant-modal-content'])[2]//tbody/tr";
     #endregion
