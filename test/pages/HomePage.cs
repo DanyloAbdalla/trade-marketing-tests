@@ -107,6 +107,7 @@ public class HomePage
     /// <returns></returns>
     public HomePage RealizarLogout()
     {
+        Dsl.Esperar();
         Dsl.Clicar(webDriver, GlobalVariables.MenuUsuarioLogado, "Botão Usuário Logado");
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SairConta, "Botão Sair da Conta");
 

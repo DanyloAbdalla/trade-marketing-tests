@@ -5,7 +5,7 @@ public class GlobalVariables
 {
     #region Projeto
     //Executa, mostrando o Browser na tela, se handLessMode igual false
-    public static bool handLessMode = true;
+    public static bool handLessMode = false;
     public static bool devMode = false;
     public static bool hmlMode = true;
     public static bool prodMode = false;

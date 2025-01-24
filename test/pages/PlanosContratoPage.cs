@@ -352,7 +352,7 @@ public class PlanosContratosPage
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
-                var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo, "Mensagem Alocação Ativo");
+                var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Alocação Ativo");
                 Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
                 Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
             }
@@ -381,10 +381,10 @@ public class PlanosContratosPage
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
-                var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo, "Mensagem Salvar Alocação Ativo");
+                var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Alocação Ativo");
                 Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
                 Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo);
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
             }
         }
 
@@ -613,7 +613,7 @@ public class PlanosContratosPage
     }
 
     /// <summary>
-    /// Método para validar as receitas dos ativos e do plano
+    /// Método para validar a receita de ativos e plano
     /// </summary>
     /// <returns></returns>
     public PlanosContratosPage ValidarReceitasDoPlano(string contextoDeExecucao, string contextoDeTeste)
@@ -660,8 +660,8 @@ public class PlanosContratosPage
                 }
                 else if (contextoDeExecucao.Contains("EditarPlanoIncluindoAtivo"))
                 {
-                    var valorReceitaAtivosEsperado = 3400.00;
-                    var valorReceitaPlanoEsperado = 3740.00;
+                    var valorReceitaAtivosEsperado = 3800.00;
+                    var valorReceitaPlanoEsperado = 4140.00;
                     Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaAtivos, valorReceitaAtivosEsperado, "Campo Receita Ativos");
                     Dsl.ValidarNumerosNoElemento(webDriver, GlobalVariables.ReceitaPlano, valorReceitaPlanoEsperado, "Campo Receita Plano");
                 }

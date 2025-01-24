@@ -11,7 +11,7 @@ public class DashboardOperacoesPage
     private IWebDriver webDriver;
     private string nomeAtivo = "Adesivo de Elevador";
     private string nomeAtivoEsperado = "AdesivodeElevador";
-    private string nomeConratoCampanha = "MassaAutomatizadaDashboardOperacoes";
+    private string nomeConratoCampanha = "DashboardOperacoesMassaAutomatizada";
 
     public DashboardOperacoesPage(IWebDriver webDriver)
     {

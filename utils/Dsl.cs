@@ -550,13 +550,13 @@ public class Dsl
         {
             int valorAtual = (int)numeroAtual;
             int valorEsperado = (int)numeroEsperado;
-            Debug.Assert(valorAtual == valorEsperado, "Valores não correspondem - ValorAtual: " + valorAtual + " ValorEspeado: " + valorEsperado);
+            Debug.Assert(valorAtual == valorEsperado, "Valores não correspondem para " + elementoCampo + " - ValorAtual: " + valorAtual + " ValorEspeado: " + valorEsperado);
         }
         else if (numeroAtual is double)
         {
             double valorAtual = (double)numeroAtual;
             double valorEsperado = (double)numeroEsperado;
-            Debug.Assert(valorAtual == valorEsperado, "Valores não correspondem - ValorAtual: " + valorAtual + " ValorEsperado: " + valorEsperado);
+            Debug.Assert(valorAtual == valorEsperado, "Valores não correspondem para " + elementoCampo + " - ValorAtual: " + valorAtual + " ValorEsperado: " + valorEsperado);
         }
     }
 
@@ -617,5 +617,17 @@ public class Dsl
         IWebElement imageInput = webDriver.FindElement(By.XPath(XPath));
 
         imageInput.SendKeys("C:\\TestProjectMeuCliente\\logomeucliente.png");
+    }
+
+    /// <summary>
+    /// Método que valida se o caso de teste será executado ou não executado, conforme configurado no arquivo bin\Debug\net8.0\apprunsettings.json
+    /// </summary>
+    /// <param name="runSettings"></param>
+    /// <param name="className"></param>
+    /// <param name="testName"></param>
+    public static void PularTest(RunSettings runSettings, string className, string fixtureName, string testName)
+    {
+        if (runSettings.ToSkip(className, fixtureName, testName))
+            Assert.Ignore("Teste ignorado pelas configurações de execução");
     }
 }

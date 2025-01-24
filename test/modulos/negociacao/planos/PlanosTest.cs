@@ -1,5 +1,5 @@
-using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 
 namespace MeuClienteWebTestProject;
@@ -12,15 +12,18 @@ namespace MeuClienteWebTestProject;
 [Parallelizable(ParallelScope.Fixtures)]
 public class PlanosTest
 {
-    private IWebDriver webDriver;
-    private readonly BrowserType browserType = BrowserType.Chrome;
+    private RunSettings _runSettings;
+    private IWebDriver _webDriver;
+    private readonly BrowserType _browserType = BrowserType.Chrome;
     private bool _previousTestFalied;
-    private string _contextoDeTeste = "";
-    private string nomeCampanha = "MassaAutomatizada";
+    private readonly string _testContext;
+    private readonly string _className;
+    private readonly string _nomeCampanha = "PlanosMassaAutomatizada";
 
-    public PlanosTest(string contextoDeTeste)
+    public PlanosTest(string testContext)
     {
-        _contextoDeTeste = contextoDeTeste;
+        _testContext = testContext;
+        _className = TestContext.CurrentContext.Test.ClassName.Split('.').Last();
     }
 
     /// <summary>
@@ -29,28 +32,29 @@ public class PlanosTest
     [SetUp]
     public void Setup()
     {
-        if (_previousTestFalied) Assert.Ignore("Pular o próximo teste, pois o teste anterior falhou");
+        _runSettings = RunSettings.LoadSettings();
+        _webDriver = DriverFactory.CreateDriver(_browserType);
+        var _testName = TestContext.CurrentContext.Test.MethodName;
 
-        webDriver = DriverFactory.CreateDriver(browserType);
+        if (_previousTestFalied)
+            Assert.Ignore("Pular o próximo teste, pois o teste anterior falhou");
+        else if (_runSettings.ToSkip(_className, _testContext, _testName))
+            Assert.Ignore("Teste ignorado pelas configurações de execução");
 
-        if (_contextoDeTeste.Contains("SemPlantaLoja"))
+        if (_testContext.Contains("SemPlantaLoja"))
         {
-            new LoginPage(webDriver)
-            .PreencherEmailUsuario(GlobalVariables.emailUsuarioSemPlanta)
-            .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioSemPlanta)
-            .SubmeterLogin();
+            new LoginPage(_webDriver)
+            .RealizarLogin(GlobalVariables.emailUsuarioSemPlanta, GlobalVariables.senhaUsuarioSemPlanta);
 
-            new HomePage(webDriver)
+            new HomePage(_webDriver)
             .AcessarCadastroPlanos();
         }
-        else if (_contextoDeTeste.Contains("ComPlantaLoja"))
+        else if (_testContext.Contains("ComPlantaLoja"))
         {
-            new LoginPage(webDriver)
-            .PreencherEmailUsuario(GlobalVariables.emailUsuarioComPlanta)
-            .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioComPlanta)
-            .SubmeterLogin();
+            new LoginPage(_webDriver)
+            .RealizarLogin(GlobalVariables.emailUsuarioComPlanta, GlobalVariables.senhaUsuarioComPlanta);
 
-            new HomePage(webDriver)
+            new HomePage(_webDriver)
             .AcessarCadastroPlanos();
         }
     }
@@ -78,18 +82,18 @@ public class PlanosTest
         var farolPlanoEsperado = "PLANEJADO";
         var contextoDeExecucao = "NovoPlano";
 
-        new PlanosContratosPage(webDriver)
+        new PlanosContratosPage(_webDriver)
         .NovaSimulacaoDePlano()
         .PreencherCampoIndustria()
-        .PreencherCampoCampanha(nomeCampanha)
+        .PreencherCampoCampanha(_nomeCampanha)
         .SelecionarAtivos()
-        .PreencherQuantidadeAtivos(_contextoDeTeste)
+        .PreencherQuantidadeAtivos(_testContext)
         .SelecionarLojas()
         .GerarPrePlano()
-        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
+        .SalvarPlano(contextoDeExecucao, _testContext)
         .ValidarPlanoCriado()
         .FecharDadosDoPlano()
-        .BuscarPlanos(nomeCampanha)
+        .BuscarPlanos(_nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);
     }
 
@@ -109,14 +113,14 @@ public class PlanosTest
     [Test, Order(2)]
     public void TestEditarPlanoExistenteAlterandoVigencia()
     {
-        var contextoDeExecucao = "EditarPlano";
+        var executionContext = "EditarPlano";
 
-        new PlanosContratosPage(webDriver)
-        .BuscarPlanos(nomeCampanha)
+        new PlanosContratosPage(_webDriver)
+        .BuscarPlanos(_nomeCampanha)
         .AbrirEdicaoDoPlano()
-        .EditarInicioVigencia(contextoDeExecucao)
-        .EditarFimVigencia(contextoDeExecucao)
-        .SalvarPlano(contextoDeExecucao)
+        .EditarInicioVigencia(executionContext)
+        .EditarFimVigencia(executionContext)
+        .SalvarPlano(executionContext)
         .FecharDadosDoPlano();
     }
 
@@ -136,14 +140,14 @@ public class PlanosTest
     [Test, Order(3)]
     public void TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel()
     {
-        var contextoDeExecucao = "EditarPlanoAlterandoQuantidadeAtivo";
+        var executionContext = "EditarPlanoAlterandoQuantidadeAtivo";
 
-        new PlanosContratosPage(webDriver)
-        .BuscarPlanos(nomeCampanha)
+        new PlanosContratosPage(_webDriver)
+        .BuscarPlanos(_nomeCampanha)
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .EditarQuantidadesDosAtivosNoPlano(_contextoDeTeste)
-        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
+        .EditarQuantidadesDosAtivosNoPlano(_testContext)
+        .SalvarPlano(executionContext, _testContext)
         .FecharDadosDoPlano();
     }
 
@@ -162,14 +166,14 @@ public class PlanosTest
     [Test, Order(4)]
     public void TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel()
     {
-        var contextoDeExecucao = "EditarPlanoIncluindoAtivo";
+        var executionContext = "EditarPlanoIncluindoAtivo";
 
-        new PlanosContratosPage(webDriver)
-        .BuscarPlanos(nomeCampanha)
+        new PlanosContratosPage(_webDriver)
+        .BuscarPlanos(_nomeCampanha)
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .AlocarNovosAtivosNoPlano(_contextoDeTeste)
-        .SalvarPlano(contextoDeExecucao, _contextoDeTeste)
+        .AlocarNovosAtivosNoPlano(_testContext)
+        .SalvarPlano(executionContext, _testContext)
         .FecharDadosDoPlano();
     }
 
@@ -192,15 +196,15 @@ public class PlanosTest
         var situacaoPlano = "Contrato Aprovado";
         var statusPlanoEsperado = "Aprovado";
         var farolPlanoEsperado = "APROVADO";
-        var contextoDeExecucao = "EditarPlano";
+        var executionContext = "EditarPlano";
 
-        new PlanosContratosPage(webDriver)
-        .BuscarPlanos(nomeCampanha)
+        new PlanosContratosPage(_webDriver)
+        .BuscarPlanos(_nomeCampanha)
         .AbrirEdicaoDoPlano()
         .EditarSituacaoDoPlano(situacaoPlano)
-        .SalvarPlano(contextoDeExecucao)
+        .SalvarPlano(executionContext)
         .FecharDadosDoPlano()
-        .BuscarPlanos(nomeCampanha)
+        .BuscarPlanos(_nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);
     }
 
@@ -220,16 +224,16 @@ public class PlanosTest
     [Test, Order(6)]
     public void TestCriarPlanoComAlertaDeInventario()
     {
-        var contextoDeExecucao = "NovoPlano";
+        var executionContext = "NovoPlano";
 
-        new PlanosContratosPage(webDriver)
+        new PlanosContratosPage(_webDriver)
         .NovaSimulacaoDePlano()
         .PreencherCampoIndustria()
-        .PreencherCampoCampanha(nomeCampanha)
-        .EditarInicioVigencia(contextoDeExecucao)
-        .EditarFimVigencia(contextoDeExecucao)
+        .PreencherCampoCampanha(_nomeCampanha)
+        .EditarInicioVigencia(executionContext)
+        .EditarFimVigencia(executionContext)
         .SelecionarAtivos()
-        .PreencherQuantidadeAtivos(_contextoDeTeste)
+        .PreencherQuantidadeAtivos(_testContext)
         .SelecionarLojas()
         .ValidarAlertaInventario()
         .FecharDadosDoPlano();
@@ -254,15 +258,15 @@ public class PlanosTest
         var situacaoPlano = "Cancelado";
         var statusPlanoEsperado = "Cancelado";
         var farolPlanoEsperado = "CANCELADO";
-        var contextoDeExecucao = "CancelarPlano";
+        var executionContext = "CancelarPlano";
 
-        new PlanosContratosPage(webDriver)
-        .BuscarPlanos(nomeCampanha)
+        new PlanosContratosPage(_webDriver)
+        .BuscarPlanos(_nomeCampanha)
         .AbrirEdicaoDoPlano()
         .EditarSituacaoDoPlano(situacaoPlano)
-        .SalvarPlano(contextoDeExecucao)
+        .SalvarPlano(executionContext)
         .FecharDadosDoPlano()
-        .BuscarPlanos(nomeCampanha)
+        .BuscarPlanos(_nomeCampanha)
         .ValidarStatusFarolDoPlano(statusPlanoEsperado, farolPlanoEsperado);
     }
 
@@ -281,8 +285,8 @@ public class PlanosTest
     [Test, Order(8)]
     public void TestExcluirPlano()
     {
-        new PlanosContratosPage(webDriver)
-        .BuscarPlanos(nomeCampanha)
+        new PlanosContratosPage(_webDriver)
+        .BuscarPlanos(_nomeCampanha)
         .ConfirmarExclusaoDoPlano();
     }
 
@@ -292,14 +296,23 @@ public class PlanosTest
     [TearDown]
     public void TearDown()
     {
-        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed) _previousTestFalied = true;
+        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Skipped)
+        {
+            _webDriver.Close();
+        }
+        else if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+        {
+            _previousTestFalied = true;
+            _webDriver.Close();
+        }
+        else
+        {
+            //Retorna para o Dashboard de Operações no final de cada teste, realizando logout
+            new HomePage(_webDriver).AcessarDashboardOperacoes();
+            new HomePage(_webDriver).RealizarLogout();
 
-        //Retorna para o Dashboard de Operações no final de cada teste, realizando logout
-        new HomePage(webDriver).AcessarDashboardOperacoes();
-        new HomePage(webDriver).RealizarLogout();
+            _webDriver.Close();
+        }
 
-        Dsl.Esperar();
-
-        webDriver.Close();
     }
 }

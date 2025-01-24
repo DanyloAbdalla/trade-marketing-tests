@@ -50,4 +50,13 @@ public class LoginPage
 
         return new HomePage(webDriver);
     }
+
+    public HomePage RealizarLogin(string emailUsuario, string senhaUsuario)
+    {
+        PreencherEmailUsuario(emailUsuario);
+        PreencherSenhaUsuario(senhaUsuario);
+        SubmeterLogin();
+
+        return new HomePage(webDriver);
+    }
 }

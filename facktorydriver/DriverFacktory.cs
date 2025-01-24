@@ -15,7 +15,7 @@ public class DriverFactory
     /// Método para criação do WebDriver para múltiplos browsers
     /// </summary>
     /// <param name="browserType"></param>
-    /// <returns></returns>
+    /// <returns>Retorna a instância webDriver do Selenium</returns>
     /// <exception cref="NotSupportedException"></exception>
     public static IWebDriver CreateDriver(BrowserType browserType)
     {

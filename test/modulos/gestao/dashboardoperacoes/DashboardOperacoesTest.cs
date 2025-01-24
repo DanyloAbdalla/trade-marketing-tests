@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 
 namespace MeuClienteWebTestProject;
@@ -9,8 +10,16 @@ namespace MeuClienteWebTestProject;
 public class DashboardOperacoesTest
 {
 
-    private IWebDriver webDriver;
-    private readonly BrowserType browserType = BrowserType.Chrome;
+    private IWebDriver _webDriver;
+    private readonly BrowserType _browserType = BrowserType.Chrome;
+    private RunSettings _runSettings;
+    private readonly string _className;
+
+    public DashboardOperacoesTest()
+    {
+        _className = TestContext.CurrentContext.Test.ClassName.Split('.').Last();
+    }
+
 
     /// <summary>
     /// Método que será executado antes de cada teste
@@ -18,18 +27,21 @@ public class DashboardOperacoesTest
     [SetUp]
     public void SetUp()
     {
-        webDriver = DriverFactory.CreateDriver(browserType);
+        _runSettings = RunSettings.LoadSettings();
+        _webDriver = DriverFactory.CreateDriver(_browserType);
+        var _testName = TestContext.CurrentContext.Test.MethodName;
 
-        new LoginPage(webDriver)
-        .PreencherEmailUsuario(GlobalVariables.emailUsuarioSemPlanta)
-        .PreencherSenhaUsuario(GlobalVariables.senhaUsuarioSemPlanta)
-        .SubmeterLogin();
+        if (_runSettings.ToSkip(_className, null, _testName))
+            Assert.Ignore("Teste ignorado pelas configurações de execução");
+
+        new LoginPage(_webDriver)
+        .RealizarLogin(GlobalVariables.emailUsuarioSemPlanta, GlobalVariables.senhaUsuarioSemPlanta);
 
         //Retorna para o Dashboard de Operações, se no último logout a plataforma parou em outra tela
-        new HomePage(webDriver)
+        new HomePage(_webDriver)
         .VoltarParaDashboardOperacoes();
 
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados);
+        Dsl.EsperarVisibilidadeDoElemento(_webDriver, GlobalVariables.TextoCardAtivosAlocados);
     }
 
     /// <summary>
@@ -45,9 +57,9 @@ public class DashboardOperacoesTest
     /// Então a tela será apresentada, mostrando o aproveitamento de alocação cada de loja
     /// </summary>
     [Test, Order(1)]
-    public void TestAcessarVisãoDetalhadaLojasAtivas()
+    public void TestAcessarVisaoDetalhadaLojasAtivas()
     {
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesLojasAtivas()
         .FecharDetalhes();
     }
@@ -69,9 +81,9 @@ public class DashboardOperacoesTest
     /// E o potencial da receita de alocação de cada ativo
     /// </summary>
     [Test, Order(2)]
-    public void TestAcessarVisãoDetalhadaDeAtivosAlocados()
+    public void TestAcessarVisaoDetalhadaDeAtivosAlocados()
     {
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesDaDiponibilidade()
         .FecharDetalhes()
         .AcessarDetalhesDasNegociacoes()
@@ -96,11 +108,11 @@ public class DashboardOperacoesTest
     /// E os contratos vencendo
     /// </summary>
     [Test, Order(3)]
-    public void TestAcessarVisãoDetalhadaDeContratosVigentes()
+    public void TestAcessarVisaoDetalhadaDeContratosVigentes()
     {
         var card = "ContratosVigentes";
 
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesDeContratosAtivos(card)
         .FecharDetalhes()
         .AcessarDetalhesDeContratosVencendo()
@@ -120,11 +132,11 @@ public class DashboardOperacoesTest
     /// Então a tela será apresentada, mostrando o total de receita de cada contrato
     /// </summary>
     [Test, Order(4)]
-    public void TestAcessarVisãoDetalhadaTotalReceita()
+    public void TestAcessarVisaoDetalhadaTotalReceita()
     {
         var card = "TotalReceita";
 
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesDeContratosAtivos(card)
         .FecharDetalhes();
     }
@@ -146,13 +158,13 @@ public class DashboardOperacoesTest
     /// Então a tela será apresentada, mostrando a evolução da receita de cada mês do ano
     /// </summary>
     [Test, Order(5)]
-    public void TestAcessarVisãoDetalhadaAterrissagemReceita()
+    public void TestAcessarVisaoDetalhadaAterrissagemReceita()
     {
         var cardReceita = "EvolucaoReceita";
         var cardReceitaBandeira = "EvolucaoReceitaBandeira";
         var cardReceitaTipoFornecedor = "EvolucaoReceitaTipoFornecedor";
 
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesDeAterrissagemReceita(cardReceita)
         .FecharDetalhes()
         .AcessarDetalhesDeAterrissagemReceita(cardReceitaBandeira)
@@ -175,12 +187,12 @@ public class DashboardOperacoesTest
     /// Então a tela será apresentada, mostrando a evolução do parceiro em negociações realizadas
     /// </summary>
     [Test, Order(6)]
-    public void TestAcessarVisãoDetalhadaListaParceiro()
+    public void TestAcessarVisaoDetalhadaListaParceiro()
     {
         var cardPerformanceParceiro = "EvolucaoPerformanceParceiros";
         var cardInvestimentoParceiro = "InvestimentoParceiro";
 
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesDeListaParceiros(cardPerformanceParceiro)
         .FecharDetalhes()
         .AcessarDetalhesDeListaParceiros(cardInvestimentoParceiro)
@@ -200,9 +212,9 @@ public class DashboardOperacoesTest
     /// Então a tela será apresentada, mostrando o desempenho do por loja em negociações realizadas
     /// </summary>
     [Test, Order(7)]
-    public void TestAcessarVisãoDetalhadaDesempenhoLoja()
+    public void TestAcessarVisaoDetalhadaDesempenhoLoja()
     {
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesDesempenhoPorLoja()
         .FecharDetalhes();
     }
@@ -220,9 +232,9 @@ public class DashboardOperacoesTest
     /// Então a tela será apresentada, mostrando o desempenho do ativo em negociações realizadas
     /// </summary>
     [Test, Order(8)]
-    public void TestAcessarVisãoDetalhadaDesempenhoAtivo()
+    public void TestAcessarVisaoDetalhadaDesempenhoAtivo()
     {
-        new DashboardOperacoesPage(webDriver)
+        new DashboardOperacoesPage(_webDriver)
         .AcessarDetalhesDesempenhoDeAtivo()
         .FecharDetalhes();
     }
@@ -233,10 +245,16 @@ public class DashboardOperacoesTest
     [TearDown]
     public void TearDown()
     {
-        new HomePage(webDriver).RealizarLogout();
+        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Skipped)
+        {
+            _webDriver.Close();
+        }
+        else
+        {
+            new HomePage(_webDriver).RealizarLogout();
+            _webDriver.Close();
+        }
 
-        Dsl.Esperar();
-        webDriver.Close();
     }
 
 }
