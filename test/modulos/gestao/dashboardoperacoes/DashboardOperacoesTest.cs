@@ -20,17 +20,17 @@ public class DashboardOperacoesTest
 
     public DashboardOperacoesTest()
     {
+        runSettings = RunSettings.LoadSettings();
+        webDriver = DriverFactory.CreateDriver(browserType);
         className = TestContext.CurrentContext.Test.ClassName.Split('.').Last();
     }
 
     /// <summary>
     /// Método que será executado antes de cada teste
     /// </summary>
-    [SetUp]
-    public void SetUp()
-    {
-        runSettings = RunSettings.LoadSettings();
-        webDriver = DriverFactory.CreateDriver(browserType);
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {        
         var testName = TestContext.CurrentContext.Test.MethodName;
 
         if (runSettings.ToSkip(className, null, testName))
@@ -44,6 +44,7 @@ public class DashboardOperacoesTest
         .VoltarParaDashboardOperacoes();
 
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados);
+        Dsl.Esperar();
     }
 
     /// <summary>
@@ -244,19 +245,19 @@ public class DashboardOperacoesTest
     /// <summary>
     /// Método que será exexutado ao final de cada teste
     /// </summary>
-    [TearDown]
-    public void TearDown()
+    [OneTimeTearDown]
+    public void OneTimeTearDown()
     {
         if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Skipped)
         {
-            webDriver.Close();
+            webDriver.Quit();
+            webDriver.Dispose();
         }
         else
         {
             new HomePage(webDriver).RealizarLogout();
-            webDriver.Close();
+            webDriver.Quit();
+            webDriver.Dispose();
         }
-
     }
-
 }

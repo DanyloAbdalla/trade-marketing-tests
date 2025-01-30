@@ -4,9 +4,9 @@ public class GlobalVariables
 {
     #region Projeto
     //Executa, mostrando o Browser na tela, se handLessMode igual false
-    public static bool handLessMode = true;
-    public static bool devMode = false;
-    public static bool hmlMode = true;
+    public static bool handLessMode = false;
+    public static bool devMode = true;
+    public static bool hmlMode = false;
     public static bool prodMode = false;
     public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";

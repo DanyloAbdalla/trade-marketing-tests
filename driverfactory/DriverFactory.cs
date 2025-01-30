@@ -10,6 +10,7 @@ public class DriverFactory
 {
     [ThreadStatic]
     private static IWebDriver webDriver;
+    private static ChromeOptions chromeOptions = new ChromeOptions();
 
     /// <summary>
     /// Método para criação do WebDriver para múltiplos browsers
@@ -22,21 +23,20 @@ public class DriverFactory
         switch (browserType)
         {
             case BrowserType.Chrome:
-                var options = new ChromeOptions();
 
                 if (!GlobalVariables.handLessMode)
                 {
-                    options.AddArgument("--start-maximized");
+                    chromeOptions.AddArgument("--start-maximized");
                 }
                 else
                 {
-                    options.AddArgument("--headless"); //desativa a abertura do navegador
-                    options.AddArgument("--no-sandbox"); //desativa o recurso de segurança sandbox do Browser para o uso do mesmo em contêineres Docker
-                    options.AddArgument("--disable-dev-shm-usage"); //direciona o Browser a usar o diretório /tmp, previnindo falhas em ambientes com memória compartilhada limitada em contêineres Docker
-                    options.AddArgument("--start-maximized"); //inicia com o Browser maximizado
+                    chromeOptions.AddArgument("--headless"); //desativa a abertura do navegador
+                    chromeOptions.AddArgument("--no-sandbox"); //desativa o recurso de segurança sandbox do Browser para o uso do mesmo em contêineres Docker
+                    chromeOptions.AddArgument("--disable-dev-shm-usage"); //direciona o Browser a usar o diretório /tmp, previnindo falhas em ambientes com memória compartilhada limitada em contêineres Docker
+                    chromeOptions.AddArgument("--start-maximized"); //inicia com o Browser maximizado
                 }
 
-                webDriver = new ChromeDriver(options);
+                webDriver = new ChromeDriver(chromeOptions);
                 webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
                 if (GlobalVariables.devMode)
                     webDriver.Navigate().GoToUrl(GlobalVariables.urlDevPlataforma);

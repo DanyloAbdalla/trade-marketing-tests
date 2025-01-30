@@ -22,7 +22,8 @@ public class DashboardOperacoesPage
     public DashboardOperacoesPage AcessarDetalhesLojasAtivas()
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesLojasAtivas, "Botão Visualizar Lojas Ativas");
-        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
+        //Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
 
         var lojasAtivas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaListagemLojasAtivas) - 1;
         Dsl.Esperar();
@@ -38,10 +39,11 @@ public class DashboardOperacoesPage
     public DashboardOperacoesPage AcessarDetalhesDaDiponibilidade(string nomeAtivo, string nomeAtivoEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesDisponibilidadeAtivos, "Botão Visualizar Disponibilidade de Ativos");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNome, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
-        Dsl.Esperar();
+        Dsl.Esperar(2000);
         
         var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.ColunaAtivoListagemDisponibilidadeAtivos, "Coluna Ativo");
         var nomeAtivoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Coluna Ativo");

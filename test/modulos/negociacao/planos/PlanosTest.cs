@@ -15,7 +15,8 @@ public class PlanosTest
     private RunSettings runSettings;
     private IWebDriver webDriver;
     private readonly BrowserType browserType = BrowserType.Chrome;
-    private bool previousTestFalied;
+    private bool previousTestFaliedSkipped = false;
+    private bool isFirstTest;
     private readonly string testContext;
     private readonly string className;
     private readonly string nomeCampanha = "PlanosMassaAutomatizada";
@@ -26,19 +27,24 @@ public class PlanosTest
         className = TestContext.CurrentContext.Test.ClassName.Split('.').Last();
     }
 
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        runSettings = RunSettings.LoadSettings();
+        webDriver = DriverFactory.CreateDriver(browserType);
+    }
+
     /// <summary>
     /// Método que será executado antes de cada teste
     /// </summary>
     [SetUp]
     public void Setup()
     {
-        runSettings = RunSettings.LoadSettings();
-        webDriver = DriverFactory.CreateDriver(browserType);
         var testName = TestContext.CurrentContext.Test.MethodName;
 
-        if (previousTestFalied)
+        if (previousTestFaliedSkipped)
             Assert.Ignore("Pular teste, o teste anterior falhou");
-        else if (runSettings.ToSkip(className, testContext, testName))
+        if (runSettings.ToSkip(className, testContext, testName))
             Assert.Ignore("Teste ignorado pelas configurações de execução");
 
         if (testContext.Contains("SemPlantaLoja"))
@@ -81,6 +87,7 @@ public class PlanosTest
         var statusPlanoEsperado = "Simulado";
         var farolPlanoEsperado = "PLANEJADO";
         var contextoDeExecucao = "NovoPlano";
+        isFirstTest = true;
 
         new PlanosContratosPage(webDriver)
         .NovaSimulacaoDePlano()
@@ -296,22 +303,31 @@ public class PlanosTest
     [TearDown]
     public void TearDown()
     {
-        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Skipped)
+        var testOutCome = TestContext.CurrentContext.Result.Outcome.Status;
+        if (isFirstTest)
         {
-            webDriver.Close();
-        }
-        else if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-        {
-            previousTestFalied = true;
-            webDriver.Close();
-        }
-        else
-        {
-            //Retorna para o Dashboard de Operações no final de cada teste, realizando logout
+            if (testOutCome == TestStatus.Failed || testOutCome == TestStatus.Skipped)
+                previousTestFaliedSkipped = true;
+
+            isFirstTest = false;
+            
             new HomePage(webDriver).AcessarDashboardOperacoes();
             new HomePage(webDriver).RealizarLogout();
-
-            webDriver.Close();
         }
+        else if (testOutCome == TestStatus.Passed)
+        {
+            new HomePage(webDriver).AcessarDashboardOperacoes();
+            new HomePage(webDriver).RealizarLogout();
+        }
+    }
+
+    /// <summary>
+    /// Método que será executado uma única vez, depois de todos os teste
+    /// </summary>
+    [OneTimeTearDown]
+    public void OneTimeTearDown()
+    {
+        webDriver.Quit();
+        webDriver.Dispose();
     }
 }
