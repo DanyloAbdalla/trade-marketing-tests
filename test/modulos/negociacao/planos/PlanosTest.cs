@@ -96,7 +96,7 @@ public class PlanosTest
         .SelecionarAtivos()
         .PreencherQuantidadeAtivos(testContext)
         .SelecionarLojas()
-        .GerarPrePlano()
+        .GerarPrePlano(testContext)
         .SalvarPlano(contextoDeExecucao, testContext)
         .ValidarPlanoCriado()
         .FecharDadosDoPlano()

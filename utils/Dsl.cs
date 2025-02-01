@@ -463,6 +463,32 @@ public class Dsl
     }
 
     /// <summary>
+    /// Método para validar mensagens de comunicação
+    /// </summary>
+    /// <param name="mensagemAtual"></param>
+    /// <param name="mensagemEsperada"></param>
+    /// <param name="mensagemTipo"></param>
+    /// <returns></returns>
+    public static void ValidarMensagemDeComunicacao(string mensagemAtual, string mensagemEsperada, string mensagemTipo)
+    {
+        switch (mensagemTipo)
+        {
+            case "Mc-message-success":
+                Assert.That(mensagemAtual, Does.Contain(mensagemEsperada), "Mensagem atual não corresponde com a esperada");
+                break;
+            case "Mc-message-error":
+                Assert.Fail("Teste falhou apresentando a mensagem: " + mensagemAtual);
+                break;
+            case "Mc-message-info":
+                break;
+            case "Mc-message-warning":
+                break;
+            case "Mc-message-loading":
+                break;
+        }
+    }
+
+    /// <summary>
     /// Método para validar mensagens de sucesso e mensagens de alertas em telas
     /// </summary>
     /// <param name="mensagemAtual"></param>

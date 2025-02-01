@@ -4,9 +4,9 @@ public class GlobalVariables
 {
     #region Projeto
     //Executa, mostrando o Browser na tela, se handLessMode igual false
-    public static bool handLessMode = false;
-    public static bool devMode = true;
-    public static bool hmlMode = false;
+    public static bool handLessMode = true;
+    public static bool devMode = false;
+    public static bool hmlMode = true;
     public static bool prodMode = false;
     public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
@@ -20,7 +20,8 @@ public class GlobalVariables
     #region Elementos de página - Elementos Comuns
     public static string MenuUsuarioLogado { get; set; } = "//header/div[@class='Log']/div[2]";
     public static string SairConta { get; set; } = "//*[contains(@class,'logout')]/ancestor::a/*[text()='Sair']";
-    public static string Mensagens { get; set; } = "//*[@class='ant-message-notice']";
+    public static string Mensagens { get; set; } = "//*[@id='ant-message-notice']";
+    public static string MensagemDeSucesso { get; set; } = "//*[@id='Mc-message-success']";
     public static string NovoRegistro { get; set; } = "//button[@id='Buttonclass']";
     public static string SalvarRegistro { get; set; } = "//button/*[text()='Salvar']";
     public static string VoltarTela { get; set; } = "//button/*[text()='Voltar']";
@@ -125,6 +126,9 @@ public class GlobalVariables
     public static string InventarioAlerta { get; set; } = "//td[9]//button[contains(@class,'btn-dangerous')]";
     public static string InventarioOk { get; set; } = "//td[9]//span[contains(@class,'check-inventario')]";
     public static string GerarPrePlano { get; set; } = "//button/*[text()='Gerar Pré-Plano']";
+    public static string GerarPrePlanoComWorkflowSelecionado { get; set; } = "//button/*[text()='Gerar Pré Plano']";
+    public static string PesquisarUsuarioResponsavelEtapaWorkflow { get; set; } = "//*[contains(text(),'Selecione o usuário')]/parent::div//input[@type='search']";
+    public static string SelecionarUsuarioResponsavelEtapaWorkflow { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02SP']";
     public static string MensagensDadosPlano { get; set; } = "//*[@class='form-action'][2]/span[3]";
     #endregion
 

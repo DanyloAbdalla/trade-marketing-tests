@@ -94,7 +94,7 @@ public class PlanosContratosPage
             Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
             foreach (var nomeAtivo in nomesAtivos)
             {
-                for (var i = 0; i < 5; i++)
+                for (var i = 0; i < 4; i++)
                 {
                     //Informando a quantidade de ativos por loja
                     webDriver.FindElement(By.XPath($"//*[text()='{nomeAtivo}']/following-sibling::td[12]//span[@aria-label='Increase Value']")).Click();
@@ -137,11 +137,27 @@ public class PlanosContratosPage
     /// Método para gerar o pré-plano, clicando no botão Gera Pré-Plano
     /// </summary>
     /// <returns></returns>
-    public PlanosContratosPage GerarPrePlano()
+    public PlanosContratosPage GerarPrePlano(string contextoDeTeste)
     {
-        Dsl.ScrollParaElemento(webDriver, GlobalVariables.GerarPrePlano);
-        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlano, "Botão Gerar Pré-Plano");
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
+        switch (contextoDeTeste)
+        {
+            case "SemPlantaLoja":
+                Dsl.ScrollParaElemento(webDriver, GlobalVariables.GerarPrePlano);
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlano, "Botão Gerar Pré-Plano");
+
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.PesquisarUsuarioResponsavelEtapaWorkflow, "Campo Selecionar Usuário Responsável do Workflow no Plano");
+                Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PesquisarUsuarioResponsavelEtapaWorkflow, "UserHomolog02SP");
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflow, "Campo Selecionar Usuário Responsável");
+
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
+                break;
+            case "ComPlantaLoja":
+                Dsl.ScrollParaElemento(webDriver, GlobalVariables.GerarPrePlano);
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlano, "Botão Gerar Pré-Plano");
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
+                break;
+        }
 
         return this;
     }
@@ -286,7 +302,7 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage SalvarPlano(string contextoDeExecucao, [Optional] string contextoDeTeste)
     {
-        var mensagemSucessoEsperada = "OPlanofoialteradocomsucesso!";
+        var mensagemEsperada = "OPlanofoialteradocomsucesso!";
 
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.AbaDadosPlano, "Aba Dados Plano");
         Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarRegistro);
@@ -295,9 +311,10 @@ public class PlanosContratosPage
         if (contextoDeExecucao.Contains("CancelarPlano"))
             ConfirmarCancelamentoDoPlano();
 
-        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar Plano");
-        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Salvar Plano");
-        ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
+        var valorAtributoIdMensagem = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.MensagemDeSucesso, "Mensagens de Comunicação", "id");
+        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MensagemDeSucesso, "Mensagens de Comunicação");
+        var mensagemAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagens de Comunicação");
+        Dsl.ValidarMensagemDeComunicacao(mensagemAtual, mensagemEsperada, valorAtributoIdMensagem);
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
 
         ValidarReceitasDoPlano(contextoDeExecucao, contextoDeTeste);
