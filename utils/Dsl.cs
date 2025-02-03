@@ -152,8 +152,10 @@ public class Dsl
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)webDriver;
             jsExecutor.ExecuteScript("arguments[0].click();", element);
         }
+        catch (NoSuchElementException)
+        { throw new Exception("Elemento \"" + elemento + "\" não localizado"); }
         catch (Exception ex)
-        { throw new Exception(ex.Message + "\n" + elemento); }
+        { throw new Exception("Ocorreu um erro: " + ex.Message + " no elemento: " + elemento); }
     }
 
     /// <summary>

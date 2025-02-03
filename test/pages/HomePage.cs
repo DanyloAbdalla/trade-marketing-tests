@@ -22,7 +22,7 @@ public class HomePage
     {
         AbrirMenuVarejo();
 
-        Dsl.Clicar(webDriver, GlobalVariables.MenuGestao, "Menu Gestão");
+        Dsl.Clicar(webDriver, GlobalVariables.MenuGestao, "Submenu Gestão no menu Varejo");
         Dsl.Clicar(webDriver, GlobalVariables.DashboardOperacoes, "Tela DashBoard de Operações");
 
         return new DashboardOperacoesPage(webDriver);
