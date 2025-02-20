@@ -10,11 +10,11 @@
             { "TestName": "TestCriarPlanoComWorkflow", "TestSkip": false },
             { "TestName": "TestEditarPlanoExistenteAlterandoVigencia", "TestSkip": false },
             { "TestName": "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel", "TestSkip": false },
-            { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": true },
-            { "TestName": "TestAprovarPlano", "TestSkip": true },
-            { "TestName": "TestCriarPlanoComAlertaDeInventario", "TestSkip": true },
-            { "TestName": "TestCancelarPlano", "TestSkip": true },
-            { "TestName": "TestExcluirPlano", "TestSkip": true }
+            { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": false },
+            { "TestName": "TestAprovarPlano", "TestSkip": false },
+            { "TestName": "TestCriarPlanoComAlertaDeInventario", "TestSkip": false },
+            { "TestName": "TestCancelarPlano", "TestSkip": false },
+            { "TestName": "TestExcluirPlano", "TestSkip": false }
           ]
         },
         {
@@ -24,10 +24,10 @@
             { "TestName": "TestCriarPlanoComWorkflow", "TestSkip": false },
             { "TestName": "TestEditarPlanoExistenteAlterandoVigencia", "TestSkip": false },
             { "TestName": "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel", "TestSkip": false },
-            { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": true },
-            { "TestName": "TestAprovarPlano", "TestSkip": true },
-            { "TestName": "TestCriarPlanoComAlertaDeInventario", "TestSkip": true },
-            { "TestName": "TestCancelarPlano", "TestSkip": true },
+            { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": false },
+            { "TestName": "TestAprovarPlano", "TestSkip": false },
+            { "TestName": "TestCriarPlanoComAlertaDeInventario", "TestSkip": false },
+            { "TestName": "TestCancelarPlano", "TestSkip": false },
             { "TestName": "TestExcluirPlano", "TestSkip": true }
           ]
         }

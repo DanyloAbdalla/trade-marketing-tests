@@ -32,7 +32,7 @@ public class Dsl
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
             Timeout = TimeSpan.FromSeconds(40),
-            PollingInterval = TimeSpan.FromMilliseconds(100)
+            PollingInterval = TimeSpan.FromMilliseconds(50)
         };
 
         fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
@@ -42,7 +42,7 @@ public class Dsl
             fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
         }
         catch (Exception ex)
-        { Console.WriteLine("Erro ao esperar o elemento na página: " + "\n" + ex.Message); }
+        { Console.WriteLine("Erro ao esperar a visibilidade do elemento na página: " + "\n" + ex.Message); }
 
         return false;
     }
@@ -59,7 +59,7 @@ public class Dsl
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
             Timeout = TimeSpan.FromSeconds(40),
-            PollingInterval = TimeSpan.FromMilliseconds(100)
+            PollingInterval = TimeSpan.FromMilliseconds(50)
         };
 
         fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
@@ -70,7 +70,7 @@ public class Dsl
             if (fluentWait.Until(ExpectedConditions.StalenessOf(element)) || fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)))) { return; }
         }
         catch (Exception ex)
-        { Console.WriteLine("Erro ao processar a invisibilidade do elemento: " + "\n" + ex.Message); }
+        { Console.WriteLine("Erro ao esperar a invisibilidade do elemento na página: " + "\n" + ex.Message); }
     }
 
     /// <summary>
@@ -486,14 +486,9 @@ public class Dsl
     /// </summary>
     /// <param name="mensagemAtual"></param>
     /// <param name="mensagemEsperada"></param>
-    /// <param name="mensagemTipo"></param>
-    /// <returns></returns>
-    public static void ValidarMensagemDeComunicacao(IWebDriver webDriver, string mensagemEsperada, string nomeAtributoElemento)
+    /// <param name="valorAtributoDataTestId"></param>
+    public static void ValidarMensagemDeComunicacao(string mensagemAtual, string mensagemEsperada, string valorAtributoDataTestId)
     {
-        var valorAtributoDataTestId = ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao, "Mensagens de Comunicação", nomeAtributoElemento);
-        var texto = ObterTextoDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao, "Mensagens de Comunicação");
-        var mensagemAtual = RemoverNumerosEspacosDeUmTexto(texto, "Mensagens de Comunicação");
-
         switch (valorAtributoDataTestId)
         {
             case "Mc-message-success":
@@ -508,20 +503,9 @@ public class Dsl
         }
     }
 
-    public static void ValidarMensagemDeComunicacaoNew(string mensagemAtual, string mensagemEsperada, string valorAtributoDataTestId)
+    public static void ValidarMensagensDeConfirmacao(string mensagemAtual, string mensagemEsperada)
     {
-        switch (valorAtributoDataTestId)
-        {
-            case "Mc-message-success":
-            case "Mc-message-info":
-            case "Mc-message-warning":
-            case "Mc-message-loading":
-                Assert.That(mensagemAtual, Does.Contain(mensagemEsperada), "Mensagem atual não corresponde com a esperada");
-                break;
-            case "Mc-message-error":
-                Assert.Fail("Teste falhou apresentando a mensagem: " + mensagemAtual);
-                break;
-        }
+        Assert.That(mensagemAtual, Does.Contain(mensagemEsperada), "Mensagem atual não corresponde com a esperada");
     }
 
 
@@ -594,7 +578,9 @@ public class Dsl
     {
         Esperar(2000);
         Clicar(webDriver, xPathFiltrar, "Botão Filtrar");
+        Esperar(500);
         webDriver.FindElement(By.XPath(xPathPreencherFiltro)).SendKeys(Keys.Control + "a" + Keys.Backspace);
+        Esperar(500);
         DigitarNoCampoTexto(webDriver, xPathPreencherFiltro, textoValor);
         Clicar(webDriver, xPathBuscar, "Botão Buscar");
 

@@ -31,6 +31,7 @@ public class HomePage
     /// <summary>
     /// Método para acessar a tela de Cadastro de Planos, acessando o mesmo pelo menu suspenso no canto superior esquerdo
     /// </summary>
+    /// <param name="primeiroTeste"></param>
     /// <returns></returns>
     public PlanosContratosPage AcessarCadastroPlanos(string primeiroTeste)
     {

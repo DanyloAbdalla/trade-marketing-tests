@@ -27,7 +27,7 @@ public class PlanosContratosPage
     public PlanosContratosPage NovaSimulacaoDePlano()
     {
         Dsl.Clicar(webDriver, GlobalVariables.NovoRegistro, "Botão Nova Simulação");
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela1);
 
         return this;
     }
@@ -39,7 +39,6 @@ public class PlanosContratosPage
     public PlanosContratosPage PreencherCampoIndustria()
     {
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PesquisarIndustria);
-        //Dsl.ScrollParaElemento(webDriver, GlobalVariables.PesquisarIndustria);
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.PesquisarIndustria, "Campo Indústria");
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SelecionarIndustria);
 
@@ -196,7 +195,6 @@ public class PlanosContratosPage
                     Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "UserHomolog02CP");
                     Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowCP, "Campo Selecionar Usuário Responsável");
                 }
-
 
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
@@ -355,11 +353,6 @@ public class PlanosContratosPage
         if (contextoDeExecucao != null && contextoDeExecucao.Equals("CancelarPlano"))
             ConfirmarCancelamentoDoPlano();
 
-        /*var valorAtributoIdMensagem = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao, "Mensagens de Comunicação", atributoDataTestId);
-        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao, "Mensagens de Comunicação");
-        var mensagemAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagens de Comunicação");
-        Dsl.ValidarMensagemDeSucessoEAlerta(mensagemAtual, mensagemEsperada);*/
-
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
         ValidarMensagensDoPlano(mensagemPlanoAlteradoEsperada);
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
@@ -418,21 +411,13 @@ public class PlanosContratosPage
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
-                /*texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Alocação Ativo");
-                var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Alocação Ativo");
-                Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);*/
-
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
 
                 ValidarMensagensDoPlano(mensagemSucessoEsperadaAlocacaoAtualizada);
-                
+
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-
-                /*Dsl.ValidarMensagemDeComunicacao(webDriver, mensagemSucessoEsperada, atributoDataTestId);
-                Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);*/
             }
         }
         else if (contextoDeTestes.Contains("ComPlantaLoja"))
@@ -462,21 +447,13 @@ public class PlanosContratosPage
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
-                /*var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Alocação Ativo");
-                var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Alocação Ativo");
-                Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);*/
-
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
 
                 ValidarMensagensDoPlano(mensagemSucessoEsperadaAlocacaoAtualizada);
-                
+
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-
-                /*Dsl.ValidarMensagemDeComunicacao(webDriver, mensagemSucessoEsperada, atributoDataTestId);
-                Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);*/
             }
         }
 
@@ -502,7 +479,7 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage AlocarNovosAtivosNoPlano(string contextoDeTeste)
     {
-        var mensagemSucessoEsperada = "Alocaçãoatualizadacomsucesso!";
+        var mensagemSucessoEsperadaAlocacaoAtualizada = "Alocaçãoatualizadacomsucesso!";
 
         if (contextoDeTeste.Contains("SemPlantaLoja"))
         {
@@ -522,11 +499,12 @@ public class PlanosContratosPage
             Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
             Dsl.Clicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
-            /*var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo, "Mensagem Alocação Ativo");
-            var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Alocação Ativo");
-            Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);*/
-            Dsl.ValidarMensagemDeComunicacao(webDriver, mensagemSucessoEsperada, atributoDataTestId);
-            Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+
+            ValidarMensagensDoPlano(mensagemSucessoEsperadaAlocacaoAtualizada);
+
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
             Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
         }
         else if (contextoDeTeste.Contains("ComPlantaLoja"))
@@ -551,11 +529,12 @@ public class PlanosContratosPage
                 Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
                 Dsl.Clicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
-                /*var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MensagemSucessoAlocacaoAtivo, "Mensagem Alocação Ativo");
-                var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Alocação Ativo");
-                Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);*/
-                Dsl.ValidarMensagemDeComunicacao(webDriver, mensagemSucessoEsperada, atributoDataTestId);
-                Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+
+                ValidarMensagensDoPlano(mensagemSucessoEsperadaAlocacaoAtualizada);
+
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
             }
         }
@@ -569,6 +548,8 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage AumentarQuantidadeAtivosPorLoja(string contextoDeTeste)
     {
+        var mensagemAlertaSalvarInformacoes = "Salvesuasinformaçõesparapoderincluirprodutofoco!";
+
         if (contextoDeTeste.Contains("SemPlantaLoja"))
         {
             var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.QuantidadeLojasPorAtivo, "Campo Total Lojas por Ativo");
@@ -588,7 +569,10 @@ public class PlanosContratosPage
         {
             Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadePorLojaAtivosAlocados, "1");
             Dsl.Clicar(webDriver, GlobalVariables.AplicarQuantidadePorLojaMassivamenteAtivosAlocados, "Botão Aplicar Quantidade para Todas as Lojas");
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemAvisoEditarQuantidadeAlocacaoAtivo);
+
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+            ValidarMensagensDoPlano(mensagemAlertaSalvarInformacoes);
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
             Dsl.Esperar();
         }
 
@@ -598,7 +582,7 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para alterar a situação do plano para aprovado ou cancelado
     /// </summary>
-    /// <param name="situacaoPlano"></param>
+    /// <param name="contextoSituacao"></param>
     /// <returns></returns>
     public PlanosContratosPage EditarSituacaoDoPlano(string contextoSituacao)
     {
@@ -606,7 +590,7 @@ public class PlanosContratosPage
 
         if (contextoSituacao.Equals("Contrato Aprovado"))
         {
-            var mensagemInformarParcelaEsperada = "Salveasparcelascomostatusdoplanosimuladoparaaprovaroplano!";
+            var mensagemAlertaInformarParcelaEsperada = "Salveasparcelascomostatusdoplanosimuladoparaaprovaroplano!";
 
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SituacaoPlano, "Campo Situação Plano");
             var xpathElemento = $"//*[text()='{contextoSituacao}']";
@@ -618,10 +602,8 @@ public class PlanosContratosPage
             Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadeParcelas, "1");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.AbaDadosPlano, "Aba Dados Plano");
 
-            /*var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Parcela Pagamentos");
-            var mensagemAlertaParcelaAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Parcela Pagamentos");
-            ValidarMensagemDeSucessoEAlerta(mensagemAlertaParcelaAtual, mensagemAlertaParcelaEsperado);*/
-            Dsl.ValidarMensagemDeComunicacao(webDriver, mensagemInformarParcelaEsperada, atributoDataTestId);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+            ValidarMensagensDoPlano(mensagemAlertaInformarParcelaEsperada);
             Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
 
             Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarRegistro);
@@ -646,27 +628,32 @@ public class PlanosContratosPage
     }
 
     /// <summary>
-    /// Método para validar mensagens apresentadas nas ações do plano
+    /// Método para validar mensagens de comunicação apresentadas nas ações do plano
     /// </summary>
-    /// <param name="mensagemAtual"></param>
     /// <param name="mensagemEsperada"></param>
     /// <returns></returns>
     public PlanosContratosPage ValidarMensagensDoPlano(string mensagemEsperada)
     {
-        //Assert.That(mensagemAtual, Does.Contain(mensagemEsperada));
-
-        //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
-        //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-
         var texto = Dsl.ObterTextoDoElementoNew(webDriver, GlobalVariables.MensagemDeComunicacao, "Mensagens de Comunicação");
         var mensagemAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagens de Comunicação");
         var valorAtributoDataTestId = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao, "Mensagens de Comunicação", atributoDataTestId);
 
-        Dsl.ValidarMensagemDeComunicacaoNew(mensagemAtual, mensagemEsperada, valorAtributoDataTestId);
+        Dsl.ValidarMensagemDeComunicacao(mensagemAtual, mensagemEsperada, valorAtributoDataTestId);
 
-        //Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-        //Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
-        //Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+        return this;
+    }
+
+    /// <summary>
+    /// Método para validar mensagens de confirmação apresentadas em modal nas ações do plano
+    /// </summary>
+    /// <param name="mensagemEsperada"></param>
+    /// <returns></returns>
+    public PlanosContratosPage ValidarMensagensDeModalDoPlano(string mensagemEsperada)
+    {
+        var texto = Dsl.ObterTextoDoElementoNew(webDriver, GlobalVariables.TituloModalConfirmacao, "Mensagens de Confirmação");
+        var mensagemAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagens de Confirmação");
+
+        Dsl.ValidarMensagensDeConfirmacao(mensagemAtual, mensagemEsperada);
 
         return this;
     }
@@ -677,7 +664,10 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage ConfirmarCancelamentoDoPlano()
     {
+        var mensagemConfirmacaoEsperadaCancelarPlano = "DatadeCancelamentodoPlano";
+
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.DataCancelamentoPlano);
+        ValidarMensagensDeModalDoPlano(mensagemConfirmacaoEsperadaCancelarPlano);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.OkCancelamento, "Botão OK Cancelamento");
 
         Dsl.Clicar(webDriver, GlobalVariables.DataCancelamentoPlano, "Campo Data Cancelamento");
@@ -693,24 +683,21 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage ConfirmarExclusaoDoPlano()
     {
-        var mensagemAlertaExcluirPlanoEsperada = "DesejarealmenteexcluirestePlano?";
-        var mensagemSucessoEsperada = "Planodeletadocomsucesso";
+        var mensagemConfirmacaoEsperadaExcluirPlano = "DesejarealmenteexcluirestePlano?";
+        var mensagemSucessoEsperadaPlanoDeletado = "Planodeletadocomsucesso";
         var quantidadeLinhasTabela = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaPlanos) - 1; //Contar linhas no elemento tbody da listagem de planos, ignorando a tag tr sem dados
 
         for (var i = 1; i <= quantidadeLinhasTabela; i++)
         {
             Dsl.Clicar(webDriver, GlobalVariables.ExcluirPlano, "Botão Excluir Plano");
 
-            //var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.ExcluirPlanoMensagemConfirmacao, "Mensagem Confirmar Excluisão Plano");
-            //mensagemAlertaExcluirPlanoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Confirmar Excluisão Plano");
-            ValidarMensagensDoPlano(mensagemAlertaExcluirPlanoEsperada);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TituloModalConfirmacao);
+            ValidarMensagensDeModalDoPlano(mensagemConfirmacaoEsperadaExcluirPlano);
 
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.OkExclusao, "Botão OK Exclusão");
 
-            /*texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Excluir Plano");
-            var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Excluir Plano");
-            ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);*/
-            Dsl.ValidarMensagemDeComunicacao(webDriver, mensagemSucessoEsperada, atributoDataTestId);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+            ValidarMensagensDoPlano(mensagemSucessoEsperadaPlanoDeletado);
             Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
         }
         return this;
@@ -735,6 +722,8 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para validar o valor de receita dos ativos e do plano
     /// </summary>
+    /// <param name="contextoDeTeste"></param>
+    /// <param name="contextoDeExecucao"></param>
     /// <returns></returns>
     public PlanosContratosPage ValidarReceitasDoPlano(string contextoDeTeste, string contextoDeExecucao)
     {
