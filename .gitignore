@@ -59,3 +59,6 @@ obj/
 bin/Debug/net8.0/selenium-manager/linux/selenium-manager
 bin/Debug/net8.0/selenium-manager/macos/selenium-manager
 obj/Debug/net8.0/MeuClien.40B0615D.Up2Date
+
+# Except
+!apprunsettings.json

@@ -18,11 +18,11 @@ public class HomePage
     /// Método para acessar a tela do DashBoard de Operações, acessando o mesmo pelo menu suspenso no canto superior esquerdo
     /// </summary>
     /// <returns></returns>
-    public DashboardOperacoesPage AcessarDashBoardOperacoes()
+    public DashboardOperacoesPage AcessarDashboardOperacoes()
     {
         AbrirMenuVarejo();
 
-        Dsl.Clicar(webDriver, GlobalVariables.MenuGestao, "Menu Gestão");
+        Dsl.Clicar(webDriver, GlobalVariables.MenuGestao, "Submenu Gestão no menu Varejo");
         Dsl.Clicar(webDriver, GlobalVariables.DashboardOperacoes, "Tela DashBoard de Operações");
 
         return new DashboardOperacoesPage(webDriver);
@@ -31,15 +31,12 @@ public class HomePage
     /// <summary>
     /// Método para acessar a tela de Cadastro de Planos, acessando o mesmo pelo menu suspenso no canto superior esquerdo
     /// </summary>
+    /// <param name="primeiroTeste"></param>
     /// <returns></returns>
-    public PlanosContratosPage AcessarCadastroPlanos()
+    public PlanosContratosPage AcessarCadastroPlanos(string primeiroTeste)
     {
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado);
-        var ultimoCadastroAcessado = Dsl.PegarTextoDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
-        Dsl.Esperar();
-
-        if (!ultimoCadastroAcessado.Contains("Dashboard Opera..."))
-            AcessarDashBoardOperacoes();
+        //Retorna para o Dashboard de Operações, se no último logout a plataforma parou em outra tela
+        VoltarParaDashboardOperacoes();
 
         Dsl.Esperar();
         AbrirMenuVarejo();
@@ -48,10 +45,18 @@ public class HomePage
         Dsl.Clicar(webDriver, GlobalVariables.CadastroPlanosContratos, "Cadastro de Planos");
 
         Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-        Dsl.Esperar(2000);
+        Dsl.Esperar(3000);
 
-        if(Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
-            return new PlanosContratosPage(webDriver);        
+        if (primeiroTeste.Equals("TestCriarPlanoSemWorkflow"))
+        {
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FiltrarPlanosStatusVigencia, "Campo Filtro Vigência");
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarTodosPlanos, "Selecionar Todos Planos");
+            Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+            Dsl.Esperar(3000);
+        }
+
+        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
+            return new PlanosContratosPage(webDriver);
         else if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela) > 0)
             Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
 
@@ -64,12 +69,15 @@ public class HomePage
     /// <returns></returns>
     public SmartIaPage AcessarCadastroSmartIa()
     {
+        VoltarParaDashboardOperacoes();
+
+        Dsl.Esperar();
         AbrirMenuVarejo();
 
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuCadastros)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuCadastros, "Menu Cadastros");
 
         Dsl.ScrollParaElemento(webDriver, GlobalVariables.CadastroSmartIa);
-        webDriver.FindElement(By.XPath(GlobalVariables.CadastroSmartIa)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.CadastroSmartIa, "Cadastro de Campanhas SmartIA");
 
         return new SmartIaPage(webDriver);
     }
@@ -82,6 +90,38 @@ public class HomePage
     {
         Dsl.Clicar(webDriver, GlobalVariables.MenuPrincipal, "Menu Principal Superior Esquerdo");
         Dsl.Clicar(webDriver, GlobalVariables.MenuVarejo, "Menu Varejo");
+
+        return this;
+    }
+
+    /// <summary>
+    /// Método para retonar ao Dashboard de Operacoes, ponto de partida de todos os testes
+    /// </summary>
+    /// <returns></returns>
+    public HomePage VoltarParaDashboardOperacoes()
+    {
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado);
+        var ultimoCadastroAcessado = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
+        Dsl.Esperar();
+
+        if (!ultimoCadastroAcessado.Contains("Dashboard Opera..."))
+            AcessarDashboardOperacoes();
+
+        return this;
+    }
+
+    /// <summary>
+    /// Método para realizar o logout do usuário da plataforma
+    /// </summary>
+    /// <returns></returns>
+    public HomePage RealizarLogout()
+    {
+        Dsl.Esperar();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuUsuarioLogado, "Botão Usuário Logado");
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SairConta, "Botão Sair da Conta");
+
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioEmail);
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioSenha);
 
         return this;
     }

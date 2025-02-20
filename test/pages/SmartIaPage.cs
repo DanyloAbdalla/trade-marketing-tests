@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using OpenQA.Selenium;
 
 namespace MeuClienteWebTestProject;
@@ -9,12 +10,7 @@ namespace MeuClienteWebTestProject;
 public class SmartIaPage
 {
     private IWebDriver webDriver;
-    private string nomeCampanha = "MassaAutomatizada";
-    private string emailResponsavel = "daniela.sorrilha@meucliente.app.br";
-    private string whatsAppResponsavel = "15988086091";
-    private string nomeResponsavel = "Danylo Homologacao";
-    private string mensagemCabecalho = "Campanha Homologacao";
-    private string[] nomesAtivos = { "Display de Chão", "Woobler", "Ponta de Gôndola" };
+    private string[] nomesAtivos = { "Adesivo de Check Out", "Woobler", "Ponta de Gôndola" };
 
     public SmartIaPage(IWebDriver webDriver)
     {
@@ -27,8 +23,7 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage NovaCampanhaSmartIA()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.NovoRegistro)).Click();
-        Thread.Sleep(2000);
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.NovoRegistro, "Botão Nova Campanha");
 
         return this;
     }
@@ -37,20 +32,26 @@ public class SmartIaPage
     /// Método para preencher os campos obrigatórios na criação da campanha
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage PreencherCamposCampanha()
+    public SmartIaPage PreencherCamposCampanha(string nomeCampanha, string whatsAppResponsavel, string nomeResponsavel, string mensagemCabecalho)
     {
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.LoadDeTela) > 0)
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
+
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.MenuCampanhas, "Menu Suspenso Campanhas");
         Dsl.Esperar();
-        webDriver.FindElement(By.XPath(GlobalVariables.Campanhas)).Click();
 
         CarregarImagemCampanha();
-        PreencherNomeCampanha();
+        PreencherNomeCampanha(nomeCampanha);
         PreencherInicioVigencia();
         PreencherFimVigencia();
         PreencherEmailResponsavel();
-        PreencherWhatsAppResponsavel();
+        PreencherWhatsAppResponsavel(whatsAppResponsavel);
         PreencherDataLimite();
-        PreencherNomeResponsavel();
-        PreencherMensagemCabecalho();
+        PreencherNomeResponsavel(nomeResponsavel);
+        PreencherMensagemCabecalho(mensagemCabecalho);
+
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.MenuCampanhas, "Menu Suspenso Campanhas");
 
         return this;
     }
@@ -61,9 +62,7 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage CarregarImagemCampanha()
     {
-        IWebElement imageInput = webDriver.FindElement(By.XPath(GlobalVariables.CarregarImagem));
-
-        imageInput.SendKeys("C:\\TestProjectMeuCliente\\logomeucliente.png");
+        Dsl.CarregarImagens(webDriver, GlobalVariables.ImagemCampanha);
 
         return this;
     }
@@ -72,38 +71,34 @@ public class SmartIaPage
     /// Método para preencher o nome da campanha
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage PreencherNomeCampanha()
+    public SmartIaPage PreencherNomeCampanha(string nomeCampanha)
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.NomeCampanha)).SendKeys(nomeCampanha);
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.NomeCampanha, nomeCampanha);
 
         return this;
     }
 
     /// <summary>
-    /// Método para preencher o início da vigencia da campanha
-    /// Avançando 2 mês
+    /// Método para preencher o início da vigência da campanha
+    /// Avançando 2 meses
     /// </summary>
     /// <returns></returns>
     public SmartIaPage PreencherInicioVigencia()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.InicioVigenciaCampanha)).Click();
-        Thread.Sleep(500);
-
+        Dsl.Clicar(webDriver, GlobalVariables.InicioVigenciaCampanha, "Campo Início Vigência");
         Dsl.PreencherCalendariosInicioVigencia(webDriver, GlobalVariables.InicioVigenciaCampanhaAvancarData, 2);
 
         return this;
     }
 
     /// <summary>
-    /// Método para preencher o fim da vigencia da campanha
-    /// Avançando 3 mês
+    /// Método para preencher o fim da vigência da campanha
+    /// Avançando 3 meses
     /// </summary>
     /// <returns></returns>
     public SmartIaPage PreencherFimVigencia()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.FimVigenciaCampanha)).Click();
-        Thread.Sleep(500);
-
+        Dsl.Clicar(webDriver, GlobalVariables.FimVigenciaCampanha, "Campo Fim Vigência");
         Dsl.PreencherCalendariosFimVigencia(webDriver, GlobalVariables.FimVigenciaCampanhaAvancarData, 3);
 
         return this;
@@ -115,7 +110,7 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage PreencherEmailResponsavel()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.EmailResposavel)).SendKeys(emailResponsavel);
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.EmailResposavelCampanha, GlobalVariables.emailUsuarioSemPlanta);
 
         return this;
     }
@@ -124,9 +119,9 @@ public class SmartIaPage
     /// Método para preencher o whatsapp do responsável pela campanha
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage PreencherWhatsAppResponsavel()
+    public SmartIaPage PreencherWhatsAppResponsavel(string whatsAppResponsavel)
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.WhatsAppResposavel)).SendKeys(whatsAppResponsavel);
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.WhatsAppResposavel, whatsAppResponsavel);
 
         return this;
     }
@@ -138,9 +133,7 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage PreencherDataLimite()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.DataLimiteCampanha)).Click();
-        Thread.Sleep(500);
-
+        Dsl.Clicar(webDriver, GlobalVariables.DataLimiteCampanha, "Campo Data Limite Campanha");
         PreencherCalendarioDataLimite(GlobalVariables.DataLimiteCampanhaAvancarData, 1);
 
         return this;
@@ -150,9 +143,9 @@ public class SmartIaPage
     /// Método para preencher o nome do responsável pela campanha
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage PreencherNomeResponsavel()
+    public SmartIaPage PreencherNomeResponsavel(string nomeResponsavel)
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.NomeResposavel)).SendKeys(nomeResponsavel);
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.NomeResposavelCampanha, nomeResponsavel);
 
         return this;
     }
@@ -161,9 +154,9 @@ public class SmartIaPage
     /// Método para preencher mensagem de cabeçalho da campanha
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage PreencherMensagemCabecalho()
+    public SmartIaPage PreencherMensagemCabecalho(string mensagemCabecalho)
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.MensagemCabecalhoCampanha)).SendKeys(mensagemCabecalho);
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.MensagemCabecalhoCampanha, mensagemCabecalho);
 
         return this;
     }
@@ -174,10 +167,8 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage AbrirEdicaoDaCampanha()
     {
-        Thread.Sleep(500);
-
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarCampanha, "Botão Editar Campanha");
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MenuSuspensoVarejos);
-        webDriver.FindElement(By.XPath(GlobalVariables.EditarCampanha)).Click();
 
         return this;
     }
@@ -188,28 +179,20 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage AbrirMenuSuspensoVarejos()
     {
-        Thread.Sleep(2000);
-        webDriver.FindElement(By.XPath(GlobalVariables.MenuSuspensoVarejos)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.MenuSuspensoVarejos, "Menu Suspenso Varejos");
 
         return this;
     }
 
     /// <summary>
-    /// Método para adicionar o varejo na campanha
+    /// Método para validar que o varejo é exibido na campanha
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage AdicionarVarejo()
+    public SmartIaPage ValidarVarejoSelecionado()
     {
         AbrirMenuSuspensoVarejos();
 
-        webDriver.FindElement(By.XPath(GlobalVariables.PesquisarVarejo)).SendKeys("Meu Cliente");
-        Thread.Sleep(500);
-
-        webDriver.FindElement(By.XPath(GlobalVariables.SelecionarVarejo)).Click();
-        webDriver.FindElement(By.XPath(GlobalVariables.AdicionarVarejo)).Click();
-
-        var varejoSelecionado = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.VarejoSelecionado);
-
+        var varejoSelecionado = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.DisplayVarejoSelecionado);
         Debug.Assert(varejoSelecionado == 1, "Display com o varejo selecionado não foi apresentado na tela");
 
         return this;
@@ -221,14 +204,17 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage RealizarVarredura()
     {
-        var mensagemSucessoEsperada = "Campanhaeditadacomsucesso!";
+        var mensagemSucessoEsperada = "Campanhacriadacomsucesso!";
 
+        Dsl.Esperar();
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.VarrerAtivos, "Botão Executar Varredura de Ativos");
-        webDriver.FindElement(By.XPath(GlobalVariables.VarrerAtivos)).Click();
 
-        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Realizar Varredura");
-
+        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Realizar Varredura");
+        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Realizar Varredura");
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
+
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
 
         return this;
     }
@@ -245,8 +231,8 @@ public class SmartIaPage
         {
             Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivosCampanha, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
 
-            webDriver.FindElement(By.XPath(GlobalVariables.SelecionarAtivoCampanha)).Click();
-            webDriver.FindElement(By.XPath(GlobalVariables.ReservarQuantidadeAtivoLojasCampanha)).Click();
+            Dsl.Clicar(webDriver, GlobalVariables.SelecionarAtivoCampanha, "Selecionar Ativo para Reservar");
+            Dsl.Clicar(webDriver, GlobalVariables.ReservarQuantidadeAtivoLojasCampanha, "Reservar Ativo na Loja");
             ReservarAtivoPorLojas(1); //reservando 1 espaço para o ativo nas lojas
         }
 
@@ -296,8 +282,9 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage AbrirSelecaoDeAtivosReservados()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.SelecionarAtivosCampanha)).Click();
-        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAtivosCampanha, "Botão Salvar Ativos na Campanha");
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ReservarAtivosCampanha, "Botão Reservar Ativos na Campanha");
+        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados);
 
         return this;
     }
@@ -308,19 +295,20 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage ReservarAtivoPorLojas(int quantidadeReserva)
     {
-        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar");
+        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar Quantidade");
 
-        var quantidadeLojas = Dsl.ObterQuantidadeLinhasNoElementoTabelaSemLinhaInvisivel(webDriver, GlobalVariables.QuantidadeLojasReservaCampanha);
-        var valorReservaEsperado = quantidadeLojas * quantidadeReserva;
+        var quantidadeLojas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.QuantidadeLojasReservaCampanha);
+        var valorReservadoEsperado = quantidadeLojas * quantidadeReserva;
 
-        webDriver.FindElement(By.XPath(GlobalVariables.PreencherReservarTodasLojasCampanha)).SendKeys(quantidadeReserva.ToString());
-        webDriver.FindElement(By.XPath(GlobalVariables.ReservarAtivoLojasCampanha)).Click();
-        webDriver.FindElement(By.XPath(GlobalVariables.FecharReservaAtivoLojaCampanha)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.QuantidadeReservaLojasCampanha, "Campo Reservar Quantidade");
+        Dsl.Esperar();
+        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadeReservaLojasCampanha, quantidadeReserva.ToString());
+        Dsl.Clicar(webDriver, GlobalVariables.ReservarAtivoLojasCampanha, "Botão Reservar Quandtidade");
+        Dsl.Clicar(webDriver, GlobalVariables.FecharReservaAtivoLojasCampanha, "Botão Fechar Reserva");
 
-        var valor = Dsl.ObterDadosDoAtributoValueDoElemento(webDriver, GlobalVariables.QuantidadeReservadaAtivoCampanha, "Campo Quantidade Reserva Ativo");
-        var valorReservaAtual = Convert.ToInt16(valor);
-
-        Debug.Assert(valorReservaAtual == valorReservaEsperado, "Quantidade de reservas calculada incorretamente");
+        var tipoAtributo = "value";
+        var valorReservadoAtual = Convert.ToInt16(Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.QuantidadeReservadaAtivoCampanha, "Campo Quantidade Reservada Ativo", tipoAtributo));
+        Debug.Assert(valorReservadoAtual == valorReservadoEsperado, "Quantidade de reservas calculada incorretamente");
 
         return this;
     }
@@ -357,19 +345,19 @@ public class SmartIaPage
     /// Método para salvar a campanha
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage SalvarCampanha(string contexto)
+    public SmartIaPage SalvarCampanha(string contextoDeExecucao)
     {
         var mensagemSucessoEsperada = "";
 
-        if (contexto.Contains("NovaCampanha"))
+        if (contextoDeExecucao.Contains("NovaCampanha"))
             mensagemSucessoEsperada = "Campanhacriadacomsucesso!";
-        if (contexto.Contains("EditarCampanha"))
+        if (contextoDeExecucao.Contains("EditarCampanha"))
             mensagemSucessoEsperada = "Campanhaeditadacomsucesso!";
 
-        webDriver.FindElement(By.XPath(GlobalVariables.SalvarRegistro)).Click();
+        Dsl.Clicar(webDriver, GlobalVariables.SalvarRegistro, "Botão Salvar Campanha");
 
-        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar/Editar Campanha");
-
+        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar/Editar Campanha");
+        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Salvar/Editar Campanha");
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
 
         return this;
@@ -383,9 +371,10 @@ public class SmartIaPage
     {
         var mensagemSucessoEsperada = "AtivosSelecionadoscomSucesso!";
 
-        webDriver.FindElement(By.XPath(GlobalVariables.SalvarAtivosCampanha)).Click();
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAtivosCampanha, "Botão Salvar Ativos Reservados");
 
-        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar Ativos Reservados");
+        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar Ativos Reservados");
+        var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Salvar Ativos Reservados");
 
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
@@ -397,7 +386,7 @@ public class SmartIaPage
     /// Método para buscar as campanhas criadas
     /// </summary>
     /// <returns></returns>
-    public SmartIaPage BuscarCampanhas()
+    public SmartIaPage BuscarCampanhas([Optional] string nomeCampanha)
     {
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.StatusCampanha);
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarCampanha, GlobalVariables.PesquisarCampanha, GlobalVariables.BuscarRegistro, nomeCampanha);
@@ -406,13 +395,12 @@ public class SmartIaPage
     }
 
     /// <summary>
-    /// Método para voltar na tela de campanhas do SmartIA
+    /// Método para voltar na lista de campanhas do SmartIA
     /// </summary>
     /// <returns></returns>
     public SmartIaPage FecharCampanha()
     {
-        webDriver.FindElement(By.XPath(GlobalVariables.VoltarTela)).Click();
-        Thread.Sleep(1500);
+        Dsl.Clicar(webDriver, GlobalVariables.VoltarTela, "Botão Voltar na Edição da Campanha");
 
         return this;
     }
@@ -423,7 +411,7 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage ValidarStatusDaCampanha(string statusCampanhaEsperado)
     {
-        var statusCampanhaAtual = webDriver.FindElement(By.XPath(GlobalVariables.StatusCampanha)).Text;
+        var statusCampanhaAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.StatusCampanha, "Campo Status Campanha");
         Assert.That(statusCampanhaAtual, Does.Contain(statusCampanhaEsperado));
 
         return this;

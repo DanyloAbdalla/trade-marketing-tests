@@ -1,0 +1,71 @@
+{
+  "TestsClasses": [
+    {
+      "ClassName": "PlanosTest",
+      "FixturesNames": [
+        {
+          "FixtureName": "SemPlantaLoja",
+          "Tests": [
+            { "TestName": "TestCriarPlanoSemWorkflow", "TestSkip": false },
+            { "TestName": "TestCriarPlanoComWorkflow", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoVigencia", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": false },
+            { "TestName": "TestAprovarPlano", "TestSkip": false },
+            { "TestName": "TestCriarPlanoComAlertaDeInventario", "TestSkip": false },
+            { "TestName": "TestCancelarPlano", "TestSkip": false },
+            { "TestName": "TestExcluirPlano", "TestSkip": false }
+          ]
+        },
+        {
+          "FixtureName": "ComPlantaLoja",
+          "Tests": [
+            { "TestName": "TestCriarPlanoSemWorkflow", "TestSkip": false },
+            { "TestName": "TestCriarPlanoComWorkflow", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoVigencia", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": false },
+            { "TestName": "TestAprovarPlano", "TestSkip": false },
+            { "TestName": "TestCriarPlanoComAlertaDeInventario", "TestSkip": false },
+            { "TestName": "TestCancelarPlano", "TestSkip": false },
+            { "TestName": "TestExcluirPlano", "TestSkip": true }
+          ]
+        }
+      ]
+    },
+    {
+      "ClassName": "DashboardOperacoesTest",
+      "Tests":[
+        {"TestName": "TestAcessarVisaoDetalhadaLojasAtivas", "TestSkip": false},
+        {"TestName": "TestAcessarVisaoDetalhadaDeAtivosAlocados", "TestSkip": false},
+        {"TestName": "TestAcessarVisaoDetalhadaDeContratosVigentes", "TestSkip": false},
+        {"TestName": "TestAcessarVisaoDetalhadaTotalReceita", "TestSkip": false},
+        {"TestName": "TestAcessarVisaoDetalhadaAterrissagemReceita", "TestSkip": false},
+        {"TestName": "TestAcessarVisaoDetalhadaListaParceiro", "TestSkip": false},
+        {"TestName": "TestAcessarVisaoDetalhadaDesempenhoLoja", "TestSkip": false},
+        {"TestName": "TestAcessarVisaoDetalhadaDesempenhoAtivo", "TestSkip": false}
+      ]
+    },
+    {
+      "ClassName": "SmartIaTest",
+      "FixturesNames": [
+        {
+          "FixtureName": "SemPlantaLoja",
+          "Tests": [
+            {"TestName": "TestCriarCampanhaSmartIA", "TestSkip": true},
+            {"TestName": "TestEditarAtivosReservadosNaCampanhaExistente", "TestSkip": true},
+            {"TestName": "TestReservarNovoAtivoNaCampanhaExistente", "TestSkip": true}
+          ]
+        },
+        {
+          "FixtureName": "ComPlantaLoja",
+          "Tests": [
+            {"TestName": "TestCriarCampanhaSmartIA", "TestSkip": true},
+            {"TestName": "TestEditarAtivosReservadosNaCampanhaExistente", "TestSkip": true},
+            {"TestName": "TestReservarNovoAtivoNaCampanhaExistente", "TestSkip": true}
+          ]
+        }
+      ]
+    }
+  ]
+}

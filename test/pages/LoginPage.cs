@@ -50,4 +50,19 @@ public class LoginPage
 
         return new HomePage(webDriver);
     }
+
+    /// <summary>
+    /// Método para realizar o login do usuário da plataforma
+    /// </summary>
+    /// <param name="emailUsuario"></param>
+    /// <param name="senhaUsuario"></param>
+    /// <returns></returns>
+    public HomePage RealizarLogin(string emailUsuario, string senhaUsuario)
+    {
+        PreencherEmailUsuario(emailUsuario);
+        PreencherSenhaUsuario(senhaUsuario);
+        SubmeterLogin();
+
+        return new HomePage(webDriver);
+    }
 }

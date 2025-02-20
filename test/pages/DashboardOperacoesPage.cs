@@ -9,9 +9,6 @@ namespace MeuClienteWebTestProject;
 public class DashboardOperacoesPage
 {
     private IWebDriver webDriver;
-    private string nomeAtivo = "Adesivo de Elevador";
-    private string nomeAtivoEsperado = "AdesivodeElevador";
-    private string nomeConratoCampanha = "MassaAutomatizadaDashboardOperacoes";
 
     public DashboardOperacoesPage(IWebDriver webDriver)
     {
@@ -25,7 +22,8 @@ public class DashboardOperacoesPage
     public DashboardOperacoesPage AcessarDetalhesLojasAtivas()
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesLojasAtivas, "Botão Visualizar Lojas Ativas");
-        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
+        //Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
 
         var lojasAtivas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaListagemLojasAtivas) - 1;
         Dsl.Esperar();
@@ -38,14 +36,18 @@ public class DashboardOperacoesPage
     /// Método para acessar a tela de Detalhes da Disponibilidade dos Ativos no card Ativos Alocados
     /// </summary>
     /// <returns></returns>
-    public DashboardOperacoesPage AcessarDetalhesDaDiponibilidade()
+    public DashboardOperacoesPage AcessarDetalhesDaDiponibilidade(string nomeAtivo, string nomeAtivoEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesDisponibilidadeAtivos, "Botão Visualizar Disponibilidade de Ativos");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNome, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
-        Dsl.Esperar();
-        Dsl.ValidarTextosNoElemento(webDriver, GlobalVariables.ColunaAtivoListagemDisponibilidadeAtivos, nomeAtivoEsperado, "Coluna Ativo");
+        Dsl.Esperar(2000);
+        
+        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.ColunaAtivoListagemDisponibilidadeAtivos, "Coluna Ativo");
+        var nomeAtivoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Coluna Ativo");
+        Dsl.ValidarTextosNoElemento(nomeAtivoAtual, nomeAtivoEsperado);
 
         return new DashboardOperacoesPage(webDriver);
     }
@@ -54,14 +56,17 @@ public class DashboardOperacoesPage
     /// Método para acessar a tela de Detalhes das Negociações dos Ativos no card Ativos Alocados
     /// </summary>
     /// <returns></returns>
-    public DashboardOperacoesPage AcessarDetalhesDasNegociacoes()
+    public DashboardOperacoesPage AcessarDetalhesDasNegociacoes(string nomeAtivo, string nomeAtivoEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesNegociacaoAtivos, "Botão Visualizar Ativos Negociados");
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNome, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
         Dsl.Esperar();
-        Dsl.ValidarTextosNoElemento(webDriver, GlobalVariables.ColunaAtivoListagemAtivosNegociados, nomeAtivoEsperado, "Coluna Ativo");
+        
+        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.ColunaAtivoListagemAtivosNegociados, "Coluna Ativo");
+        var nomeAtivoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Coluna Ativo");
+        Dsl.ValidarTextosNoElemento(nomeAtivoAtual, nomeAtivoEsperado);
 
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ColunaDetalhesBotaoContratosVinculado, "Botão Visualizar Contratos Vinculados");
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FecharTelaContratosEAtivosVinculados, "Botão Fechar Contratos Vinculados");
@@ -74,14 +79,17 @@ public class DashboardOperacoesPage
     /// Método para acessar a tela de Detalhes do Potencial de Receita dos Ativos no card Ativos Alocados
     /// </summary>
     /// <returns></returns>
-    public DashboardOperacoesPage AcessarDetalhesDoPotencialDeReceita()
+    public DashboardOperacoesPage AcessarDetalhesDoPotencialDeReceita(string nomeAtivo, string nomeAtivoEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesPotencialReceitaAtivos, "Botão Visualizar Listagem Potencial Receita");
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNomePotencialReceita, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNomePotencialReceita, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
         Dsl.Esperar();
-        Dsl.ValidarTextosNoElemento(webDriver, GlobalVariables.ColunaNomeListagemPotencialReceita, nomeAtivoEsperado, "Coluna Ativo");
+
+        var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.ColunaNomeListagemPotencialReceita, "Coluna Ativo");
+        var nomeAtivoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Coluna Ativo");
+        Dsl.ValidarTextosNoElemento(nomeAtivoAtual, nomeAtivoEsperado);
 
         return new DashboardOperacoesPage(webDriver);
     }
@@ -90,7 +98,7 @@ public class DashboardOperacoesPage
     /// Método para acessar a tela de Detalhes dos Contratos Ativos no card Contratos Vigentes, Total de Receitas
     /// </summary>
     /// <returns></returns>
-    public DashboardOperacoesPage AcessarDetalhesDeContratosAtivos(string card)
+    public DashboardOperacoesPage AcessarDetalhesDeContratosAtivos(string card, string nomeConratoCampanha)
     {
         if (card.Contains("ContratosVigentes"))
         {
@@ -108,9 +116,10 @@ public class DashboardOperacoesPage
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarContratoPorCampanha, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeConratoCampanha);
         Dsl.Esperar();
-        var contratoAtual = Dsl.PegarTextoDoElemento(webDriver, GlobalVariables.ColunaContratoListagemContratosAtivos, "Coluna Contrato");
-        var contratoEsperado = nomeConratoCampanha;
-        Assert.That(contratoAtual, Does.Contain(contratoEsperado), "Contratos não correspondem");
+
+        var nomeContratoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.ColunaContratoListagemContratosAtivos, "Coluna Contrato");
+        var nomecontratoEsperado = nomeConratoCampanha;
+        Dsl.ValidarTextosNoElemento(nomeContratoAtual, nomecontratoEsperado);
 
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ColunaAcoesBotaoListagemContratosAtivos, "Botão Visualizar Ativos Vinculados");
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FecharTelaContratosEAtivosVinculados, "Botão Fechar Ativos Vinculados");
@@ -123,15 +132,16 @@ public class DashboardOperacoesPage
     /// Método para acessar a tela de Detalhes dos Contratos Vencendo no card Contratos Vigentes
     /// </summary>
     /// <returns></returns>
-    public DashboardOperacoesPage AcessarDetalhesDeContratosVencendo()
+    public DashboardOperacoesPage AcessarDetalhesDeContratosVencendo(string nomeContratoCampanhaEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesContratosVencendo, "Botão Visualizar Contratos Vencendo");
         Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarContratoPorCampanha, "Botão Filtro");
 
-        Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarContratoPorCampanha, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeConratoCampanha);
+        Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarContratoPorCampanha, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeContratoCampanhaEsperado);
         Dsl.Esperar();
-        Dsl.ValidarTextosNoElemento(webDriver, GlobalVariables.ColunaContratoListagemContratosVencendo, nomeConratoCampanha, "Coluna Contrato");
+        var nomeContratoCampanhaAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.ColunaContratoListagemContratosVencendo, "Coluna Contrato");
+        Dsl.ValidarTextosNoElemento(nomeContratoCampanhaAtual, nomeContratoCampanhaEsperado);
 
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ColunaAcoesBotaoListagemContratosVencendo, "Botão Visualizar Ativos Vinculados");
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FecharTelaContratosEAtivosVinculados, "Botão Fechar Ativos Vinculados");
