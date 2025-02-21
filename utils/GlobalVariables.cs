@@ -32,6 +32,7 @@ public class GlobalVariables
     public static string AvisoInexistenciaDados { get; set; } = "//*[text()='Não há dados']";
     public static string LoadDeTela { get; set; } = "(//*[contains(@class,'ant-spin-dot-item')])[1]";
     public static string LoadDeTela1 { get; set; } = "//span[@class='ant-spin-dot ant-spin-dot-spin']";
+    public static string LoadDeTelaBarra { get; set; } = "(//span[@class='anticon anticon-loading anticon-spin'])[2]";
     public static string RecarregarTela { get; set; } = "//button/*[text()='Recarregar tela']";
     public static string TituloModalConfirmacao { get; set; } = "//span[@class='ant-modal-confirm-title']";
     #endregion

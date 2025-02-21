@@ -59,6 +59,7 @@ public class DashboardOperacoesPage
     public DashboardOperacoesPage AcessarDetalhesDasNegociacoes(string nomeAtivo, string nomeAtivoEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesNegociacaoAtivos, "Botão Visualizar Ativos Negociados");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNome, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
@@ -200,7 +201,9 @@ public class DashboardOperacoesPage
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesListaParceirosInvestimento, "Botão Visualizar Lista Parceiro");
         }
 
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.Esperar();
+        //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados);
 
         if (!(Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0))
             Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
@@ -209,7 +212,7 @@ public class DashboardOperacoesPage
         Debug.Assert(countTabelaDeDados > 0, "Tabela de dados não foi apresentada corretamente");
 
         var countColunaIndustriaParceiro = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.ColunaIndustriaParcerio);
-        Debug.Assert(countColunaIndustriaParceiro > 0, "Coluna Indústria/Parceiro não foi apresentado corretamente");
+        Debug.Assert(countColunaIndustriaParceiro > 0, "Coluna Indústria/Parceiro não foi apresentada corretamente");
 
         return new DashboardOperacoesPage(webDriver);
     }
@@ -222,6 +225,8 @@ public class DashboardOperacoesPage
     {
         Dsl.ScrollParaElemento(webDriver, GlobalVariables.DetalhesDesempenhoDosAtivos);
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesDesempenhoPorLoja, "Botão Visualizar Desempenho por Loja");
+
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaBarra);
 
         var countGraficoDesempenhoLoja = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.GraficoDesempenhoLoja);
         Debug.Assert(countGraficoDesempenhoLoja > 0, "Gráfico não foi apresentado corretamente");
@@ -240,6 +245,8 @@ public class DashboardOperacoesPage
     {
         Dsl.ScrollParaElemento(webDriver, GlobalVariables.TextoCardMaisVendidosDepartamento);
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesDesempenhoDosAtivos, "Botão Visualizar Desempenho dos Ativos");
+
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaBarra);
 
         var countGraficoDesempenhoAtivo = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.GraficoDesempenhoAtivo);
         Debug.Assert(countGraficoDesempenhoAtivo > 0, "Gráfico não foi apresentado corretamente");
