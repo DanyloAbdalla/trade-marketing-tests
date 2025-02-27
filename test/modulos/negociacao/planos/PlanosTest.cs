@@ -340,11 +340,11 @@ public class PlanosTest
     [Test, Order(9)]
     public void TestExcluirPlano()
     {
-        var nomeCampanhaSemWorkflow = "PlanoSemWorkflowMassaAutomatizada";
+        var nomeCampanharComWorkflowPadrao = "PlanoComWorkflowPadraoMassaAutomatizada";
         var nomeCampanhaComWorkflow = "PlanoComWorkflowMassaAutomatizada";
 
         new PlanosContratosPage(webDriver)
-        .BuscarPlanos(nomeCampanhaSemWorkflow)
+        .BuscarPlanos(nomeCampanharComWorkflowPadrao)
         .ConfirmarExclusaoDoPlano()
         .BuscarPlanos(nomeCampanhaComWorkflow)
         .ConfirmarExclusaoDoPlano();
