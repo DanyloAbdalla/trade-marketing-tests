@@ -62,7 +62,7 @@ public class GlobalVariables
     public static string ColunaAtivoListagemDisponibilidadeAtivos { get; set; } = "//*[contains(text(),'Disponibilidade de Ativos')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
     public static string DetalhesNegociacaoAtivos { get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[2]";
     public static string ColunaAtivoListagemAtivosNegociados { get; set; } = "//*[contains(text(),'Ativos Negociados')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[1]";
-    public static string ColunaDetalhesBotaoContratosVinculado { get; set; } = "//*[contains(text(),'Ativos Negociados')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[10]/button";
+    public static string ColunaDetalhesBotaoContratosVinculado { get; set; } = "//*[contains(text(),'Ativos Negociados')]/ancestor::div[@class='ant-modal-body']//table/tbody/tr[2]/td[11]/button";
     public static string FiltrarAtivoPorNome { get; set; } = "//span[text()='Ativo']/following-sibling::span[@role='button']";
     public static string DetalhesPotencialReceitaAtivos { get; set; } = "//*[contains(text(),'Ativos Alocados')]/following-sibling::div//button[3]";
     public static string FiltrarAtivoPorNomePotencialReceita { get; set; } = "//th[@aria-label='Nome']/div/span[@role='button']";
