@@ -97,6 +97,7 @@ public class GlobalVariables
     public static string GraficoDesempenhoAtivo { get; set; } = "//*[@class='ant-modal-content']//*[@class='Chart']";
     public static string FiltroDesempenhoAtivo { get; set; } = "//*[@class='ant-modal-content']//*[text()='Maior Retorno']";
     public static string TextoCardMaisVendidosDepartamento { get; set; } = "//*[text()='Mais vendidos do Departamento']";
+    public static string ModalDashboardDetalhesCards { get; set; } = "//*[@class='ant-modal-content']";
     #endregion
 
     #region Elementos de página - Planos

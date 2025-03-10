@@ -264,7 +264,7 @@ public class DashboardOperacoesPage
     /// <returns></returns>
     public DashboardOperacoesPage FecharDetalhes()
     {
-        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Detalhes");
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Detalhes Card");
 
         return this;
     }

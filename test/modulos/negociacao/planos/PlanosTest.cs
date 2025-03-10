@@ -371,7 +371,7 @@ public class PlanosTest
         else if (statusTeste == TestStatus.Passed || statusTeste == TestStatus.Failed)
         {
             if (statusTeste == TestStatus.Failed && Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaPlano) > 0) //Identifica se o teste falhou e se a modal do plano está aberta, caso sim, a mesma é fechada para não comprometer a execução do próximo teste
-                Dsl.Clicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Tela Plano");
+                Dsl.Clicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Edição");
 
             Dsl.Esperar();
             new HomePage(webDriver).AcessarDashboardOperacoes();

@@ -27,9 +27,10 @@ public class DashboardOperacoesTest
     /// </summary>
     [OneTimeSetUp]
     public void OneTimeSetUp()
-    {        
+    {
         runSettings = RunSettings.LoadSettings();
         webDriver = DriverFactory.CreateDriver(browserType);
+
         var nomeTeste = TestContext.CurrentContext.Test.MethodName;
 
         if (runSettings.ToSkip(nomeClasse, null, nomeTeste))
@@ -239,6 +240,16 @@ public class DashboardOperacoesTest
         new DashboardOperacoesPage(webDriver)
         .AcessarDetalhesDesempenhoDeAtivo()
         .FecharDetalhes();
+    }
+
+    /// <summary>
+    /// Método que será executado ao final de cada teste
+    /// </summary>
+    [TearDown]
+    public void TearDown()
+    {
+        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed && Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.ModalDashboardDetalhesCards) > 0) //Identifica se o teste falhou e se a modal de detalhes do card está aberta, caso sim, a mesma é fechada para não comprometer a execução do próximo teste
+            Dsl.Clicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Detalhes Card");
     }
 
     /// <summary>
