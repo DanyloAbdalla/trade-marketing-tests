@@ -493,7 +493,7 @@ public class PlanosContratosPage
 
         if (contextoDeTeste.Contains("SemPlantaLoja"))
         {
-            var nomeAtivo = "Stopper - ";
+            var nomeAtivo = "Ilha 01 - ";
             var xpathElemento = $"//div[@class='rc-virtual-list']//*[text()='{nomeAtivo}']";
 
             Dsl.Clicar(webDriver, GlobalVariables.IncluirAlocacaoAtivo, "Botão Incluir Ativo");
@@ -519,7 +519,7 @@ public class PlanosContratosPage
         }
         else if (contextoDeTeste.Contains("ComPlantaLoja"))
         {
-            string[] nomeAtivo = { "Stopper - ", "Stopper - E01", "Stopper - E02", "Stopper - E03" };
+            string[] nomeAtivo = { "Ilha 01 - ", "Ilha 01 - E01", "Ilha 01 - E02", "Ilha 01 - E03" };
 
             foreach (var nome in nomeAtivo)
             {
