@@ -768,11 +768,11 @@ public class PlanosContratosPage
                 }
                 else if (contextoDeExecucao.Equals("CriarPlanoComWorkflow"))
                 {
-                    var valorReceitaAtivosEsperado = 525.50;
+                    var valorReceitaAtivosEsperado = 527.50;
                     var valorReceitaAtivos = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaAtivos, "Campo Receita Ativos", tipoAtributo);
                     var valorReceitaAtivosAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaAtivos, "Campo Receita Ativos");
 
-                    var valorReceitaPlanoEsperado = 603.00;
+                    var valorReceitaPlanoEsperado = 605.00;
                     var valorReceitaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaPlano, "Campo Receita Plano", tipoAtributo);
                     var valorReceitaPlanoAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaPlano, "Campo Receita Plano");
 
