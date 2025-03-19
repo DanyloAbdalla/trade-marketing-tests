@@ -407,6 +407,8 @@ public class PlanosContratosPage
 
         if (contextoDeTestes.Contains("SemPlantaLoja"))
         {
+            string[] nomesAtivosAlocadosEsperados = { "Adesivo de Check Out -", "Display de Check Out -", "Woobler -" };
+            
             var qtdAtivosAlocados = Dsl.ObterQuantidadeLinhasNoElementoTabelaComLinhaInvisivel(webDriver, GlobalVariables.TabelaAtivosPlano);
 
             for (var i = 1; i <= qtdAtivosAlocados; i++)
@@ -417,6 +419,12 @@ public class PlanosContratosPage
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
                 Dsl.Esperar();
+
+                var nomeAtivoAlocadoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.NomeAtivoAlocao, "Campo Nome Ativo");
+                var nomeAtivoAlocadoEsperado = nomesAtivosAlocadosEsperados[i - 1];
+
+                Dsl.ValidarTextosNoElemento(nomeAtivoAlocadoAtual, nomeAtivoAlocadoEsperado);
+
                 var texto = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.QuantidadeLojasPorAtivo, "Campo Total Lojas por Ativo");
                 var quantidadeAtivosAlocadosLoja = Dsl.RemoverLetrasEspacosDeUmTexto(texto, "Campo Total Lojas por Ativo"); //Descobrindo a quantidade de lojas no plano para o ativo alocado
 
@@ -440,6 +448,8 @@ public class PlanosContratosPage
         }
         else if (contextoDeTestes.Contains("ComPlantaLoja"))
         {
+            string[] nomesAtivosAlocadosEsperados = { "Adesivo de Check Out -", "Adesivo de Check Out - E01", "Adesivo de Check Out - E02", "Adesivo de Check Out - E03" };
+
             BuscarAtivosAlocadosNoPlano(ativosGraficos[0]);
             Dsl.Esperar();
 
@@ -453,6 +463,11 @@ public class PlanosContratosPage
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
                 Dsl.Esperar();
+
+                var nomeAtivoAlocadoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.NomeAtivoAlocao, "Campo Nome Ativo");
+                var nomeAtivoAlocadoEsperado = nomesAtivosAlocadosEsperados[i - 1];
+
+                Dsl.ValidarTextosNoElemento(nomeAtivoAlocadoAtual, nomeAtivoAlocadoEsperado);
 
                 Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadePorLojaAtivosAlocados, "6");
                 Dsl.Clicar(webDriver, GlobalVariables.AplicarQuantidadePorLojaMassivamenteAtivosAlocados, "Botão Aplicar Quantidade para Todas as Lojas");

@@ -515,7 +515,7 @@ public class Dsl
     /// <param name="textoEsperado"></param>
     public static void ValidarTextosNoElemento(string textoAtual, string textoEsperado)
     {
-        Assert.That(textoAtual, Does.Contain(textoEsperado), "Textos não correspondem - TextoAtual: " + textoAtual + " TextoEsperado: " + textoEsperado);
+        Assert.That(textoAtual, Does.Contain(textoEsperado), $"Textos não correspondem - TextoAtual: {textoAtual} - TextoEsperado: {textoEsperado}");
     }
 
     /// <summary>

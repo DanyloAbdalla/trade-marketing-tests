@@ -211,6 +211,7 @@ public class GlobalVariables
     public static string MensagemSucessoAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Alocação atualizada')]";
     public static string MensagemSucessoEditarQuantidadeAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Produtos atualizados')]";
     public static string MensagemAvisoEditarQuantidadeAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Salve suas informações')]";
+    public static string NomeAtivoAlocao { get; set; } = "//*[text()='Ativo: ']/div/div/span[2]";
     #endregion
 
     #region Elementos de página - SmartIA
