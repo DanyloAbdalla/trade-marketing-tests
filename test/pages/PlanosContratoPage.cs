@@ -407,7 +407,7 @@ public class PlanosContratosPage
 
         if (contextoDeTestes.Contains("SemPlantaLoja"))
         {
-            string[] nomesAtivosAlocadosEsperados = { "Adesivo de Check Out -", "Display de Check Out -", "Woobler -" };
+            string[] nomesAtivosAlocadosEsperados = { "Adesivo de Check Out", "Display de Check Out", "Woobler" };
 
             var qtdAtivosAlocados = Dsl.ObterQuantidadeLinhasNoElementoTabelaComLinhaInvisivel(webDriver, GlobalVariables.TabelaAtivosPlano);
 
@@ -521,7 +521,7 @@ public class PlanosContratosPage
 
         if (contextoDeTeste.Contains("SemPlantaLoja"))
         {
-            var nomeAtivo = "Ilha 01 - ";
+            var nomeAtivo = "Ilha 01";
             var xpathElemento = $"//div[@class='rc-virtual-list']//*[text()='{nomeAtivo}']";
 
             Dsl.Clicar(webDriver, GlobalVariables.IncluirAlocacaoAtivo, "Botão Incluir Ativo");
