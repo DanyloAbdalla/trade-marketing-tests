@@ -127,7 +127,7 @@ public class PlanosContratosPage
                         for (var i = 0; i < 4; i++)
                         {
                             //Informando a quantidade de ativos por loja
-                            webDriver.FindElement(By.XPath($"//*[text()='{nomeAtivo}']/following-sibling::td[12]//span[@aria-label='Increase Value']")).Click();
+                            webDriver.FindElement(By.XPath($"//*[text()='{nomeAtivo}']/following-sibling::td[13]//span[@aria-label='Increase Value']")).Click();
                         }
                     }
                 }
@@ -431,7 +431,7 @@ public class PlanosContratosPage
                 int qtd = (int)quantidadeAtivosAlocadosLoja;
                 for (var j = 1; j <= qtd; j++)
                 {
-                    webDriver.FindElement(By.XPath($"//tbody//tr[{j + 1}]/td[17]/div//span[@aria-label='Increase Value']")).Click(); //Aumentando a quantidade de alocação por loja
+                    webDriver.FindElement(By.XPath($"//tbody//tr[{j + 1}]/td[18]/div//span[@aria-label='Increase Value']")).Click(); //Aumentando a quantidade de alocação por loja
                 }
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
@@ -605,7 +605,7 @@ public class PlanosContratosPage
                 for (var i = 1; i <= qtd; i++)
                 {
                     //Aumentando a quantidade de alocação por loja
-                    webDriver.FindElement(By.XPath($"//tr[{i + 1}]/td[17]/div//span[@aria-label='Increase Value']")).Click();
+                    webDriver.FindElement(By.XPath($"//tr[{i + 1}]/td[18]/div//span[@aria-label='Increase Value']")).Click();
                 }
             }
         }
