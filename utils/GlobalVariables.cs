@@ -138,7 +138,7 @@ public class GlobalVariables
     public static string GerarPrePlano { get; set; } = "//button/*[text()='Gerar Pré-Plano']";
     public static string GerarPrePlanoComWorkflowSelecionado { get; set; } = "//button/*[text()='Gerar Pré Plano']";
     public static string PesquisarUsuarioResponsavelEtapaWorkflow { get; set; } = "//*[contains(text(),'Selecione o usuário')]/parent::div/div/div/div/div/div/div/div/span[2]";
-    public static string PreencherUsuarioResponsavelEtapaWorkflow { get; set; } = "//*[contains(text(),'Selecione o usuário')]/parent::div/div/div/div/div/div/div/div/span[1]/input";
+    public static string PreencherUsuarioResponsavelEtapaWorkflow { get; set; } = "//span[contains(text(),'usuário responsável')]/..//input";
     public static string SelecionarUsuarioResponsavelEtapaWorkflowSP { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02SP']";
     public static string SelecionarUsuarioResponsavelEtapaWorkflowCP { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02CP']";
     public static string MensagemIndisponibilidadeInventario { get; set; } = "//*[@class='form-action'][2]/span[3]/label";

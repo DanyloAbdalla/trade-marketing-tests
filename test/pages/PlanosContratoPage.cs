@@ -193,7 +193,7 @@ public class PlanosContratosPage
                 Dsl.ScrollParaElemento(webDriver, GlobalVariables.GerarPrePlano);
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlano, "Botão Gerar Pré-Plano");
 
-                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.PesquisarUsuarioResponsavelEtapaWorkflow, "Campo Selecionar Usuário Responsável do Workflow no Plano");
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "Campo Selecionar Usuário Responsável do Workflow no Plano");
 
                 if (contextoDeTeste.Equals("SemPlantaLoja"))
                 {
