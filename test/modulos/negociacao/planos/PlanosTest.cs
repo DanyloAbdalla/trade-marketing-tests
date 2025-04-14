@@ -307,7 +307,7 @@ public class PlanosTest
     public void TestCriarPlanoComAlertaDeInventario()
     {
         var ativoTipoMidia = "Grafica";
-        var contextoDeExecucao = "CriarPlanoComWorkflowPadrao";
+        var contextoDeExecucao = "CriarPlano";
 
         new PlanosContratosPage(webDriver)
         .NovaSimulacaoDePlano()

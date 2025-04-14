@@ -329,22 +329,20 @@ public class PlanosContratosPage
     {
         int avancarMesCalendarioEm = 2;
 
-        if (contextoDeExecucao.Contains("CriarPlano"))
+        if (contextoDeExecucao.Equals("CriarPlano"))
         {
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.InicioVigenciaSimulacao, "Campo Início Vigencia Novo Plano");
-            Dsl.PreencherCalendariosInicioVigencia(webDriver, avancarMesCalendarioEm);
-
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FimVigenciaSimulacao, "Campo Fim Vigencia Novo Plano");
             Dsl.PreencherCalendariosFimVigencia(webDriver, avancarMesCalendarioEm);
+
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.InicioVigenciaSimulacao, "Campo Início Vigencia Novo Plano");
+            Dsl.PreencherCalendariosInicioVigencia(webDriver, avancarMesCalendarioEm);
         }
         else if (contextoDeExecucao.Equals("EditarPlano"))
         {
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.InicioVigenciaPlano, "Campo Início Vigencia Editar Plano");
-            Dsl.Esperar();
             Dsl.PreencherCalendariosInicioVigencia(webDriver, avancarMesCalendarioEm);
 
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FimVigenciaPlano, "Campo Fim Vigencia Editar Plano");
-            Dsl.Esperar();
             Dsl.PreencherCalendariosFimVigencia(webDriver, avancarMesCalendarioEm);
         }
 
