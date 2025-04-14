@@ -196,8 +196,8 @@ public class GlobalVariables
     public static string AplicarQuantidadePorLojaMassivamenteAtivosAlocados { get; set; } = "(//button/*[text()='Aplicar'])[2]";
     public static string AbaAtivosAlocados { get; set; } = "//div[@class='ant-tabs-nav-list']//*[contains(text(),'Ativos Alocados')]";
     public static string TabelaAtivosPlano { get; set; } = "//div[@class='ant-modal-content']//tbody";
-    public static string AvancarCalendarioMesInicioVigenciaTrade { get; set; } = "(//*[contains(@class,'header-next-btn')])[3]";
-    public static string AvancarCalendarioMesFimVigenciaTrade { get; set; } = "(//*[contains(@class,'header-next-btn')])[4]";
+    public static string AvancarCalendarioMesInicioVigenciaTrade { get; set; } = "(//*[contains(@class,'header-next-btn')])[2]";
+    public static string AvancarCalendarioMesFimVigenciaTrade { get; set; } = "(//*[contains(@class,'header-next-btn')])[1]";
 
     #endregion
 

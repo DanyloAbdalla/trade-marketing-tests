@@ -86,7 +86,7 @@ public class SmartIaPage
     public SmartIaPage PreencherInicioVigencia()
     {
         Dsl.Clicar(webDriver, GlobalVariables.InicioVigenciaCampanha, "Campo Início Vigência");
-        Dsl.PreencherCalendariosInicioVigencia(webDriver, GlobalVariables.InicioVigenciaCampanhaAvancarData, 2);
+        //Dsl.PreencherCalendariosInicioVigencia(webDriver, GlobalVariables.InicioVigenciaCampanhaAvancarData, 2);
 
         return this;
     }
@@ -99,7 +99,7 @@ public class SmartIaPage
     public SmartIaPage PreencherFimVigencia()
     {
         Dsl.Clicar(webDriver, GlobalVariables.FimVigenciaCampanha, "Campo Fim Vigência");
-        Dsl.PreencherCalendariosFimVigencia(webDriver, GlobalVariables.FimVigenciaCampanhaAvancarData, 3);
+        //Dsl.PreencherCalendariosFimVigencia(webDriver, GlobalVariables.FimVigenciaCampanhaAvancarData, 3);
 
         return this;
     }

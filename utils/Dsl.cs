@@ -4,6 +4,7 @@ using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Interactions;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Net.Mime;
 
 namespace MeuClienteWebTestProject;
 
@@ -332,7 +333,7 @@ public class Dsl
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
     /// <param name="quantidadeAvancarMeses"></param>
-    public static void PreencherCalendariosInicioVigencia(IWebDriver webDriver, string XPath, int quantidadeAvancarMeses)
+    public static void PreencherCalendariosInicioVigencia(IWebDriver webDriver, string XPath, int quantidadeAvancarMeses, string contextoDeExecucao)
     {
         DateTime dataAtual = DateTime.Now;
         var diaAtual = dataAtual.Day;
@@ -351,7 +352,19 @@ public class Dsl
                 webDriver.FindElement(By.XPath(XPath)).Click();
             }
 
-            if (ContarExistenciaDoElemento(webDriver, $"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[2]/ancestor::td") == 0)
+            if (contextoDeExecucao.Equals("plano"))
+            {
+                var xpathElemento = $"//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-bottomLeft ']//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
+                Clicar(webDriver, xpathElemento, "Campo Data Início Vigencia Plano");
+            }
+            else if (contextoDeExecucao.Equals("trade"))
+            {
+                var xpathElemento = $"//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-topLeft ']//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
+                Clicar(webDriver, xpathElemento, "Campo Data Início Vigencia Trade");
+            }
+
+
+            /*if (ContarExistenciaDoElemento(webDriver, $"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[2]/ancestor::td") == 0)
                 webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[1]")).Click();
             else
             {
@@ -361,7 +374,7 @@ public class Dsl
                     webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[2]")).Click();
                 else
                     webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{diaAtual}'])[1]")).Click();
-            }
+            }*/
         }
     }
 
@@ -372,7 +385,7 @@ public class Dsl
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
     /// <param name="quantidadeAvancarMeses"></param>
-    public static void PreencherCalendariosFimVigencia(IWebDriver webDriver, string XPath, int quantidadeAvancarMeses)
+    public static void PreencherCalendariosFimVigencia(IWebDriver webDriver, string XPath, int quantidadeAvancarMeses, string contextoDeExecucao)
     {
         DateTime dataAtual = DateTime.Now;
         var diaAtual = dataAtual.Day;
@@ -391,7 +404,18 @@ public class Dsl
                 webDriver.FindElement(By.XPath(XPath)).Click();
             }
 
-            if (ContarExistenciaDoElemento(webDriver, $"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[2]/ancestor::td") == 0)
+            if (contextoDeExecucao.Equals("plano"))
+            {
+                var xpathElemento = $"//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-bottomLeft ']//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
+                Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia");
+            }
+            else if(contextoDeExecucao.Equals("trade"))
+            {
+                var xpathElemento = $"//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-topLeft ']//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
+                Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia Trade");
+            }
+
+            /*if (ContarExistenciaDoElemento(webDriver, $"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[2]/ancestor::td") == 0)
                 webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
             else
             {
@@ -401,7 +425,7 @@ public class Dsl
                     webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[2]")).Click();
                 else
                     webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
-            }
+            }*/
         }
     }
 

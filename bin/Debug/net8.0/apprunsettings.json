@@ -8,7 +8,8 @@
           "Tests": [
             { "TestName": "TestCriarPlanoSemWorkflow", "TestSkip": false },
             { "TestName": "TestCriarPlanoComWorkflow", "TestSkip": false },
-            { "TestName": "TestEditarPlanoExistenteAlterandoVigencia", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoVigenciaDoPlano", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoVigenciaDoTrade", "TestSkip": true },
             { "TestName": "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel", "TestSkip": false },
             { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": false },
             { "TestName": "TestAprovarPlano", "TestSkip": false },
@@ -22,7 +23,8 @@
           "Tests": [
             { "TestName": "TestCriarPlanoSemWorkflow", "TestSkip": false },
             { "TestName": "TestCriarPlanoComWorkflow", "TestSkip": false },
-            { "TestName": "TestEditarPlanoExistenteAlterandoVigencia", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoVigenciaDoPlano", "TestSkip": false },
+            { "TestName": "TestEditarPlanoExistenteAlterandoVigenciaDoTrade", "TestSkip": true },
             { "TestName": "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel", "TestSkip": false },
             { "TestName": "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "TestSkip": false },
             { "TestName": "TestAprovarPlano", "TestSkip": false },

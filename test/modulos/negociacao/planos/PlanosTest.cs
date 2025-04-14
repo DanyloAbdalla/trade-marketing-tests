@@ -155,27 +155,52 @@ public class PlanosTest
     /// Testar a edição da vigência em um plano existente
     /// 
     /// Como comercial de trade marketing
-    /// Eu quero alterar a vigência
+    /// Eu quero alterar a vigência do plano
     /// Para negociar um novo período
     /// 
     /// Dado que eu tenho um plano criado na Negociação
     /// Quando acessar a tela de edição
     /// E alterar as datas início e fim da vigência
-    /// E clicar no botão Salvar Plano
-    /// Então um o plano será salvo com a nova vigência
+    /// E clicar no botão Salvar
+    /// Então o plano será salvo com a nova vigência
     /// </summary>
     [Test, Order(3)]
-    public void TestEditarPlanoExistenteAlterandoVigenciaDoTrade()
+    public void TestEditarPlanoExistenteAlterandoVigenciaDoPlano()
     {
         var contextoDeExecucao = "EditarPlano";
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
-        .EditarInicioVigencia(contextoDeExecucao)
-        .EditarFimVigencia(contextoDeExecucao)
+        .PreencherVigenciaDoPlano(contextoDeExecucao)
+        .SalvarPlano()
+        .FecharDadosDoPlano();
+    }
+
+    /// <summary>
+    /// Testar a edição da vigência em um plano existente
+    /// 
+    /// Como comercial de trade marketing
+    /// Eu quero alterar a vigência do trade
+    /// Para negociar um novo período
+    /// 
+    /// Dado que eu tenho um plano criado na Negociação
+    /// Quando acessar a aba "Ativos Alocados" na edição do plano
+    /// E editar um ativo alocado
+    /// E alterar as datas início e fim da vigência do trade
+    /// E clicar no botão Salvar
+    /// Então o plano será salvo com a nova vigência
+    /// </summary>
+    [Test, Order(3)]
+    public void TestEditarPlanoExistenteAlterandoVigenciaDoTrade()
+    {
+        //var contextoDeExecucao = "EditarPlano";
+
+        new PlanosContratosPage(webDriver)
+        .BuscarPlanos(nomeCampanha)
+        .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .EditarVigenciaDoTradeNoPlano(contextoDeExecucao, contextoDeTeste)
+        .EditarVigenciaDoTrade(contextoDeTeste)
         .SalvarPlano()
         .FecharDadosDoPlano();
     }
@@ -288,8 +313,7 @@ public class PlanosTest
         .NovaSimulacaoDePlano()
         .PreencherCampoIndustria(contextoDeTeste)
         .PreencherCampoCampanha(nomeCampanha)
-        .EditarInicioVigencia(contextoDeExecucao)
-        .EditarFimVigencia(contextoDeExecucao)
+        .PreencherVigenciaDoPlano(contextoDeExecucao)
         .SelecionarAtivos(ativoTipoMidia)
         .PreencherQuantidadeAtivos(contextoDeTeste, ativoTipoMidia)
         .SelecionarLojas()
