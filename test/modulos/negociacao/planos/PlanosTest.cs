@@ -191,7 +191,7 @@ public class PlanosTest
     /// E clicar no botão Salvar
     /// Então o plano será salvo com a nova vigência
     /// </summary>
-    [Test, Order(3)]
+    [Test, Order(4)]
     public void TestEditarPlanoExistenteAlterandoVigenciaDoTrade()
     {
         //var contextoDeExecucao = "EditarPlano";
@@ -218,7 +218,7 @@ public class PlanosTest
     /// E clicar no botão Salvar Plano
     /// Então o plano será salvo com sucesso com a nova quantidade
     /// </summary>
-    [Test, Order(4)]
+    [Test, Order(5)]
     public void TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel()
     {
         var contextoDeExecucao = "EditarPlanoAlterandoQuantidadeAtivo";
@@ -245,7 +245,7 @@ public class PlanosTest
     /// E incluir um novo ativo para a loja com disponibilidade de inventário
     /// Então o plano será salvo com sucesso com o novo ativo
     /// </summary>
-    [Test, Order(5)]
+    [Test, Order(6)]
     public void TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel()
     {
         var contextoDeExecucao = "EditarPlanoIncluindoAtivo";
@@ -273,7 +273,7 @@ public class PlanosTest
     /// E clicar no botão Salvar Plano
     /// Então o plano será salvo, com Status = Aprovado e Farol = Aprovado
     /// </summary>
-    [Test, Order(6)]
+    [Test, Order(7)]
     public void TestAprovarPlano()
     {
         var situacaoPlano = "Contrato Aprovado";
@@ -303,7 +303,7 @@ public class PlanosTest
     /// Então será apresentado o botão de alerta para as lojas com indisponibilidade
     /// E uma mensagem será apresentada ao lado do botão Gerar Pré-Plano, com o mesmo desabilitado
     /// </summary>
-    [Test, Order(7)]
+    [Test, Order(8)]
     public void TestCriarPlanoComAlertaDeInventario()
     {
         var ativoTipoMidia = "Grafica";
@@ -334,7 +334,7 @@ public class PlanosTest
     /// E clicar no botão Salvar Plano
     /// Então o plano será salvo, com Status = Cancelado e Farol = Cancelado
     /// </summary>
-    [Test, Order(8)]
+    [Test, Order(9)]
     public void TestCancelarPlano()
     {
         var situacaoPlano = "Cancelado";
@@ -364,7 +364,7 @@ public class PlanosTest
     /// E excluir (desativar), clicando no campo Excluir do Plano
     /// Então o plano será excluído com mensagem de sucesso, não sendo mais apresentado na lista
     /// </summary>
-    [Test, Order(9)]
+    [Test, Order(10)]
     public void TestExcluirPlano()
     {
         var nomeCampanharComWorkflowPadrao = "PlanoComWorkflowPadraoMassaAutomatizada";
@@ -388,7 +388,9 @@ public class PlanosTest
         if (primeiroTeste)
         {
             if (statusTeste == TestStatus.Failed || statusTeste == TestStatus.Skipped)
+            {
                 testeAnteriorPulouFalhou = true;
+            }
 
             primeiroTeste = false;
 
@@ -397,8 +399,20 @@ public class PlanosTest
         }
         else if (statusTeste == TestStatus.Passed || statusTeste == TestStatus.Failed)
         {
-            if (statusTeste == TestStatus.Failed && Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaPlano) > 0) //Identifica se o teste falhou e se a modal do plano está aberta, caso sim, a mesma é fechada para não comprometer a execução do próximo teste
-                Dsl.Clicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Edição");
+            if (statusTeste == TestStatus.Failed)
+            {
+                if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaAlocacaoPorLojaAtivo) > 0)
+                {
+                    //Se a modal da alocação por loja do ativo está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+                    new PlanosContratosPage(webDriver).FecharAlocacaoPorLoja();
+
+                    if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaPlano) > 0)
+                    {
+                        //Se a modal do plano está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+                        new PlanosContratosPage(webDriver).FecharDadosDoPlano();
+                    }
+                }
+            }
 
             Dsl.Esperar();
             new HomePage(webDriver).AcessarDashboardOperacoes();

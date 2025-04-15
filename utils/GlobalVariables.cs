@@ -1,11 +1,13 @@
+using OpenQA.Selenium.DevTools.V128.Page;
+
 namespace MeuClienteWebTestProject;
 
 public class GlobalVariables
 {
     #region Projeto
     public static bool handLessMode = false; //Executa, mostrando o Browser na tela, se handLessMode igual false
-    public static bool devMode = false;
-    public static bool hmlMode = true;
+    public static bool devMode = true;
+    public static bool hmlMode = false;
     public static bool prodMode = false;
     public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
@@ -116,7 +118,7 @@ public class GlobalVariables
     public static string ExcluirPlanoMensagemConfirmacao { get; set; } = "//*[@class='ant-modal-confirm-body']/span[2]";
     public static string OkExclusao { get; set; } = "//*[text()='OK']";
     public static string ModalPlanos { get; set; } = "//*[@class='ant-modal-body' and @style='overflow-x: hidden; height: 85vh;']";
-    public static string AbaPlano { get; set; } = "//div[contains(@class,'ant-tabs-tab-active')]/div";
+    public static string AbaPlano { get; set; } = "//*[contains(text(),'Dados do Plano')]";
     #endregion
 
     #region Elementos de página - Planos - Simulação
@@ -216,11 +218,12 @@ public class GlobalVariables
     public static string IncluirAlocacaoAtivo { get; set; } = "//button/*[text()='Incluir Ativo']";
     public static string QuantidadeLojasPorAtivo { get; set; } = "//*[contains(text(),'Total de lojas')]";
     public static string SalvarAlocacaoLoja { get; set; } = "(//button/*[text()='Salvar'])[2]";
-    public static string FecharAlocacaoAtivoPorLoja { get; set; } = "(//button/*[text()='Fechar'])[2]";
+    public static string FecharAlocacaoAtivoPorLoja { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../../../../../..//*[text()='Fechar']";
     public static string MensagemSucessoAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Alocação atualizada')]";
     public static string MensagemSucessoEditarQuantidadeAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Produtos atualizados')]";
     public static string MensagemAvisoEditarQuantidadeAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Salve suas informações')]";
     public static string NomeAtivoAlocao { get; set; } = "//*[text()='Ativo: ']/div/div/span[2]";
+    public static string AbaAlocacaoPorLojaAtivo { get; set;} = "//*[contains(text(),'Alocação por Loja')]";
     #endregion
 
     #region Elementos de página - SmartIA

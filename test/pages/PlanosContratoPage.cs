@@ -511,7 +511,13 @@ public class PlanosContratosPage
         return this;
     }
 
+    public PlanosContratosPage FecharAlocacaoPorLoja()
+    {
+        Dsl.Clicar(webDriver, GlobalVariables.FecharAlocacaoAtivoPorLoja, "Botão Fechar Alocação Por Loja");
+        Dsl.Esperar();
 
+        return this;
+    }
 
     /// <summary>
     /// Método para editar as quantidades dos ativos por loja
