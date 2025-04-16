@@ -200,7 +200,7 @@ public class PlanosTest
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .AlterarVigenciaDoAtivoAlocado(contextoDeTeste)
+        .EditarVigenciaDoAtivoAlocado(contextoDeTeste)
         .SalvarPlano()
         .FecharDadosDoPlano();
     }

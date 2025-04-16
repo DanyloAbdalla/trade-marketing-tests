@@ -369,7 +369,7 @@ public class PlanosContratosPage
         return this;
     }
 
-    public PlanosContratosPage AlterarVigenciaDoAtivoAlocado(string contextoDeTestes)
+    public PlanosContratosPage EditarVigenciaDoAtivoAlocado(string contextoDeTestes)
     {
         if (contextoDeTestes.Contains("SemPlantaLoja"))
         {
@@ -389,7 +389,7 @@ public class PlanosContratosPage
                 var quantidadeAtivosAlocadosLoja = Dsl.RemoverLetrasEspacosDeUmTexto(texto, "Campo Total Lojas por Ativo"); //Descobrindo a quantidade de lojas no plano para o ativo alocado
                 int totalLojas = (int)quantidadeAtivosAlocadosLoja;*/
 
-                AlterarVigenciaLoja();
+                EditarVigenciaLoja();
 
                 SalvarAtivoAlocado();
             }
@@ -414,7 +414,7 @@ public class PlanosContratosPage
                 var quantidadeAtivosAlocadosLoja = Dsl.RemoverLetrasEspacosDeUmTexto(texto, "Campo Total Lojas por Ativo"); //Descobrindo a quantidade de lojas no plano para o ativo alocado
                 int totalLojas = (int)quantidadeAtivosAlocadosLoja;
 
-                AlterarVigenciaLoja();
+                EditarVigenciaLoja();
 
                 SalvarAtivoAlocado();
             }
@@ -423,25 +423,31 @@ public class PlanosContratosPage
         return this;
     }
 
-    public PlanosContratosPage AlterarVigenciaLoja()
+    public PlanosContratosPage EditarVigenciaLoja()
     {
-
-        IList<IWebElement> linhas = Dsl.ObterLinhasDoElementoTabela(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
-
-        foreach (IWebElement linha in linhas)
+        if (true)
         {
-            var valorAtributo = Dsl.ObterDadosDoAtributoDoElementoId(linha, "Linha Tabela Lojas Alocadas No Ativo", "aria-hidden");
-            IList<IWebElement> colunas = Dsl.ObterColunasDoElementoTabela(linha);
+            IList<IWebElement> linhas = Dsl.ObterLinhasDoElementoTabela(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
 
-            if (valorAtributo == null || valorAtributo != "true")
+            foreach (IWebElement linha in linhas)
             {
-                Dsl.ScrollHorizontalDentroDoElementoTabela(webDriver, GlobalVariables.ScrollTabelaLojasAtivoAlocados, GlobalVariables.ColunaVeiculacaoTrade);
+                var valorAtributo = Dsl.ObterDadosDoAtributoDoElementoId(linha, "Linha Tabela Lojas Alocadas No Ativo", "aria-hidden");
+                IList<IWebElement> colunas = Dsl.ObterColunasDoElementoTabela(linha);
 
-                var inicioVigencia = colunas[6];
-                var fimVigencia = colunas[7];
+                if (valorAtributo == null || valorAtributo != "true")
+                {
+                    Dsl.ScrollHorizontalDentroDoElementoTabela(webDriver, GlobalVariables.ScrollTabelaLojasAtivoAlocados, GlobalVariables.ColunaVeiculacaoTrade);
 
-                SelecionarVigenciaDoTrade(inicioVigencia, fimVigencia);
+                    var inicioVigencia = colunas[6];
+                    var fimVigencia = colunas[7];
+
+                    SelecionarVigenciaDoTrade(inicioVigencia, fimVigencia);
+                }
             }
+        }
+        else if (true)
+        {
+
         }
 
         return this;
