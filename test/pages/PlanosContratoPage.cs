@@ -561,7 +561,7 @@ public class PlanosContratosPage
     public PlanosContratosPage EditarQuantidadesDosAtivosNoPlano(string contextoDeTestes)
     {
         var mensagemSucessoEsperadaAlocacaoAtualizada = "Alocaçãoatualizadacomsucesso!";
-        var mensagemSucessoEsperadaProdutosInseridos = "Produtosinseridoscomsucesso!";
+        var mensagemSucessoEsperadaProdutosAtualizados = "Produtosatualizadoscomsucesso!";
 
         if (contextoDeTestes.Contains("SemPlantaLoja"))
         {
@@ -620,7 +620,8 @@ public class PlanosContratosPage
 
                 Dsl.EsperarElementoParaClicar(webDriver, editarAtivo, "Botão Editar Ativo");
 
-                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
+                //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
+                Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
                 Dsl.Esperar();
 
                 var textoQuantidadeLojasAtivoAlocado = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.QuantidadeLojasPorAtivo, "Label Quantidade de Lojas no Ativo Alocado");
@@ -632,11 +633,11 @@ public class PlanosContratosPage
 
                 Dsl.ValidarTextosNoElemento(nomeAtivoAlocadoAtual, nomeAtivoAlocadoEsperado);
 
-                Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadePorLojaAtivosAlocados, "6");
+                Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.AceleradorQuantidadeAlocarTrade, "6");
                 Dsl.Clicar(webDriver, GlobalVariables.AplicarAceleradorPorLojaAtivoAlocado, "Botão Aplicar Quantidade para Todas as Lojas");
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-                ValidarMensagensDoPlano(mensagemSucessoEsperadaProdutosInseridos);
+                ValidarMensagensDoPlano(mensagemSucessoEsperadaProdutosAtualizados);
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
 
                 Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
@@ -718,7 +719,8 @@ public class PlanosContratosPage
             Dsl.EsperarVisibilidadeDoElemento(webDriver, elementoAtivoNome);
             Dsl.Clicar(webDriver, elementoAtivoNome, "Campo Selecionar Ativo");
 
-            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
+            //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
+            Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
             Dsl.Esperar();
 
             var textoQuantidadeLojasAtivoAlocado = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.QuantidadeLojasPorAtivo, "Label Quantidade de Lojas no Ativo Alocado");
@@ -769,7 +771,7 @@ public class PlanosContratosPage
         }
         else if (contextoDeTeste.Contains("ComPlantaLoja"))
         {
-            Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadePorLojaAtivosAlocados, "1");
+            Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.AceleradorQuantidadeAlocarTrade, "1");
             Dsl.Clicar(webDriver, GlobalVariables.AplicarAceleradorPorLojaAtivoAlocado, "Botão Aplicar Quantidade para Todas as Lojas");
 
             Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
