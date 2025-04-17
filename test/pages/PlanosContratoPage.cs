@@ -575,7 +575,7 @@ public class PlanosContratosPage
 
                 Dsl.EsperarElementoParaClicar(webDriver, editarAtivo, "Botão Editar Ativo");
 
-                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LinhaTabelaLojasAtivoAlocados);
                 Dsl.Esperar();
 
                 var nomeAtivoAlocadoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.NomeAtivoAlocao, "Campo Nome Ativo");
@@ -688,7 +688,7 @@ public class PlanosContratosPage
             Dsl.EsperarVisibilidadeDoElemento(webDriver, xpathElemento);
             Dsl.Clicar(webDriver, xpathElemento, "Campo Selecionar Ativo");
 
-            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LinhaTabelaLojasAtivoAlocados);
             Dsl.Esperar();
 
             AumentarQuantidadeAtivosPorLoja(contextoDeTeste);
@@ -719,7 +719,7 @@ public class PlanosContratosPage
             Dsl.EsperarVisibilidadeDoElemento(webDriver, elementoAtivoNome);
             Dsl.Clicar(webDriver, elementoAtivoNome, "Campo Selecionar Ativo");
 
-            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LinhaTabelaLojasAtivoAlocados);
             //Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
             Dsl.Esperar(2000);
 
