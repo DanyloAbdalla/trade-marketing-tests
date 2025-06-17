@@ -47,13 +47,15 @@ public class HomePage
         Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
         Dsl.Esperar(3000);
 
-        if (primeiroTeste.Equals("TestCriarPlanoComWorkflowPadrao"))
+        FiltrarTodosPlanos();
+
+        /*if (primeiroTeste.Equals("TestCriarPlanoComWorkflowPadrao"))
         {
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FiltrarPlanosStatusVigencia, "Campo Filtro Vigência");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarTodosPlanos, "Selecionar Todos Planos");
             Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
             Dsl.Esperar(3000);
-        }
+        }*/
 
         if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
             return new PlanosContratosPage(webDriver);
@@ -124,5 +126,19 @@ public class HomePage
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioSenha);
 
         return this;
+    }
+
+    /// <summary>
+    /// Método para selecionar todos os planos, vingentes e não vigentes
+    /// </summary>
+    /// <returns></returns>
+    public PlanosContratosPage FiltrarTodosPlanos()
+    {
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FiltrarPlanosStatusVigencia, "Campo Filtro Vigência");
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarTodosPlanos, "Selecionar Todos Planos");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.Esperar(3000);
+
+        return new PlanosContratosPage(webDriver);
     }
 }

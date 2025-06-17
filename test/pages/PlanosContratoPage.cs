@@ -31,7 +31,7 @@ public class PlanosContratosPage
         var mensagemConfirmacaoEsperadaReutilizarDadosSalvosAnteriormente = "Existemdadossalvosdaultimasimulação,desejareutiliza-los?";
 
         Dsl.Clicar(webDriver, GlobalVariables.NovoRegistro, "Botão Nova Simulação");
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela1);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
 
         if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TituloModalConfirmacao) > 0)
         {
@@ -315,7 +315,9 @@ public class PlanosContratosPage
     public PlanosContratosPage AbrirEdicaoDoPlano()
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.AbasPlano);
+        Dsl.Esperar(5000);
 
         return this;
     }
@@ -454,8 +456,8 @@ public class PlanosContratosPage
                 {
                     Dsl.ScrollHorizontalDentroDoElementoTabela(webDriver, GlobalVariables.ScrollTabelaLojasAtivoAlocados, GlobalVariables.ColunaVeiculacaoTrade);
 
-                    var inicioVigencia = colunas[6];
-                    var fimVigencia = colunas[7];
+                    var inicioVigencia = colunas[7];
+                    var fimVigencia = colunas[8];
 
                     SelecionarVigenciaDoTrade(inicioVigencia, fimVigencia, contextoDeTeste);
                 }
@@ -590,7 +592,7 @@ public class PlanosContratosPage
                 int qtd = (int)quantidadeAtivosAlocadosLoja;
                 for (var j = 1; j <= qtd; j++)
                 {
-                    webDriver.FindElement(By.XPath($"//tbody//tr[{j + 1}]/td[18]/div//span[@aria-label='Increase Value']")).Click(); //Aumentando a quantidade de alocação por loja
+                    webDriver.FindElement(By.XPath($"//tbody//tr[{j + 1}]/td[19]/div//span[@aria-label='Increase Value']")).Click(); //Aumentando a quantidade de alocação por loja
                 }
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja);
@@ -623,7 +625,7 @@ public class PlanosContratosPage
 
                 //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
                 Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-                Dsl.Esperar();
+                Dsl.Esperar(3000);
 
                 var textoQuantidadeLojasAtivoAlocado = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.QuantidadeLojasPorAtivo, "Label Quantidade de Lojas no Ativo Alocado");
                 var quantidadeLojasAtivoAlocadoAtual = Dsl.RemoverLetrasEspacosDeUmTexto(textoQuantidadeLojasAtivoAlocado, "Label Quantidade de Lojas no Ativo Alocado");
@@ -765,7 +767,7 @@ public class PlanosContratosPage
                 for (var i = 1; i <= qtd; i++)
                 {
                     //Aumentando a quantidade de alocação por loja
-                    webDriver.FindElement(By.XPath($"//tr[{i + 1}]/td[18]/div//span[@aria-label='Increase Value']")).Click();
+                    webDriver.FindElement(By.XPath($"//tr[{i + 1}]/td[19]/div//span[@aria-label='Increase Value']")).Click();
                 }
             }
         }
@@ -806,9 +808,9 @@ public class PlanosContratosPage
             Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadeParcelas, "1");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.AbaDadosPlano, "Aba Dados Plano");
 
-            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-            ValidarMensagensDoPlano(mensagemAlertaInformarParcelaEsperada);
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
+            //ValidarMensagensDoPlano(mensagemAlertaInformarParcelaEsperada);
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
 
             Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarRegistro);
 

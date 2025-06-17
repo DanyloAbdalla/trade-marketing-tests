@@ -30,7 +30,7 @@
             { "TestName": "TestAprovarPlano", "TestSkip": false },
             { "TestName": "TestCriarPlanoComAlertaDeInventario", "TestSkip": false },
             { "TestName": "TestCancelarPlano", "TestSkip": false },
-            { "TestName": "TestExcluirPlano", "TestSkip": true }
+            { "TestName": "TestExcluirPlano", "TestSkip": false }
           ]
         }
       ]

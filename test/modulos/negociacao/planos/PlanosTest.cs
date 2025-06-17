@@ -104,6 +104,9 @@ public class PlanosTest
         .SelecionarLojas()
         .GerarPrePlano(contextoDeTeste, ativoTipoMidia)
         .SalvarPlano()
+        .FecharDadosDoPlano()
+        .BuscarPlanos(nomeCampanha)
+        .AbrirEdicaoDoPlano()
         .ValidarReceitasDoPlano(contextoDeTeste, contextoDeExecucao)
         .ValidarPlanoCriado()
         .FecharDadosDoPlano()
@@ -144,6 +147,9 @@ public class PlanosTest
         .SelecionarLojas()
         .GerarPrePlano(contextoDeTeste, ativoTipoMidia)
         .SalvarPlano()
+        .FecharDadosDoPlano()
+        .BuscarPlanos(nomeCampanha)
+        .AbrirEdicaoDoPlano()
         .ValidarReceitasDoPlano(contextoDeTeste, contextoDeExecucao)
         .ValidarPlanoCriado()
         .FecharDadosDoPlano()
@@ -229,6 +235,8 @@ public class PlanosTest
         .AbrirAbaAtivosAlocados()
         .EditarQuantidadesDosAtivosNoPlano(contextoDeTeste)
         .SalvarPlano()
+        .FecharDadosDoPlano()
+        .AbrirEdicaoDoPlano()
         .ValidarReceitasDoPlano(contextoDeTeste, contextoDeExecucao)
         .FecharDadosDoPlano();
     }
@@ -256,6 +264,8 @@ public class PlanosTest
         .AbrirAbaAtivosAlocados()
         .AlocarNovosAtivosNoPlano(contextoDeTeste)
         .SalvarPlano()
+        .FecharDadosDoPlano()
+        .AbrirEdicaoDoPlano()
         .ValidarReceitasDoPlano(contextoDeTeste, contextoDeExecucao)
         .FecharDadosDoPlano();
     }
