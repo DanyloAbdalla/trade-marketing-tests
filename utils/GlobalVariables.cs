@@ -7,8 +7,8 @@ public class GlobalVariables
     #region Projeto
     public static bool handLessMode = false; //Executa, mostrando o Browser na tela, se handLessMode igual false
     public static bool devMode = false;
-    public static bool hmlMode = false;
-    public static bool prodMode = true;
+    public static bool hmlMode = true;
+    public static bool prodMode = false;
     public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
     public static string urlPrdPlataforma = "https://login.meucliente.app.br/";
@@ -32,8 +32,7 @@ public class GlobalVariables
     public static string LimparRegistro { get; set; } = "//button/*[text()='Limpar']";
     public static string PaginacaoTela { get; set; } = "//ul[contains(@class,'ant-pagination')]//li[2]";
     public static string AvisoInexistenciaDados { get; set; } = "//*[text()='No data']";
-    public static string LoadDeTela { get; set; } = "(//*[contains(@class,'ant-spin-dot-item')])[1]";
-    public static string LoadDeTela1 { get; set; } = "//span[@class='ant-spin-dot ant-spin-dot-spin']";
+    public static string LoadDeTelaSpiner { get; set; } = "(//*[contains(@class,'ant-spin-dot-item')])[1]";
     public static string LoadDeTelaBarra { get; set; } = "(//span[@class='anticon anticon-loading anticon-spin'])[2]";
     public static string RecarregarTela { get; set; } = "//button/*[text()='Recarregar tela']";
     public static string TituloModalConfirmacao { get; set; } = "//span[@class='ant-modal-confirm-title']";
@@ -112,6 +111,7 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos
+    public static string LoadTelaListaDePlanos { get; set; } = "(//div[@class='thin-card ant-card']//*[contains(@class,'ant-spin-dot-item')])[1]";
     public static string TabelaPlanos { get; set; } = "//table/tbody/tr";
     public static string FiltrarPlanosStatusVigencia { get; set; } = "//div[contains(@class,'select-selector')]/span[2]";
     public static string SelecionarTodosPlanos { get; set; } = "//div[@class='rc-virtual-list']//div[@title='Todos']";
@@ -173,10 +173,12 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos - Dados do Plano
+    public static string LoadDeTelaDadosPlano { set; get; } = "//*[contains(@class,'contrato-loading-overlay')]";
     public static string AbasPlano { get; set; } = "//div[@class='ant-tabs-nav-list']";
     public static string AbaDadosPlano { get; set; } = "//div[@class='ant-tabs-nav-list']//*[contains(text(),'Dados do Plano')]";
     public static string SituacaoPlano { get; set; } = "//*[@name='Status']";
     public static string Desconto { get; set; } = "//*[@name='Desconto']";
+    public static string AplicarDesconto { get; set; } = "//button/*[text()='Aplicar']";
     public static string InicioVigenciaPlano { get; set; } = "//*[contains(text(),'Dados do Plano')]/../../../../..//label[text()='Inicio Vigência']/../../../..//div[contains(@class,'date-picker')]/div/input";
     public static string FimVigenciaPlano { get; set; } = "//*[contains(text(),'Dados do Plano')]/../../../../..//span[text()='Fim Vigência']/../../../../..//div[contains(@class,'date-picker')]/div/input";
     public static string AvancarCalendarioMes { get; set; } = "//*[contains(@class,'header-next-btn')]";

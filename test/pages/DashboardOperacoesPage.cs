@@ -23,7 +23,7 @@ public class DashboardOperacoesPage
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesLojasAtivas, "Botão Visualizar Lojas Ativas");
         //Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
 
         var lojasAtivas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaListagemLojasAtivas) - 1;
         Dsl.Esperar();
@@ -42,7 +42,7 @@ public class DashboardOperacoesPage
         string nomeAtivoComCalendario = DataLoader.ObterDados("dashboard_operacaoes", "TestAcessarVisaoDetalhadaDeAtivosAlocados", "nomeAtivoComCalendario");
 
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesDisponibilidadeAtivos, "Botão Visualizar Disponibilidade de Ativos");
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         BuscarDisponibilidadeDoAtivo(nomeAtivoSemCalendario);
@@ -105,7 +105,7 @@ public class DashboardOperacoesPage
     public DashboardOperacoesPage AcessarDetalhesDasNegociacoes(string nomeAtivo, string nomeAtivoEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesNegociacaoAtivos, "Botão Visualizar Ativos Negociados");
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarAtivoPorNome, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarAtivoPorNome, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeAtivo);
@@ -150,13 +150,13 @@ public class DashboardOperacoesPage
         if (card.Contains("ContratosVigentes"))
         {
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesContratosAtivos, "Botão Visualizar Contratos Ativos");
-            Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+            Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
         }
         else if (card.Contains("TotalReceita"))
         {
             Dsl.ScrollParaElemento(webDriver, GlobalVariables.TextoCardTotalReceita);
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesContratosAtivosTotalReceita, "Botão Visualizar Contratos Ativos");
-            Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+            Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
         }
 
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarContratoPorCampanha, "Botão Filtro");
@@ -182,7 +182,7 @@ public class DashboardOperacoesPage
     public DashboardOperacoesPage AcessarDetalhesDeContratosVencendo(string nomeContratoCampanhaEsperado)
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesContratosVencendo, "Botão Visualizar Contratos Vencendo");
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
         Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.FiltrarContratoPorCampanha, "Botão Filtro");
 
         Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarContratoPorCampanha, GlobalVariables.PreencherFiltro, GlobalVariables.BuscarRegistro, nomeContratoCampanhaEsperado);
@@ -248,7 +248,7 @@ public class DashboardOperacoesPage
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.DetalhesListaParceirosInvestimento, "Botão Visualizar Lista Parceiro");
         }
 
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
         Dsl.Esperar();
         //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados);
 

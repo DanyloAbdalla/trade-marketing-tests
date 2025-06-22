@@ -47,6 +47,7 @@ public class LoginPage
     public HomePage SubmeterLogin()
     {
         Dsl.Clicar(webDriver, GlobalVariables.SubmeterLogin, "Botão Login");
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
 
         return new HomePage(webDriver);
     }

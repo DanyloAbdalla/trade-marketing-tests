@@ -34,9 +34,9 @@ public class SmartIaPage
     /// <returns></returns>
     public SmartIaPage PreencherCamposCampanha(string nomeCampanha, string whatsAppResponsavel, string nomeResponsavel, string mensagemCabecalho)
     {
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTela);
-        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.LoadDeTela) > 0)
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
+        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner) > 0)
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
 
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.MenuCampanhas, "Menu Suspenso Campanhas");
         Dsl.Esperar();
@@ -215,7 +215,7 @@ public class SmartIaPage
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
 
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTela);
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
 
         return this;
     }
