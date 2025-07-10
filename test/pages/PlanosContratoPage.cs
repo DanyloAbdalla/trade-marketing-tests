@@ -49,6 +49,8 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage PreencherCampoIndustria(string contextoDeTeste)
     {
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
+        
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PesquisarIndustria);
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.PesquisarIndustria, "Campo Indústria");
         if (contextoDeTeste.Equals("SemPlantaLoja"))
@@ -332,6 +334,8 @@ public class PlanosContratosPage
         int avancarMesCalendarioEm = 2;
 
         var teste = TestContext.CurrentContext.Test.MethodName;
+
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
 
         if (teste.Equals("TestCriarPlanoComAlertaDeInventario"))
         {
@@ -671,6 +675,7 @@ public class PlanosContratosPage
     {
         Dsl.ScrollParaElemento(webDriver, GlobalVariables.AbaAtivosAlocados);
         Dsl.Clicar(webDriver, GlobalVariables.AbaAtivosAlocados, "Aba Ativos Alocados");
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
 
         return this;
     }
@@ -797,6 +802,8 @@ public class PlanosContratosPage
     {
         var valorSetorDepartamentoCategoria = "Geral";
         var teste = TestContext.CurrentContext.Test.MethodName;
+
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
 
         if (!string.IsNullOrEmpty(teste) && teste.Equals("TestAprovarPlano"))
         {

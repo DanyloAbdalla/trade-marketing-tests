@@ -97,8 +97,6 @@ public class PlanosTest
     [Test, Order(1)]
     public void TestCriarPlanoComWorkflowPadrao()
     {
-        //var tipoMidiaAtivo = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComWorkflowPadrao", "tipoMidiaAtivo");
-        //var contextoDeExecucao = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComWorkflowPadrao", "contextoDeExecucao");
         primeiroTeste = true;
 
         new PlanosContratosPage(webDriver)
@@ -140,9 +138,8 @@ public class PlanosTest
     [Test, Order(2)]
     public void TestCriarPlanoComWorkflow()
     {
-        var tipoMidiaAtivo = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComWorkflow", "tipoMidiaAtivo");
-        //var contextoDeExecucao = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComWorkflow", "contextoDeExecucao");
-        var nomeCampanha = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComWorkflow", "nomeCampanha");
+        string tipoMidiaAtivo = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComWorkflow", "tipoMidiaAtivo");
+        string nomeCampanha = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComWorkflow", "nomeCampanha");
 
         new PlanosContratosPage(webDriver)
         .NovaSimulacaoDePlano()
@@ -229,8 +226,6 @@ public class PlanosTest
     [Test, Order(5)]
     public void TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel()
     {
-        //var contextoDeExecucao = DataLoader.ObterDados("negociacoes_planos", "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel", "contextoDeExecucao");
-
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
@@ -258,8 +253,6 @@ public class PlanosTest
     [Test, Order(6)]
     public void TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel()
     {
-        //var contextoDeExecucao = DataLoader.ObterDados("negociacoes_planos", "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel", "contextoDeExecucao");
-
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
@@ -288,8 +281,8 @@ public class PlanosTest
     [Test, Order(7)]
     public void TestAprovarPlano()
     {
-        var statusEsperado = DataLoader.ObterDados("negociacoes_planos", "TestAprovarPlano", "statusEsperado");
-        var farolEsperado = DataLoader.ObterDados("negociacoes_planos", "TestAprovarPlano", "farolEsperado");
+        string statusEsperado = DataLoader.ObterDados("negociacoes_planos", "TestAprovarPlano", "statusEsperado");
+        string farolEsperado = DataLoader.ObterDados("negociacoes_planos", "TestAprovarPlano", "farolEsperado");
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
@@ -345,8 +338,8 @@ public class PlanosTest
     [Test, Order(9)]
     public void TestCancelarPlano()
     {
-        var statusEsperado = DataLoader.ObterDados("negociacoes_planos", "TestCancelarPlano", "statusEsperado");
-        var farolEsperado = DataLoader.ObterDados("negociacoes_planos", "TestCancelarPlano", "farolEsperado");
+        string statusEsperado = DataLoader.ObterDados("negociacoes_planos", "TestCancelarPlano", "statusEsperado");
+        string farolEsperado = DataLoader.ObterDados("negociacoes_planos", "TestCancelarPlano", "farolEsperado");
 
         new PlanosContratosPage(webDriver)
         .BuscarPlanos(nomeCampanha)
