@@ -29,5 +29,63 @@
         "InvestimentoParceiro"
       ]
     }
+  },
+  "negociacoes_planos": {
+    "TestGlobalData": {
+      "atributoTesteId": "data-testid",
+      "nomeCampanha": "PlanoComWorkflowPadraoMassaAutomatizada",
+      "statusEsperado": "Simulado",
+      "farolEsperado": "PLANEJADO",
+      "tipoMidiaAtivo": "Grafica",
+      "ativoNome": "Ilha 01",
+      "ativosGraficos": [
+        "Adesivo de Check Out",
+        "Display de Check Out",
+        "Woobler"
+      ],
+      "ativosFisicos": [
+        "Cestão 01",
+        "Ponta de Gôndola"
+      ],
+      "abasPlanoEsperado": [
+        "Dados do Plano",
+        "Ativos Alocados",
+        "Fluxo de Pagamentos",
+        "Histórico",
+        "Registro",
+        "Anexos",
+        "Book Fotográfico",
+        "Painel da indústria",
+        "Tarefas"
+      ],
+      "etapaNomeWorkflowPlanoEsperado": [
+        "Arte",
+        "Montagem",
+        "Comprovação"
+      ]
+    },
+    "TestCriarPlanoComWorkflowPadrao": {},
+    "TestCriarPlanoComWorkflow": {
+      "tipoMidiaAtivo": "Fisica",
+      "nomeCampanha": "PlanoComWorkflowMassaAutomatizada"
+    },
+    "TestEditarPlanoExistenteAlterandoVigenciaDoPlano": {},
+    "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel": {},
+    "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel": {},
+    "TestAprovarPlano": {
+      "statusEsperado": "Aprovado",
+      "farolEsperado": "APROVADO"
+    },
+    "TestCriarPlanoComAlertaDeInventario": {},
+    "TestCancelarPlano": {
+      "statusEsperado": "Cancelado",
+      "farolEsperado": "CANCELADO"
+    },
+    "TestExcluirPlano": {
+      "nomeCampanhas": [
+        "PlanoComWorkflowPadraoMassaAutomatizada",
+        "PlanoComWorkflowMassaAutomatizada"
+      ]
+    }
   }
 }

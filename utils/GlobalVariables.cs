@@ -177,6 +177,8 @@ public class GlobalVariables
     public static string AbasPlano { get; set; } = "//div[@class='ant-tabs-nav-list']";
     public static string AbaDadosPlano { get; set; } = "//div[@class='ant-tabs-nav-list']//*[contains(text(),'Dados do Plano')]";
     public static string SituacaoPlano { get; set; } = "//*[@name='Status']";
+    public static string SituacaoPlanoAprovar { get; set; } = "//*[text()='Contrato Aprovado']";
+    public static string SituacaoPlanoCancelar { get; set; } = "//*[text()='Cancelado']";
     public static string Desconto { get; set; } = "//*[@name='Desconto']";
     public static string AplicarDesconto { get; set; } = "//button/*[text()='Aplicar']";
     public static string InicioVigenciaPlano { get; set; } = "//*[contains(text(),'Dados do Plano')]/../../../../..//label[text()='Inicio Vigência']/../../../..//div[contains(@class,'date-picker')]/div/input";
