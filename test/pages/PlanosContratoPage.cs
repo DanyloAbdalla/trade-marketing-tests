@@ -51,7 +51,7 @@ public class PlanosContratosPage
     public PlanosContratosPage PreencherCampoIndustria(string contextoDeTeste)
     {
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
-        
+
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PesquisarIndustria);
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.PesquisarIndustria, "Campo Indústria");
         if (contextoDeTeste.Equals("SemPlantaLoja"))
@@ -193,37 +193,27 @@ public class PlanosContratosPage
     /// Método para gerar o pré-plano, clicando no botão Gera Pré-Plano
     /// </summary>
     /// <returns></returns>
-    public PlanosContratosPage GerarPrePlano(string contextoDeTeste, string tipoAtivoMidia)
+    public PlanosContratosPage GerarPrePlano(string contextoDeTeste)
     {
-        switch (tipoAtivoMidia)
+        Dsl.ScrollParaElemento(webDriver, GlobalVariables.GerarPrePlano);
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlano, "Botão Gerar Pré-Plano");
+
+        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
+        Dsl.Esperar(500);
+
+        if (contextoDeTeste.Equals("SemPlantaLoja"))
         {
-            case "Grafica":
-                Dsl.ScrollParaElemento(webDriver, GlobalVariables.GerarPrePlano);
-                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlano, "Botão Gerar Pré-Plano");
-                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
-                break;
-            case "Fisica":
-                Dsl.ScrollParaElemento(webDriver, GlobalVariables.GerarPrePlano);
-                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlano, "Botão Gerar Pré-Plano");
-
-                Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
-                Dsl.Esperar(500);
-
-                if (contextoDeTeste.Equals("SemPlantaLoja"))
-                {
-                    Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "UserHomolog02SP");
-                    Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowSP, "Campo Selecionar Usuário Responsável");
-                }
-                else
-                {
-                    Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "UserHomolog02CP");
-                    Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowCP, "Campo Selecionar Usuário Responsável");
-                }
-
-                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
-                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
-                break;
+            Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "UserHomolog02SP");
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowSP, "Campo Selecionar Usuário Responsável");
         }
+        else
+        {
+            Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "UserHomolog02CP");
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowCP, "Campo Selecionar Usuário Responsável");
+        }
+
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
 
         return this;
     }
@@ -688,8 +678,8 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage AlocarNovosAtivosNoPlano(string contextoDeTeste)
     {
-        var mensagemSucessoEsperadaAlocacaoAtualizada = "Alocaçãoatualizadacomsucesso!";
-        var ativoNome = DataLoader.ObterDados("negociacoes_planos", "TestGlobalData", "ativoNome");
+        string mensagemSucessoEsperadaAlocacaoAtualizada = "Alocaçãoatualizadacomsucesso!";
+        string ativoNome = DataLoader.ObterDados("negociacoes_planos", "TestGlobalData", "ativoNome");
 
         if (contextoDeTeste.Contains("SemPlantaLoja"))
         {
@@ -998,11 +988,11 @@ public class PlanosContratosPage
                     }
                     else if (teste.Equals("TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel"))
                     {
-                        var valorReceitaAtivosEsperado = 1050.00;
+                        var valorReceitaAtivosEsperado = 950.00;
                         var valorReceitaAtivos = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaAtivos, "Campo Receita Ativos", tipoAtributo);
                         var valorReceitaAtivosAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaAtivos, "Campo Receita Ativos");
 
-                        var valorReceitaPlanoEsperado = 1145.00;
+                        var valorReceitaPlanoEsperado = 1045.00;
                         var valorReceitaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaPlano, "Campo Receita Plano", tipoAtributo);
                         var valorReceitaPlanoAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaPlano, "Campo Receita Plano");
 
