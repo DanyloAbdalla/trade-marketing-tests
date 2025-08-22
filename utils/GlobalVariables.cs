@@ -219,10 +219,13 @@ public class GlobalVariables
     public static string TabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../div[2]/div//tbody";
     public static string LinhaTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../div[2]/div//tbody/tr[@data-row-key='0']";
     public static string ScrollTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//div[contains(@class,'ant-table-scroll-horizontal')]";
+    public static string ScrollHorizontalTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//tbody[@class='ant-table-tbody']";
     public static string AceleradorInicioVigenciaTrade { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//*[@title='Início Vigência']/../..//input";
     public static string AceleradorQuantidadeAlocarTrade { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//*[@title='Alocar']/../..//input";
     public static string AceleradorFimVigenciaTrade { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//*[@title='Fim Vigência']/../..//input";
     public static string ColunaVeiculacaoTrade { get; set; } = "//div[@id='ativos-alocados-table']//thead//th[text()='Veiculação']";
+    public static string ColunaVeiculacaoTradeCheckbox { get; set; } = "(//tbody[@class='ant-table-tbody']//input[@type='checkbox'])[1]";
+    public static string ColunaDisponivelTrade { get; set; } = "//div[@id='ativos-alocados-table']//thead//th[text()='Disponível']";
     public static string LojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../..//tbody";
     public static string AplicarDadosLojas { get; set; } = "(//button/*[text()='Aplicar'])[2]";
     public static string BuscarAtivoAlocacao { get; set; } = "//div[@class='ativo-selector']//input";

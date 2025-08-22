@@ -452,7 +452,7 @@ public class PlanosContratosPage
 
                 if (valorAtributo == null || valorAtributo != "true")
                 {
-                    Dsl.ScrollHorizontalDentroDoElementoTabela(webDriver, GlobalVariables.ScrollTabelaLojasAtivoAlocados, GlobalVariables.ColunaVeiculacaoTrade);
+                    Dsl.ScrollHorizontalDentroDoElementoTabela(webDriver, GlobalVariables.ScrollHorizontalTabelaLojasAtivoAlocados, GlobalVariables.ColunaVeiculacaoTradeCheckbox);
 
                     var inicioVigencia = colunas[7];
                     var fimVigencia = colunas[8];
