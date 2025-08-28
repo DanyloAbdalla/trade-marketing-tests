@@ -58,8 +58,6 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage PreencherCampoIndustria(string contextoDeTeste)
     {
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
-
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PesquisarIndustria);
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.PesquisarIndustria, "Campo Indústria");
 

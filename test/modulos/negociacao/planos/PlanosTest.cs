@@ -77,7 +77,7 @@ public class PlanosTest
             ClienteUpSell.ClienteStart => 0,
             ClienteUpSell.ClientePro => 1,
             ClienteUpSell.ClienteExpert => 2,
-            _ => throw new ArgumentOutOfRangeException(nameof(cliente), "ClienteUpSell não reconhecido")
+            _ => throw new ArgumentOutOfRangeException(nameof(cliente), "Cliente upsell não reconhecido")
         };
 
         new LoginPage(webDriver)
