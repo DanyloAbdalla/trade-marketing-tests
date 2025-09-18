@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using OpenQA.Selenium;
+using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
 
 namespace MeuClienteWebTestProject;
 
@@ -372,7 +373,7 @@ public class PlanosTest
         {
             new PlanosContratosPage(webDriver)
             .BuscarPlanos(nomeCampanha)
-            .ConfirmarExclusaoDoPlano();
+            .ConfirmarExclusaoDoPlano(nomeCampanha);
         }
     }
 

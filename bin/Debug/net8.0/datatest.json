@@ -62,6 +62,13 @@
         "Arte",
         "Montagem",
         "Comprovação"
+      ],
+      "lojas": [
+        "Loja 01",
+        "Loja 02",
+        "Loja 03",
+        "Loja 04",
+        "Loja 05"
       ]
     },
     "TestCriarPlanoComWorkflowPadrao": {},

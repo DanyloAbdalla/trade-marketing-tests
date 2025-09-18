@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools;
 
 namespace MeuClienteWebTestProject;
 
@@ -54,7 +56,8 @@ public class HomePage
         else if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela) > 0)
         {
             FiltrarTodosPlanos();
-            Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano, "Botão Editar Plano");
+            //Console.WriteLine(primeiroTeste);
+            //Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano(primeiroTeste), "Botão Editar Plano");
         }
 
         return new PlanosContratosPage(webDriver);
