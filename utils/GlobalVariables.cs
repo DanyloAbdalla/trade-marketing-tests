@@ -95,7 +95,7 @@ public class GlobalVariables
     public static string FiltrarContratoPorCampanha { get; set; } = "//span[text()='Contrato']/following-sibling::span[@role='button']";
     public static string DetalhesContratosAtivosTotalReceita { get; set; } = "//*[contains(text(),'Total de Receita')]/following-sibling::div//button[1]";
     public static string TextoCardTotalReceita { get; set; } = "//div[@class='DashBoardCards']//*[contains(text(),'índice de Crescimento')]";
-    public static string TabelaListagemAterrissagem { get; set; } = "//*[@role='tabpanel']/div/div";
+    public static string TabelaListagemAterrissagem { get; set; } = "//*[text()='Listagem de Aterrissagem receita']/../../../../../../..//table";
     public static string ColunaMesAterrissagem { get; set; } = "//*[text()='JANEIRO']";
     public static string DetalhesAterrissagemReceita { get; set; } = "(//*[contains(text(),'Perfomance Receita')]/following-sibling::div//button[1])[1]";
     public static string DetalhesAterrissagemReceitaPorBandeira { get; set; } = "(//*[contains(text(),'Receita Bandeira')]/following-sibling::div//button[1])[1]";
@@ -208,11 +208,11 @@ public class GlobalVariables
     public static string SelecionarTipoCampanha { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Tipo Campanha 01']";
     public static string QuantidadeParcelas { get; set; } = "//*[@name='QuantidadeParcelas']";
     public static string Setor { get; set; } = "//*[@name='SetorId']//input";
-    public static string SelecionarSetor { get; set; } = "(//*[text()='Geral'])[2]";
+    public static string SelecionarSetor { get; set; } = "(//*[@class='ant-select-item-option-content'][text()='Geral'])[1]";
     public static string Departamento { get; set; } = "//*[@name='DepartamentoId']//input";
-    public static string SelecionarDepartamento { get; set; } = "(//*[text()='Geral'])[3]";
+    public static string SelecionarDepartamento { get; set; } = "(//*[@class='ant-select-item-option-content'][text()='Geral'])[2]";
     public static string Categoria { get; set; } = "//*[@name='CategoriaId']//input";
-    public static string SelecionarCategoria { get; set; } = "(//*[text()='Geral'])[5]";
+    public static string SelecionarCategoria { get; set; } = "(//*[@class='ant-select-item-option-content'][text()='Geral'])[3]";
     public static string DataCancelamentoPlano { get; set; } = "//*[contains(text(),'Data de Cancelamento')]/parent::div/div/div/div[2]//input";
     public static string SelecionarDataCancelamentoPlano { get; set; } = "//*[text()='Today']";
     public static string OkCancelamento { get; set; } = "//*[text()='OK']";

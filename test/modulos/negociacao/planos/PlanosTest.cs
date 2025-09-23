@@ -278,7 +278,7 @@ public class PlanosTest
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .EditarQuantidadesDosAtivosNoPlano(contextoDeTeste)
+        .EditarQuantidadesDosAtivosNoPlano()
         .SalvarPlano()
         .FecharDadosDoPlano()
         .AbrirEdicaoDoPlano()
@@ -305,7 +305,7 @@ public class PlanosTest
         .BuscarPlanos(nomeCampanha)
         .AbrirEdicaoDoPlano()
         .AbrirAbaAtivosAlocados()
-        .AlocarNovosAtivosNoPlano(contextoDeTeste)
+        .AlocarNovosAtivosNoPlano()
         .SalvarPlano()
         .FecharDadosDoPlano()
         .AbrirEdicaoDoPlano()
@@ -338,7 +338,7 @@ public class PlanosTest
         .EditarSituacaoDoPlano()
         .SalvarPlano()
         .FecharDadosDoPlano()
-        .BuscarPlanos(nomeCampanha)
+        .RecarregarPlanos()
         .ValidarStatusFarolDoPlano(statusEsperado, farolEsperado);
     }
 
@@ -411,7 +411,7 @@ public class PlanosTest
         .EditarSituacaoDoPlano()
         .SalvarPlano()
         .FecharDadosDoPlano()
-        .BuscarPlanos(nomeCampanha)
+        .RecarregarPlanos()
         .ValidarStatusFarolDoPlano(statusEsperado, farolEsperado);
     }
 

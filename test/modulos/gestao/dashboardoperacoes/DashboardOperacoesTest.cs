@@ -12,15 +12,16 @@ public class DashboardOperacoesTest
     private RunSettings runSettings;
     private IWebDriver webDriver;
     private readonly BrowserType browserType = BrowserType.Chrome;
-    private readonly ClienteUpSell clienteUpSellAtual;
+    private readonly string contextoDeTeste;
+    private ClienteUpSell clienteUpSellAtual => Enum.TryParse<ClienteUpSell>(contextoDeTeste, out var cliente) ? cliente : ClienteUpSell.ClienteStart;
     private readonly string nomeClasse;
     private readonly string nomeAtivo;
     private readonly string nomeAtivoEsperado;
     private readonly string nomeCampanha;
 
-    public DashboardOperacoesTest(ClienteUpSell clienteUpSell)
+    public DashboardOperacoesTest(string contextoDeTeste)
     {
-        clienteUpSellAtual = clienteUpSell;
+        this.contextoDeTeste = contextoDeTeste;
         nomeClasse = TestContext.CurrentContext.Test.ClassName.Split('.').Last();
         DataLoader.CarregarArquivo();
         nomeAtivo = DataLoader.ObterDados("dashboard_operacaoes", "TestGlobalData", "nomeAtivo") ?? throw new Exception("nomeAtivo não encontrado");

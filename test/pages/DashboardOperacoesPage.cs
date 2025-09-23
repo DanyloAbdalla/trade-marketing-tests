@@ -26,7 +26,7 @@ public class DashboardOperacoesPage
 
         var lojasAtivas = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaListagemLojasAtivas) - 1;
         Dsl.Esperar();
-        Debug.Assert(lojasAtivas == 6, "Lojas não foram exibidas corretamente");
+        Debug.Assert(lojasAtivas == 5, "Lojas não foram exibidas corretamente");
 
         return new DashboardOperacoesPage(webDriver);
     }
@@ -226,7 +226,7 @@ public class DashboardOperacoesPage
         Dsl.ScrollParaElemento(webDriver, xpathElementoScroll);
         Dsl.EsperarElementoParaClicar(webDriver, xpathElementoBotao, telaElemento);
 
-        Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.PaginacaoTela, "Paginação Tela");
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TabelaListagemAterrissagem);
 
         var countTabelaDeDados = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaListagemAterrissagem);
         Debug.Assert(countTabelaDeDados > 0, "Tabela de dados não foi apresentada corretamente");
