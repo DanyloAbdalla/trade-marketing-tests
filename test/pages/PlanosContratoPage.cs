@@ -28,8 +28,8 @@ public class PlanosContratosPage
         abasPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestGlobalData", "abasPlanoEsperado");
 
         var teste = TestContext.CurrentContext.Test.MethodName;
-        if (teste.Equals("TestCriarPlanoComWorkflow"))
-            etapaNomeWorkflowPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestCriarPlanoComWorkflow", "etapaNomeWorkflowPlanoEsperado");
+        if (teste.Equals("TestCriarPlanoComAtivosTipoMidiaFisica"))
+            etapaNomeWorkflowPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestCriarPlanoComAtivosTipoMidiaFisica", "etapaNomeWorkflowPlanoEsperado");
         else
             etapaNomeWorkflowPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestGlobalData", "etapaNomeWorkflowPlanoEsperado");
     }
@@ -200,7 +200,6 @@ public class PlanosContratosPage
         switch (clienteUpSellAtual)
         {
             case ClienteUpSell.ClienteStart:
-            case ClienteUpSell.ClientePro:
                 if (tipoAtivoMidia.Equals("Grafica"))
                 {
                     Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
@@ -225,6 +224,13 @@ public class PlanosContratosPage
                         }
                     }
                 }
+                break;
+            case ClienteUpSell.ClientePro:
+                Dsl.ScrollParaElemento(webDriver, GlobalVariables.AplicarAceleradorPorLojaSimulacao);
+                Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.AceleradorQuantidadeAlocarSimulacao, "5");
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.AplicarAceleradorPorLojaSimulacao, "Botão Aplicar Quantidade para Todas as Lojas na Simulação do Plano");
+                Dsl.Esperar(500);
+                Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
                 break;
             case ClienteUpSell.ClienteExpert:
                 break;
@@ -325,14 +331,14 @@ public class PlanosContratosPage
         {
             Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadProcurandoEtapa);
             Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "UserHomolog02Pro");
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowSP, "Campo Selecionar Usuário Responsável");
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowPro, "Campo Selecionar Usuário Responsável");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
         }
         else if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
         {
             Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadProcurandoEtapa);
             Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.PreencherUsuarioResponsavelEtapaWorkflow, "UserHomolog02Expert");
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowCP, "Campo Selecionar Usuário Responsável");
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarUsuarioResponsavelEtapaWorkflowExpert, "Campo Selecionar Usuário Responsável");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
         }
 
@@ -371,6 +377,7 @@ public class PlanosContratosPage
         }
         else
         {
+            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.EtapasWorkflow);
             IList<IWebElement> elementos = Dsl.ObterListaDeElementos(webDriver, GlobalVariables.EtapasWorkflowPlano);
             IList<string> nomesEtapasWorkflowPlanoAtual = elementos.Select(elementos => elementos.Text).ToList();
 
@@ -547,7 +554,6 @@ public class PlanosContratosPage
         switch (clienteUpSellAtual)
         {
             case ClienteUpSell.ClienteStart:
-            case ClienteUpSell.ClientePro:
                 for (var i = 1; i <= quantidadeAtivosAlocados; i++)
                 {
                     var editarAtivo = $"//tr[{i + 1}]//button/span[@aria-label='edit']";
@@ -561,6 +567,7 @@ public class PlanosContratosPage
                     SalvarAtivoAlocado();
                 }
                 break;
+            case ClienteUpSell.ClientePro:
             case ClienteUpSell.ClienteExpert:
                 BuscarAtivosAlocadosNoPlano(ativosGraficos[0]);
                 Dsl.Esperar();
@@ -636,12 +643,11 @@ public class PlanosContratosPage
 
     public PlanosContratosPage EditarVigenciaLoja()
     {
-        Dsl.ScrollHorizontalDentroDoElementoTabela(webDriver, GlobalVariables.ScrollHorizontalTabelaLojasAtivoAlocados, GlobalVariables.ColunaVeiculacaoTradeCheckbox);
 
         switch (clienteUpSellAtual)
         {
             case ClienteUpSell.ClienteStart:
-            case ClienteUpSell.ClientePro:
+                Dsl.ScrollHorizontalDentroDoElementoTabela(webDriver, GlobalVariables.ScrollHorizontalTabelaLojasAtivoAlocados, GlobalVariables.ColunaVeiculacaoTradeCheckbox);
                 IList<IWebElement> linhas = Dsl.ObterLinhasDoElementoTabela(webDriver, GlobalVariables.TabelaLojasAtivoAlocados);
 
                 foreach (IWebElement linha in linhas)
@@ -658,8 +664,9 @@ public class PlanosContratosPage
                     }
                 }
                 break;
+            case ClienteUpSell.ClientePro:
             case ClienteUpSell.ClienteExpert:
-                var mensagemSucessoEsperadaProdutosInseridos = "Produtosinseridoscomsucesso!";
+                List<MensagemFeedback> mensagensEsperadas = DataLoader.ObterMensagensDeFeedback("negociacoes_planos", "TestGlobalData", "mensagensDeFeedback");
 
                 IWebElement iniciovigencia = Dsl.EncontrarElemento(webDriver, GlobalVariables.AceleradorInicioVigenciaTrade, "Campo Início Vigência no Acelerador");
                 IWebElement fimvigencia = Dsl.EncontrarElemento(webDriver, GlobalVariables.AceleradorFimVigenciaTrade, "Campo Fim Vigência no Acelerador");
@@ -668,11 +675,12 @@ public class PlanosContratosPage
 
                 Dsl.Clicar(webDriver, GlobalVariables.AplicarAceleradorPorLojaAtivoAlocado, "Botão Aplicar Vigência para Todas as Lojas");
 
-                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-                ValidarMensagensDoPlano(mensagemSucessoEsperadaProdutosInseridos);
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-                break;
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagensDeFeedback);
 
+                List<MensagemFeedback> mensagensAtuais = Dsl.ObterMensagensDeFeedback(webDriver, GlobalVariables.MensagensDeFeedback);
+
+                Dsl.ValidarMensagemDeFeedbacak(mensagensEsperadas, mensagensAtuais);
+                break;
         }
 
         return this;
@@ -1390,11 +1398,11 @@ public class PlanosContratosPage
                     }
                     else if (teste.Equals("TestCriarPlanoComAtivosTipoMidiaFisica"))
                     {
-                        var valorReceitaAtivosEsperado = 2000.00;
+                        var valorReceitaAtivosEsperado = 2110.00;
                         var valorReceitaAtivos = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaAtivos, "Campo Receita Ativos", tipoAtributo);
                         var valorReceitaAtivosAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaAtivos, "Campo Receita Ativos");
 
-                        var valorReceitaPlanoEsperado = 2200.00;
+                        var valorReceitaPlanoEsperado = 2420.00;
                         var valorReceitaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaPlano, "Campo Receita Plano", tipoAtributo);
                         var valorReceitaPlanoAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaPlano, "Campo Receita Plano");
 

@@ -27,6 +27,7 @@ public class GlobalVariables
     public static string SairConta { get; set; } = "//*[contains(@class,'logout')]/ancestor::a/*[text()='Sair']";
     public static string Mensagens { get; set; } = "//*[@class='ant-message-notice']";
     public static string MensagemDeComunicacao { get; set; } = "//div[@class='Mc-message-container']/div/div";
+    public static string MensagensDeFeedback { get; set; } = "//div[@class='Mc-message-container']";
     public static string NovoRegistro { get; set; } = "//button[@id='Buttonclass']";
     public static string SalvarRegistro { get; set; } = "//button/*[text()='Salvar']";
     public static string VoltarTela { get; set; } = "//button/*[text()='Voltar']";
@@ -167,8 +168,8 @@ public class GlobalVariables
     public static string GerarPrePlanoComWorkflowSelecionado { get; set; } = "//button/*[text()='Gerar Pré Plano']";
     public static string PesquisarUsuarioResponsavelEtapaWorkflow { get; set; } = "//*[contains(text(),'Selecione o usuário')]/parent::div/div/div/div/div/div/div/div/span[2]";
     public static string PreencherUsuarioResponsavelEtapaWorkflow { get; set; } = "//span[contains(text(),'usuário responsável')]/..//input";
-    public static string SelecionarUsuarioResponsavelEtapaWorkflowSP { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02SP']";
-    public static string SelecionarUsuarioResponsavelEtapaWorkflowCP { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02CP']";
+    public static string SelecionarUsuarioResponsavelEtapaWorkflowPro { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02Pro']";
+    public static string SelecionarUsuarioResponsavelEtapaWorkflowExpert { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02Expert']";
     public static string LoadProcurandoEtapa { get; set; } = "//div[text()='Procurando Etapa...']";
     public static string MensagemIndisponibilidadeInventario { get; set; } = "//*[@class='form-action'][2]/div/span[3]";
     #endregion
@@ -219,6 +220,7 @@ public class GlobalVariables
     public static string SelecionarDataCancelamentoPlano { get; set; } = "//*[text()='Today']";
     public static string OkCancelamento { get; set; } = "//*[text()='OK']";
     public static string FecharPlanoConfirmacao { get; set; } = "//button/*[text()='Fechar mesmo assim']";
+    public static string EtapasWorkflow { get; set; } = "//div[contains(@class,'etapas-container')]";
     public static string EtapasWorkflowPlano { get; set; } = "//div[contains(@class,'etapas-item')]/span";
     public static string EtapasWorkflowGraficoPlano { get; set; } = "//div[@class='ant-row etapas-container-grafico ']";
     public static string SalvarPlano { get; set; } = "//div[contains(@class,'contrato')]//button/*[text()='Salvar']";

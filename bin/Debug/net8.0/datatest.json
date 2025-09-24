@@ -68,6 +68,28 @@
         "L3 - Loja 03",
         "L4 - Loja 04",
         "L5 - Loja 05"
+      ],
+      "mensagensDeFeedback": [
+        {
+          "mensagem": "Disponibilidade recalculada com sucesso!",
+          "atributo": "Mc-message-success"
+        },
+        {
+          "mensagem": "Produtos inseridos com sucesso!",
+          "atributo": "Mc-message-success"
+        },
+        {
+          "mensagem": "Produtos atualizados com sucesso!",
+          "atributo": "Mc-message-success"
+        },
+        {
+          "mensagem": "Alocação atualizada com sucesso!",
+          "atributo": "Mc-message-success"
+        },
+        {
+          "mensagem": "Nenhuma mudança detectada na disponibilidade!",
+          "atributo": "Mc-message-info"
+        }
       ]
     },
     "TestCriarPlanoComAtivosTipoMidiaGrafica": {},
@@ -81,6 +103,7 @@
       ]
     },
     "TestEditarPlanoExistenteAlterandoVigenciaDoPlano": {},
+    "TestEditarPlanoExistenteAlterandoVigenciaDoTrade": {},
     "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel": {},
     "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel": {},
     "TestAprovarPlano": {

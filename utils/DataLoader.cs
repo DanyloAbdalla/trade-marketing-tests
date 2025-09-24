@@ -20,4 +20,9 @@ public class DataLoader
     {
         return ((JArray)massaDados[suite][teste][data]).ToObject<List<string>>();
     }
+
+    public static List<MensagemFeedback> ObterMensagensDeFeedback(string suite, string teste, string data)
+    {
+        return ((JArray)massaDados[suite][teste][data]).ToObject<List<MensagemFeedback>>();
+    }
 }

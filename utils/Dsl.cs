@@ -75,6 +75,28 @@ public class Dsl
         { Console.WriteLine("Erro ao esperar a invisibilidade do elemento na página: " + "\n" + ex.Message); }
     }
 
+    public static bool EsperarInvisibilidadeDoElementoMCMessageContainer(IWebDriver webDriver, string XPath)
+    {
+
+        var fluentWait = new DefaultWait<IWebDriver>(webDriver)
+        {
+            Timeout = TimeSpan.FromSeconds(40),
+            PollingInterval = TimeSpan.FromMilliseconds(50)
+        };
+
+        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+
+        try
+        {
+            IWebElement element = webDriver.FindElement(By.XPath(XPath));
+            if (fluentWait.Until(ExpectedConditions.StalenessOf(element)) || fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)))) { return true; }
+        }
+        catch (Exception ex)
+        { Console.WriteLine("Erro ao esperar a invisibilidade do elemento na página: " + "\n" + ex.Message); }
+
+        return false;
+    }
+
     /// <summary>
     /// Método que espera o elemento ficar disponível para o click
     /// </summary>
@@ -279,6 +301,30 @@ public class Dsl
         return linhas;
     }
 
+    public static List<MensagemFeedback> ObterMensagensDeFeedback(IWebDriver webDriver, string XPath)
+    {
+        var mensagensFeedback = new List<MensagemFeedback>();
+
+        while (!EsperarInvisibilidadeDoElementoMCMessageContainer(webDriver, XPath))
+        {
+            IWebElement mensagensContainer = webDriver.FindElement(By.XPath(XPath));
+            IList<IWebElement> mensagens = mensagensContainer.FindElements(By.XPath("//*[contains(@class,'MC-message')]"));
+            foreach (var mensagem in mensagens)
+            {
+                var atributoValor = mensagem.GetAttribute("data-testid");
+                var mensagemTexto = mensagem.Text;
+
+                mensagensFeedback.Add(new MensagemFeedback
+                {
+                    Atributo = atributoValor,
+                    Mensagem = mensagemTexto
+                });
+            }
+        }
+
+        return mensagensFeedback;
+    }
+
     public static IList<IWebElement> ObterColunasDoElementoTabela(IWebElement linhaTabela)
     {
         IList<IWebElement> colunas = linhaTabela.FindElements(By.XPath("td"));
@@ -296,8 +342,6 @@ public class Dsl
     /// <returns>Retorna uma lista de elementos</returns>
     public static IList<IWebElement> ObterListaDeElementos(IWebDriver webDriver, string XPath)
     {
-        EsperarVisibilidadeDoElemento(webDriver, XPath);
-
         IList<IWebElement> elementos = webDriver.FindElements(By.XPath(XPath));
 
         return elementos;
@@ -579,6 +623,21 @@ public class Dsl
             case "Mc-message-error":
                 Assert.Fail("Teste falhou apresentando a mensagem: " + mensagemAtual);
                 break;
+        }
+    }
+
+    public static void ValidarMensagemDeFeedbacak(List<MensagemFeedback> mensagensEsperadas, List<MensagemFeedback> mensagensAtuais)
+    {
+        var erroDetectado = mensagensAtuais.FirstOrDefault(m => m.Atributo == "MC-message-error");
+
+        if (erroDetectado != null)
+        {
+            Assert.Fail($" Mensagem de erro apresentada: '{erroDetectado.Mensagem}' com atributo '{erroDetectado.Atributo}'");
+        }
+
+        foreach (var esperada in mensagensEsperadas)
+        {
+            Assert.That(mensagensAtuais.Any(atual => atual.Mensagem == esperada.Mensagem && atual.Atributo == esperada.Atributo), Is.True);
         }
     }
 
