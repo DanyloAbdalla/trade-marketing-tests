@@ -1,6 +1,7 @@
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using OpenQA.Selenium;
+using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
 
 namespace MeuClienteWebTestProject;
 
@@ -436,7 +437,7 @@ public class PlanosTest
         {
             new PlanosContratosPage(webDriver, clienteUpSellAtual)
             .BuscarPlanos(nomeCampanha)
-            .ConfirmarExclusaoDoPlano();
+            .ConfirmarExclusaoDoPlano(nomeCampanha);
         }
     }
 
