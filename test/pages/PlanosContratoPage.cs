@@ -8,13 +8,18 @@ namespace MeuClienteWebTestProject;
 public class PlanosContratosPage
 {
     private IWebDriver webDriver;
-    private string atributoTesteId;
+    private readonly string atributoTesteId;
+    private readonly string nomeCampanha;
+    private string tipoMidiaAtivo;
+    private readonly string statusEsperado;
+    private readonly string farolEsperado;
     private ClienteUpSell clienteUpSellAtual;
     private IList<string> ativosGraficos;
     private IList<string> ativosFisicos;
     private IList<string> abasPlanoEsperado;
     private IList<string> etapaNomeWorkflowPlanoEsperado;
-    List<MensagemFeedback> mensagensEsperadas;
+    private List<string> nomeCampanhas;
+    private List<MensagemFeedback> mensagensEsperadas;
 
 
     public PlanosContratosPage(IWebDriver webDriver, ClienteUpSell clienteUpSell)
@@ -27,11 +32,39 @@ public class PlanosContratosPage
         abasPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestGlobalData", "abasPlanoEsperado");
         mensagensEsperadas = DataLoader.ObterMensagensDeFeedback("negociacoes_planos", "TestGlobalData", "mensagensDeFeedback");
 
-        var teste = TestContext.CurrentContext.Test.MethodName;
-        if (teste.Equals("TestCriarPlanoComAtivosTipoMidiaFisica"))
-            etapaNomeWorkflowPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestCriarPlanoComAtivosTipoMidiaFisica", "etapaNomeWorkflowPlanoEsperado");
+        var nomeTeste = TestContext.CurrentContext.Test.MethodName;
+        if (nomeTeste.Equals("TestCriarPlanoComAtivosTipoMidiaFisica"))
+        {
+            nomeCampanha = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "nomeCampanha");
+            tipoMidiaAtivo = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "tipoMidiaAtivo");
+            etapaNomeWorkflowPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", nomeTeste, "etapaNomeWorkflowPlanoEsperado");
+            statusEsperado = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "statusEsperado");
+            farolEsperado = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "farolEsperado");
+        }
+        else if (nomeTeste.Equals("TestAprovarPlano"))
+        {
+            nomeCampanha = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "nomeCampanha");
+            statusEsperado = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "statusEsperado");
+            farolEsperado = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "farolEsperado");
+        }
+        else if (nomeTeste.Equals("TestCancelarPlano"))
+        {
+            nomeCampanha = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "nomeCampanha");
+            statusEsperado = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "statusEsperado");
+            farolEsperado = DataLoader.ObterDados("negociacoes_planos", nomeTeste, "farolEsperado");
+        }
+        else if (nomeTeste.Equals("TestExcluirPlano"))
+        {
+            nomeCampanhas = DataLoader.ObterDadosEmLista("negociacoes_planos", nomeTeste, "nomeCampanhas");
+        }
         else
+        {
+            nomeCampanha = DataLoader.ObterDados("negociacoes_planos", "TestGlobalData", "nomeCampanha");
+            tipoMidiaAtivo = DataLoader.ObterDados("negociacoes_planos", "TestGlobalData", "tipoMidiaAtivo");
             etapaNomeWorkflowPlanoEsperado = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestGlobalData", "etapaNomeWorkflowPlanoEsperado");
+            statusEsperado = DataLoader.ObterDados("negociacoes_planos", "TestGlobalData", "statusEsperado");
+            farolEsperado = DataLoader.ObterDados("negociacoes_planos", "TestGlobalData", "farolEsperado");
+        }
     }
 
     /// <summary>
@@ -89,7 +122,7 @@ public class PlanosContratosPage
     /// Método para preencher o campo Campanha
     /// </summary>
     /// <returns></returns>
-    public PlanosContratosPage PreencherCampoCampanha(string nomeCampanha)
+    public PlanosContratosPage PreencherCampoCampanha()
     {
         Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PreencherCampanha, nomeCampanha);
 
@@ -100,7 +133,7 @@ public class PlanosContratosPage
     /// Método para filtrar e selecionar os ativos
     /// </summary>
     /// <returns></returns>
-    public PlanosContratosPage SelecionarAtivos(string tipoMidiaAtivo)
+    public PlanosContratosPage SelecionarAtivos()
     {
         List<string> lojas = DataLoader.ObterDadosEmLista("negociacoes_planos", "TestGlobalData", "lojas");
 
@@ -118,6 +151,7 @@ public class PlanosContratosPage
                     foreach (var nomeAtivo in ativosGraficos)
                     {
                         Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PesquisarAtivos, nomeAtivo);
+                        Dsl.Esperar();
                         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarAtivosFiltro, "Campo Seleciona Ativo Filtrado");
                         webDriver.FindElement(By.XPath(GlobalVariables.PesquisarAtivos)).SendKeys(Keys.Control + "a" + Keys.Backspace); //Apagando o nome do ativo do campo de pesquisa
                         Dsl.Clicar(webDriver, GlobalVariables.TelaFiltrarAtivo, "Tela Filtrar Ativos");
@@ -128,6 +162,7 @@ public class PlanosContratosPage
                     foreach (var nomeAtivo in ativosFisicos)
                     {
                         Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PesquisarAtivos, nomeAtivo);
+                        Dsl.Esperar();
                         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarAtivosFiltro, "Campo Seleciona Ativo Filtrado");
                         webDriver.FindElement(By.XPath(GlobalVariables.PesquisarAtivos)).SendKeys(Keys.Control + "a" + Keys.Backspace); //Apagando o nome do ativo do campo de pesquisa
                         Dsl.Clicar(webDriver, GlobalVariables.TelaFiltrarAtivo, "Tela Filtrar Ativos");
@@ -195,12 +230,12 @@ public class PlanosContratosPage
     /// </summary>
     /// <param name="contextoDeTestes"></param>
     /// <returns></returns>
-    public PlanosContratosPage PreencherQuantidadeAtivos(string tipoAtivoMidia)
+    public PlanosContratosPage PreencherQuantidadeAtivos()
     {
         switch (clienteUpSellAtual)
         {
             case ClienteUpSell.ClienteStart:
-                if (tipoAtivoMidia.Equals("Grafica"))
+                if (tipoMidiaAtivo.Equals("Grafica"))
                 {
                     Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
                     foreach (var nomeAtivo in ativosGraficos)
@@ -211,7 +246,7 @@ public class PlanosContratosPage
                         quantidade.SendKeys("5");
                     }
                 }
-                else if (tipoAtivoMidia.Equals("Fisica"))
+                else if (tipoMidiaAtivo.Equals("Fisica"))
                 {
                     Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
                     foreach (var nomeAtivo in ativosFisicos)
@@ -232,7 +267,7 @@ public class PlanosContratosPage
             case ClienteUpSell.ClienteExpert:
                 break;
                 /*case "SemPlantaLoja":
-                        if (tipoAtivoMidia.Equals("Grafica"))
+                        if (tipoMidiaAtivo.Equals("Grafica"))
                         {
                             Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
                             foreach (var nomeAtivo in ativosGraficos)
@@ -244,7 +279,7 @@ public class PlanosContratosPage
                                 }
                             }
                         }
-                        else if (tipoAtivoMidia.Equals("Fisica"))
+                        else if (tipoMidiaAtivo.Equals("Fisica"))
                         {
                             Dsl.ScrollParaElemento(webDriver, GlobalVariables.CarregarLojas);
                             foreach (var nomeAtivo in ativosFisicos)
@@ -411,16 +446,14 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para validar status e farol na lista de planos, após criação ou alteração
     /// </summary>
-    /// <param name="statusPlanoEsperado"></param>
-    /// <param name="farolPlanoEsperado"></param>
     /// <returns></returns>
-    public PlanosContratosPage ValidarStatusFarolDoPlano(string statusPlanoEsperado, string farolPlanoEsperado)
+    public PlanosContratosPage ValidarStatusFarolDoPlano()
     {
         var statusPlanoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.StatusPlano, "Coluna Status Plano");
-        Assert.That(statusPlanoAtual, Does.Contain(statusPlanoEsperado), "Status atual não corresponde com o esperado");
+        Assert.That(statusPlanoAtual, Does.Contain(statusEsperado), "Status atual não corresponde com o esperado");
 
         var farolPlanoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.FarolPlano, "Coluna Farol Plano");
-        Assert.That(farolPlanoAtual, Does.Contain(farolPlanoEsperado), "Farol atual não corresponde com o esperado");
+        Assert.That(farolPlanoAtual, Does.Contain(farolEsperado), "Farol atual não corresponde com o esperado");
 
         return this;
     }
@@ -440,11 +473,10 @@ public class PlanosContratosPage
     /// <summary>
     /// Método para buscar planos
     /// </summary>
-    /// <param name="textoValor"></param>
     /// <returns></returns>
-    public PlanosContratosPage BuscarPlanos(string textoValor)
+    public PlanosContratosPage BuscarPlanos()
     {
-        Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarPlanoPorCampanha, GlobalVariables.PesquisarNomeCampanha, GlobalVariables.BuscarRegistro, textoValor);
+        Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarPlanoPorCampanha, GlobalVariables.PesquisarNomeCampanha, GlobalVariables.BuscarRegistro, nomeCampanha);
 
         return this;
     }
@@ -1023,25 +1055,30 @@ public class PlanosContratosPage
     /// Método para confirmar a exclusão de um plano, validando as mensagens de alerta e sucesso
     /// </summary>
     /// <returns></returns>
-    public PlanosContratosPage ConfirmarExclusaoDoPlano(string nomeCampanha)
+    public PlanosContratosPage ConfirmarExclusaoDoPlano()
     {
         var mensagemConfirmacaoEsperadaExcluirPlano = "DesejarealmenteexcluirestePlano?";
         var mensagemSucessoEsperadaPlanoDeletado = "Planodeletadocomsucesso";
-        var quantidadeLinhasTabela = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaPlanos) - 1; //Contar linhas no elemento tbody da listagem de planos, ignorando a tag tr sem dados
-
-        for (var i = 1; i <= quantidadeLinhasTabela; i++)
+        foreach (var nomeCampanha in nomeCampanhas)
         {
-            Dsl.Clicar(webDriver, GlobalVariables.ExcluirPlano(nomeCampanha), "Botão Excluir Plano");
+            Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarPlanoPorCampanha, GlobalVariables.PesquisarNomeCampanha, GlobalVariables.BuscarRegistro, nomeCampanha);
+            var quantidadeLinhasTabela = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.TabelaPlanos) - 1; //Contar linhas no elemento tbody da listagem de planos, ignorando a tag tr sem dados
 
-            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TituloModalConfirmacao);
-            ValidarMensagensDeModalDoPlano(mensagemConfirmacaoEsperadaExcluirPlano);
+            for (var i = 1; i <= quantidadeLinhasTabela; i++)
+            {
+                Dsl.Clicar(webDriver, GlobalVariables.ExcluirPlano(nomeCampanha), "Botão Excluir Plano");
 
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.OkExclusao, "Botão OK Exclusão");
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TituloModalConfirmacao);
+                ValidarMensagensDeModalDoPlano(mensagemConfirmacaoEsperadaExcluirPlano);
 
-            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
-            ValidarMensagensDoPlano(mensagemSucessoEsperadaPlanoDeletado);
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.OkExclusao, "Botão OK Exclusão");
+
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+                ValidarMensagensDoPlano(mensagemSucessoEsperadaPlanoDeletado);
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeComunicacao);
+            }
         }
+
         return this;
     }
 
@@ -1079,6 +1116,7 @@ public class PlanosContratosPage
     {
         var tipoAtributo = "value";
         var teste = TestContext.CurrentContext.Test.MethodName;
+        Dsl.Esperar();
 
         if (string.IsNullOrEmpty(teste))
             throw new ArgumentException("Variável teste vazia ou nulo");

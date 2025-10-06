@@ -98,8 +98,10 @@
     },
     "TestCriarPlanoComAtivosTipoMidiaGrafica": {},
     "TestCriarPlanoComAtivosTipoMidiaFisica": {
-      "tipoMidiaAtivo": "Fisica",
       "nomeCampanha": "PlanoComAtivosTipoMidiaFisicaMassaAutomatizada",
+      "tipoMidiaAtivo": "Fisica",
+      "statusEsperado": "Simulado",
+      "farolEsperado": "PLANEJADO",
       "etapaNomeWorkflowPlanoEsperado": [
         "Arte",
         "Montagem",
@@ -118,11 +120,13 @@
     "TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel": {},
     "TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel": {},
     "TestAprovarPlano": {
+      "nomeCampanha": "PlanoComAtivosTipoMidiaGraficaMassaAutomatizada",
       "statusEsperado": "Aprovado",
       "farolEsperado": "APROVADO"
     },
     "TestCriarPlanoComAlertaDeInventario": {},
     "TestCancelarPlano": {
+      "nomeCampanha": "PlanoComAtivosTipoMidiaGraficaMassaAutomatizada",
       "statusEsperado": "Cancelado",
       "farolEsperado": "CANCELADO"
     },
