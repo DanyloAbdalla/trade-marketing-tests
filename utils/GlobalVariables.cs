@@ -4,8 +4,8 @@ public class GlobalVariables
 {
     #region Projeto
     public static bool handLessMode = false; //Executa, mostrando o Browser na tela, se handLessMode igual false
-    public static bool devMode = true;
-    public static bool hmlMode = false;
+    public static bool devMode = false;
+    public static bool hmlMode = true;
     public static bool prodMode = false;
     public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
@@ -29,7 +29,7 @@ public class GlobalVariables
     public static string NovoRegistro { get; set; } = "//button[@id='Buttonclass']";
     public static string SalvarRegistro { get; set; } = "//*[@data-testid='salvarPlano']";
     public static string VoltarTela { get; set; } = "//button/*[text()='Voltar']";
-    public static string FecharTela { get; set; } = "//*[@data-testid='fecharPlano']";
+    public static string FecharTela { get; set; } = "//button/*[text()='Fechar']";
     public static string PreencherFiltro { get; set; } = "//*[@class='ant-table-filter-dropdown']//input";
     public static string BuscarRegistro { get; set; } = "//button/*[text()='Buscar']";
     public static string LimparRegistro { get; set; } = "//button/*[text()='Limpar']";
@@ -159,7 +159,7 @@ public class GlobalVariables
     public static string Loja { get; set; } = "//span[text()='Loja']/../../..//input";
     public static string SelecionarTipoMidiaGrafica { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Gráfica']";
     public static string ConfirmarFiltroInventario { get; set; } = "//button/*[text()='Confirmar']";
-    public static string CarregarLojas { get; set; } = "//*[@data-testid='carregarLojas']";
+    public static string CarregarLojas { get; set; } = "//button[@data-testid='carregarLojas']";
     public static string InventarioAlerta { get; set; } = "//td[9]//*[contains(@data-testid,'inventarioIndisponivel')]";
     public static string InventarioOk { get; set; } = "//td[9]//*[contains(@data-testid,'inventarioDisponivel')]";
     public static string GerarPrePlano { get; set; } = "//*[@data-testid='gerarPrePlano']";
@@ -227,7 +227,8 @@ public class GlobalVariables
     public static string EtapasWorkflow { get; set; } = "//div[contains(@class,'etapas-container')]";
     public static string EtapasWorkflowPlano { get; set; } = "//div[contains(@class,'etapas-item')]/span";
     public static string EtapasWorkflowGraficoPlano { get; set; } = "//div[@class='ant-row etapas-container-grafico ']";
-    public static string SalvarPlano { get; set; } = "//div[contains(@class,'contrato')]//button/*[text()='Salvar']";
+    public static string SalvarPlano { get; set; } = "//*[@data-testid='salvarPlano']";
+    public static string FecharPlano { get; set; } = "//*[@data-testid='fecharPlano']";
     #endregion
 
     #region Elementos de página - Planos - Ativos Alocados
