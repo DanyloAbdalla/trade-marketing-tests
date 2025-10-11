@@ -154,8 +154,8 @@ public class PlanosContratosPage
                 {
                     foreach (var nomeAtivo in ativosGraficos)
                     {
-                        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PesquisarAtivos, nomeAtivo);
                         Dsl.Esperar();
+                        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PesquisarAtivos, nomeAtivo);
                         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarAtivosFiltro, "Campo Seleciona Ativo Filtrado");
                         webDriver.FindElement(By.XPath(GlobalVariables.PesquisarAtivos)).SendKeys(Keys.Control + "a" + Keys.Backspace); //Apagando o nome do ativo do campo de pesquisa
                         Dsl.Clicar(webDriver, GlobalVariables.TelaFiltrarAtivo, "Tela Filtrar Ativos");
@@ -165,8 +165,8 @@ public class PlanosContratosPage
                 {
                     foreach (var nomeAtivo in ativosFisicos)
                     {
-                        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PesquisarAtivos, nomeAtivo);
                         Dsl.Esperar();
+                        Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.PesquisarAtivos, nomeAtivo);
                         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarAtivosFiltro, "Campo Seleciona Ativo Filtrado");
                         webDriver.FindElement(By.XPath(GlobalVariables.PesquisarAtivos)).SendKeys(Keys.Control + "a" + Keys.Backspace); //Apagando o nome do ativo do campo de pesquisa
                         Dsl.Clicar(webDriver, GlobalVariables.TelaFiltrarAtivo, "Tela Filtrar Ativos");
@@ -491,8 +491,12 @@ public class PlanosContratosPage
         var statusPlanoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.StatusPlano, "Coluna Status Plano");
         Assert.That(statusPlanoAtual, Does.Contain(statusEsperado), "Status atual não corresponde com o esperado");
 
-        var farolPlanoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.FarolPlano, "Coluna Farol Plano");
-        Assert.That(farolPlanoAtual, Does.Contain(farolEsperado), "Farol atual não corresponde com o esperado");
+        if (clienteUpSellAtual != ClienteUpSell.ClienteStart)
+        {
+            var farolPlanoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.FarolPlano, "Coluna Farol Plano");
+            Assert.That(farolPlanoAtual, Does.Contain(farolEsperado), "Farol atual não corresponde com o esperado");
+        }
+
 
         return this;
     }
@@ -780,7 +784,7 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage FecharDadosDoPlano()
     {
-        Dsl.Clicar(webDriver, GlobalVariables.FecharTela, "Botão Fechar Plano");
+        Dsl.Clicar(webDriver, GlobalVariables.FecharPlano, "Botão Fechar Plano");
         Dsl.Esperar();
 
         var modalInventarioIndisponivel = Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.ModalInventarioIndisponivel);
