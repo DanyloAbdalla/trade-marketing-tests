@@ -962,7 +962,7 @@ public class PlanosContratosPage
 
                 var textoQuantidadeLojasAtivoAlocado = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.QuantidadeLojasPorAtivo, "Label Quantidade de Lojas no Ativo Alocado");
                 var quantidadeLojasAtivoAlocadoAtual = Dsl.RemoverLetrasEspacosDeUmTexto(textoQuantidadeLojasAtivoAlocado, "Label Quantidade de Lojas no Ativo Alocado");
-                Dsl.ValidarNumerosNoElemento(quantidadeLojasAtivoAlocadoAtual, clienteUpSellAtual == ClienteUpSell.ClienteExpert ? "19" : "20", "Label Quantidade de Loja no Ativo Alocado"); //alterei para 19 já que o Stopper ta com um ativo a menos
+                Dsl.ValidarNumerosNoElemento(quantidadeLojasAtivoAlocadoAtual, 20, "Label Quantidade de Loja no Ativo Alocado");
 
                 AumentarQuantidadeAtivosPorLoja();
 
