@@ -93,6 +93,14 @@
         {
           "mensagem": "Salve suas informações para poder incluir produto foco!",
           "atributo": "Mc-message-info"
+        },
+        {
+          "mensagem": "Não foram encontrados inventários que correspondam aos filtros aplicados.",
+          "atributo": "Mc-message-info"
+        },
+        {
+          "mensagem": "Inventário indisponível: já possui alocação em período conflitante",
+          "atributo": "Mc-message-info"
         }
       ]
     },

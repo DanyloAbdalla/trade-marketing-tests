@@ -158,7 +158,7 @@ public class GlobalVariables
     public static string TipoMidia { get; set; } = "//span[text()='Tipo Mídia']/../../..//input";
     public static string Loja { get; set; } = "//span[text()='Loja']/../../..//input";
     public static string SelecionarTipoMidiaGrafica { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Gráfica']";
-    public static string ConfirmarFiltroInventario { get; set; } = "//button/*[text()='Confirmar']";
+    public static string SelecionarTipoMidiaFisica { get; set; } = "//div[@class='rc-virtual-list']//*[text()='FISICA']";
     public static string CarregarLojas { get; set; } = "//button[@data-testid='carregarLojas']";
     public static string InventarioAlerta { get; set; } = "//td[9]//*[contains(@data-testid,'inventarioIndisponivel')]";
     public static string InventarioOk { get; set; } = "//td[9]//*[contains(@data-testid,'inventarioDisponivel')]";
@@ -171,6 +171,36 @@ public class GlobalVariables
     public static string SelecionarUsuarioResponsavelEtapaWorkflowExpert { get; set; } = "//div[@class='rc-virtual-list']//*[text()='UserHomolog02Expert']";
     public static string LoadProcurandoEtapa { get; set; } = "//div[text()='Procurando Etapa...']";
     public static string MensagemIndisponibilidadeInventario { get; set; } = "//*[@class='form-action'][2]/div/span[3]";
+    #endregion
+
+    #region Elementos de página - Planos - Nova Tela de Simulação
+    public static string FiltrarPorDisponibilidade { get; set; } = "//*[text()='Filtrar por: ']/../..//span/input";
+    public static string SelecionarFiltroDisponibilidadeOcupado { get; set; } = "//*[@class='rc-virtual-list']//*[text()='Ocupado']";
+    public static string FiltrarInventarios { get; set; } = "//*[@data-testid='filtrarInventarios']";
+    public static string FiltroTipoMidia { get; set; } = "//*[@data-testid='filtroTipoMidia']//input";
+    public static string FiltroLoja { get; set; } = "//*[@data-testid='filtroLoja']//input";
+    public static string FiltroAtivos { get; set; } = "//*[@data-testid='filtroAtivos']//input";
+    public static string ConfirmarFiltroInventario { get; set; } = "//*[@data-testid='confirmar']";
+    public static string SelecionarLojasInventario(string nomeLoja) { return $"//div[@class='rc-virtual-list']//*[text()='{nomeLoja}']"; }
+    public static string SelecionarAtivosInventario(string nomeAtivo) { return $"//div[@class='rc-virtual-list']//*[text()='{nomeAtivo}']"; }
+    public static string AlocarAtivo(string nomeLoja) { return $"(//*[contains(@data-testid, 'alocar-{nomeLoja}')])"; }
+    public static string AlocarAtivoOcupado { get; set; } = "(//*[@class='react-window-table-cell']//*[@class='anticon anticon-question-circle'])[1]";
+    public static string AlocarTodosAtivos { get; set; } = "//*[@data-testid='alocarTodos']";
+    public static string QuantidadeItensAtivo { get; set; } = "//*[@data-testid='configurarQuantidadeItens']";
+    public static string ReplicarConfiguracoes { get; set; } = "//*[@data-testid='replicarConfiguracoes']";
+    public static string MaisInformacoesPlano { get; set; } = "//*[text()='Mais Informações do Plano']/..";
+    public static string ModalInventarioIndisponivel { get; set; } = "//*[@class='ant-modal-confirm-body']//*[@aria-label='close-circle']";
+    public static string ModalInventarioIndisponivelOKButton { get; set; } = "//*[@class='ant-modal-confirm-btns']//button";
+    public static string NovaSimulacaoTabSimulacao { get; set; } = "//div[@data-node-key='1']";
+    public static string NovaSimulacaoTabSelecionados { get; set; } = "//div[@data-node-key='2']";
+    public static string TabSelecionadosPrimeiroElemento { get; set; } = "((//div[@class='matriz-status-legend'])[2]/..//*[contains(@data-testid, 'editarAlocacao')])[1]";
+    public static string BotaoEditarModalAtivoInventario { get; set; } = "(//*[contains(@data-testid, 'editar-')])[1]";
+    public static string CampoQuantidadeModalAtivoInventario { get; set; } = "(//*[contains(@data-testid, 'editar-')])[1]/../../..//*[7]//input";
+    public static string SpanQuantidadeAtivosSelecionados { get; set; } = "//*[@class='estatisticas-superiores']//span[3]";
+    public static string MatrizSimulacaoVazia { get; set; } = "//*[@class='matriz-simulacao-empty-state']";
+    public static string MatrizSimulacao { get; set; } = "//*[@class='matriz-simulacao-container']";
+    public static string MensagemAvisoInventariosInexistentes { get; set; } = "//*[@class='matriz-simulacao-empty-state']//*[@class='ant-space-item']/div/div";
+    public static string MensagemAvisoAtivoOcupado { get; set; } = "//*[@class='ant-tooltip-inner']";
     #endregion
 
     #region Elementos de página - Planos - Novo Plano - Selecionar Ativos
@@ -190,7 +220,6 @@ public class GlobalVariables
     public static string MenuLojas { get; set; } = "//div[text()='Selecione as lojas: ']";
     public static string TabelaLojasPlano { get; set; } = "(//table/tbody)[3]/tr";
     public static string SelecionarLojaCheckbox(string nomeLoja) { return $"//*[@data-testid='selecionarLoja-{nomeLoja}']"; }
-    public static string SelecionarLojas { get; set; } = "//div[@class='ant-spin-container']/div[3]//div[@class='ant-collapse-content ant-collapse-content-active']//tbody/tr[2]//input";
     public static string QuantidadeLojasFiltradas { get; set; } = "//div[text()='Selecione as lojas: ']/parent::div/div[2]/div/div/div";
     #endregion
 
