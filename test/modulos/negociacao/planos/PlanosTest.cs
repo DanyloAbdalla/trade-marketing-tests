@@ -363,7 +363,6 @@ public class PlanosTest
             .PreencherCampoCampanha()
             .SelecionarVigenciaDoPlano()
             .SelecionarAtivos()
-            .PreencherQuantidadeAtivos()
             .SelecionarLojas()
             .ValidarIndisponibilidadeDeInventario()
             .FecharDadosDoPlano();
