@@ -1,15 +1,12 @@
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
 
 namespace MeuClienteWebTestProject;
 
 /// <summary>
 /// Classe com os testes para o Cadastro de Planos\Contratos
 /// </summary>
-//[TestFixture("SemPlantaLoja", Category = "PlanosSemPlantaDeLoja")]
-//[TestFixture("ComPlantaLoja", Category = "PlanosComPlantaDeLoja")]
 [TestFixture("ClienteStart")]
 [TestFixture("ClientePro")]
 [TestFixture("ClienteExpert")]
@@ -71,21 +68,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar a criação de um plano com workflow padrão (sem vínculo com tipo mídia)
+    /// Testar a simulação do plano com tipo de mídia gráfica, criando um contrato com status simulado
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero criar um plano
-    /// E inicar uma negociação
-    /// Para enviar a proposta para o cliente
-    /// 
-    /// Dado que eu tenho uma nova negociação
-    /// E que eu tenho disponibilidade de inventário, em um determinado período de vigência
-    /// Quando eu simular um novo plano, preenchendo indústria E vigência
-    /// E escolher os ativos, alocar as quantidades, selecionar as lojas
-    /// Então será apresentado o botão de sucesso para as lojas com disponibilidade, com o botão Gerar Pré-Plano habilitado
-    /// Quando eu clicar no botão “Gerar Pré-Plano”
-    /// Então o plano\contrato será criado, com Status = Simulado e Farol = Planejado
-    /// E Workflow padrão
+    /// Como comercial
+    /// Eu quero simular o plano, criando um contrato de venda
+    /// Para que eu possa negociar com a indústria a alocação de ativos, realizando o trade marketing
     /// </summary>
     [Test, Order(1)]
     public void TestCriarPlanoComAtivosTipoMidiaGrafica()
@@ -133,21 +120,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar a criação de um plano com workflow
+    /// Testar a simulação do plano com tipo de mídia física, criando um contrato com status simulado
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero criar um plano
-    /// E inicar uma negociação
-    /// Para enviar a proposta para o cliente
-    /// 
-    /// Dado que eu tenho uma nova negociação
-    /// E que eu tenho disponibilidade de inventário, em um determinado período de vigência
-    /// Quando eu simular um novo plano, preenchendo indústria E vigência
-    /// E escolher os ativos, alocar as quantidades, selecionar as lojas
-    /// Então será apresentado o botão de sucesso para as lojas com disponibilidade, com o botão Gerar Pré-Plano habilitado
-    /// Quando eu clicar no botão “Gerar Pré-Plano”
-    /// Então o plano\contrato será criado, com Status = Simulado e Farol = Planejado
-    /// E com as etapas do Workflow
+    /// Como comercial
+    /// Eu quero simular o plano, criando um contrato de venda
+    /// Para que eu possa negociar com a indústria a alocação de ativos, realizando o trade marketing
     /// </summary>
     [Test, Order(2)]
     public void TestCriarPlanoComAtivosTipoMidiaFisica()
@@ -198,17 +175,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar a edição da vigência em um plano existente
+    /// Testar a edição da vigência no plano existente
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero alterar a vigência do plano
-    /// Para negociar um novo período
-    /// 
-    /// Dado que eu tenho um plano criado na Negociação
-    /// Quando acessar a tela de edição
-    /// E alterar as datas início e fim da vigência
-    /// E clicar no botão Salvar
-    /// Então o plano será salvo com a nova vigência
+    /// Como comercial
+    /// Eu quero editar a vigência do plano
+    /// Para negociar um novo período com a indústria
     /// </summary>
     [Test, Order(3)]
     public void TestEditarPlanoExistenteAlterandoVigenciaDoPlano()
@@ -222,18 +193,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar a edição da vigência em um plano existente
+    /// Testar a edição da vigência do trade no plano existente
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero alterar a vigência do trade
-    /// Para negociar um novo período
-    /// 
-    /// Dado que eu tenho um plano criado na Negociação
-    /// Quando acessar a aba "Ativos Alocados" na edição do plano
-    /// E editar um ativo alocado
-    /// E alterar as datas início e fim da vigência do trade
-    /// E clicar no botão Salvar
-    /// Então o plano será salvo com a nova vigência
+    /// Como comercial
+    /// Eu quero editar a vigência do trade
+    /// Para negociar um novo período com a indústria
     /// </summary>
     [Test, Order(4)]
     public void TestEditarPlanoExistenteAlterandoVigenciaDoTrade()
@@ -248,17 +212,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar edição das quantidades dos ativos alocados em um plano existente
+    /// Testar edição das quantidades alocadas para um ativo no plano existente
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero alterar as quantidades dos ativos alocados por loja
-    /// Para negociar a alocação de mais espaços
-    /// 
-    /// Dado que eu tenho um plano criado, contendo um ativo com disponibilidade de inventário
-    /// Quando eu acessar a tela de edição do plano
-    /// E alterar a quantidade do ativo
-    /// E clicar no botão Salvar Plano
-    /// Então o plano será salvo com sucesso com a nova quantidade
+    /// Como comercial
+    /// Eu quero alterar as quantidades alocadas nas lojas selecionadas para os ativos
+    /// Para negociar mais espaços com a indústria
     /// </summary>
     [Test, Order(5)]
     public void TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel()
@@ -276,16 +234,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar alocação de um novo ativo em um plano existente
+    /// Testar a inclusão de um ativo no plano existente
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero alocar um novo ativo para as lojas
-    /// Para atualizar meu plano com um novo ativo
-    /// 
-    /// Dado que eu tenho um plano criado
-    /// Quando eu acessar a tela de edição do plano
-    /// E incluir um novo ativo para a loja com disponibilidade de inventário
-    /// Então o plano será salvo com sucesso com o novo ativo
+    /// Como comercial
+    /// Eu quero incluir um ativo com as lojas
+    /// Para negociar mais ativos com a indústria
     /// </summary>
     [Test, Order(6)]
     public void TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel()
@@ -303,17 +256,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar aprovação de um plano existente
+    /// Testar aprovação do plano
     /// 
-    /// Como comercial de trade marketing
+    /// Como comercial
     /// Eu quero aprovar o plano
-    /// Para finalizar a venda, alocando os ativos nos espaços das lojas
-    /// 
-    /// Dado que eu tenho um plano simulado
-    /// Quando acessar a tela de edição
-    /// E aprovar, clicando no campo Situação do Plano
-    /// E clicar no botão Salvar Plano
-    /// Então o plano será salvo, com Status = Aprovado e Farol = Aprovado
+    /// Para concluir a venda, bloqueando o inventário dos ativos nas lojas para novas negociações
     /// </summary>
     [Test, Order(7)]
     public void TestAprovarPlano()
@@ -329,17 +276,11 @@ public class PlanosTest
     }
 
     /// <summary>
-    /// Testar alerta de inventário na criação de planos
+    /// Testar alerta de inventário ao criar um plano
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero selecionar ativos sem indisponibilidade de alocação
-    /// Para que eu seja informado de que não há quantidade suficente no inventário
-    /// 
-    /// Dado que eu não tenho disponibilidade de inventário, em um determinado período de vigência
-    /// Quando eu simular um novo plano
-    /// E escolher os ativos, colocar as quantidades, selecionar as lojas
-    /// Então será apresentado o botão de alerta para as lojas com indisponibilidade
-    /// E uma mensagem será apresentada ao lado do botão Gerar Pré-Plano, com o mesmo desabilitado
+    /// Como QA
+    /// Eu quero selecionar ativos sem disponibilidade de inventario
+    /// Para que eu seja informado de que os ativos não possuem quantidade suficente
     /// </summary>
     [Test, Order(8)]
     public void TestCriarPlanoComAlertaDeInventario()
@@ -372,15 +313,9 @@ public class PlanosTest
     /// <summary>
     /// Testar cancelamento de plano
     /// 
-    /// Como comercial de trade marketing
+    /// Como comercial
     /// Eu quero cancelar um plano
-    /// Para que o mesmo seja desconsiderado, gerenciando as minhas negociações
-    /// 
-    /// Dado que eu tenho um plano
-    /// Quando acessar a tela de edição
-    /// E cancelar, clicando no campo Situação do Plano
-    /// E clicar no botão Salvar Plano
-    /// Então o plano será salvo, com Status = Cancelado e Farol = Cancelado
+    /// Para que o mesmo seja desconsiderado das minhas negociações
     /// </summary>
     [Test, Order(9)]
     public void TestCancelarPlano()
@@ -398,14 +333,9 @@ public class PlanosTest
     /// <summary>
     /// Testar exclusão de plano
     /// 
-    /// Como comercial de trade marketing
-    /// Eu quero excluir uma plano
-    /// Para que o mesmo seja desconsiderado, gerenciando as minhas negociações
-    /// 
-    /// Dado que eu tenho um plano
-    /// Quando acessar a tela de planos
-    /// E excluir (desativar), clicando no campo Excluir do Plano
-    /// Então o plano será excluído com mensagem de sucesso, não sendo mais apresentado na lista
+    /// Como comercial
+    /// Eu quero excluir um plano
+    /// Para que o mesmo seja removido da minha lista de negociações
     /// </summary>
     [Test, Order(10)]
     public void TestExcluirPlano()
