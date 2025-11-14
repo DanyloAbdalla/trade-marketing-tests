@@ -698,17 +698,12 @@ public class PlanosContratosPage
 
     public PlanosContratosPage EditarVigenciaDoAtivoAlocado()
     {
-        var quantidadeAtivosAlocados = Dsl.ObterQuantidadeLinhasNoElementoTabelaComLinhaInvisivel(webDriver, GlobalVariables.TabelaAtivosPlano);
-        string editarAtivo;
-
         switch (clienteUpSellAtual)
         {
             case ClienteUpSell.ClienteStart:
-                for (var i = 1; i <= quantidadeAtivosAlocados; i++)
+                foreach (var nomeAtivo in ativosGraficos)
                 {
-                    editarAtivo = $"//tr[{i + 1}]//button/span[@aria-label='edit']";
-
-                    Dsl.EsperarElementoParaClicar(webDriver, editarAtivo, "Botão Editar Ativo");
+                    Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarAtivoAlocado(nomeAtivo), "Botão Editar Ativo");
 
                     Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaAlocacaoPorLoja);
 
@@ -719,12 +714,10 @@ public class PlanosContratosPage
                 break;
             case ClienteUpSell.ClientePro:
             case ClienteUpSell.ClienteExpert:
-                BuscarAtivosAlocadosNoPlano(ativosGraficos[0]);
+                BuscarAtivosAlocadosNoPlano(ativosGraficos.FirstOrDefault());
                 Dsl.Esperar();
 
-                editarAtivo = "//tr[2]//button/span[@aria-label='edit']";
-
-                Dsl.EsperarElementoParaClicar(webDriver, editarAtivo, "Botão Editar Ativo");
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarAtivoAlocado(ativosGraficos.FirstOrDefault()), "Botão Editar Ativo");
 
                 Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
                 Dsl.Esperar();
@@ -874,7 +867,6 @@ public class PlanosContratosPage
         string mensagemSucessoEsperadaAlocacaoAtualizada = "Alocaçãoatualizadacomsucesso!";
         string nomeAtivoAlocadoEsperado;
         string nomeAtivoAlocadoAtual;
-        string editarAtivo;
         IList<string> nomesAtivosAlocadosEsperados = ativosGraficos;
 
         switch (clienteUpSellAtual)
@@ -882,17 +874,15 @@ public class PlanosContratosPage
             case ClienteUpSell.ClienteStart:
                 int qtdAtivosAlocados = Dsl.ObterQuantidadeLinhasNoElementoTabelaComLinhaInvisivel(webDriver, GlobalVariables.TabelaAtivosPlano);
 
-                for (var i = 1; i <= qtdAtivosAlocados; i++)
+                foreach (var nomeAtivo in ativosGraficos)
                 {
-                    editarAtivo = $"//tr[{i + 1}]//button/span[@aria-label='edit']";
-
-                    Dsl.EsperarElementoParaClicar(webDriver, editarAtivo, "Botão Editar Ativo");
+                    Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarAtivoAlocado(nomeAtivo), "Botão Editar Ativo");
 
                     Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LinhaTabelaLojasAtivoAlocados);
                     Dsl.Esperar();
 
                     nomeAtivoAlocadoAtual = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.NomeAtivoAlocacao, "Campo Nome Ativo");
-                    nomeAtivoAlocadoEsperado = nomesAtivosAlocadosEsperados[i - 1];
+                    nomeAtivoAlocadoEsperado = nomeAtivo;
 
                     Dsl.ValidarTextosNoElemento(nomeAtivoAlocadoAtual, nomeAtivoAlocadoEsperado);
 
@@ -916,9 +906,7 @@ public class PlanosContratosPage
                 BuscarAtivosAlocadosNoPlano(nomeAtivoAlocadoEsperado);
                 Dsl.Esperar();
 
-                editarAtivo = "//tr[2]//button/span[@aria-label='edit']";
-
-                Dsl.EsperarElementoParaClicar(webDriver, editarAtivo, "Botão Editar Ativo");
+                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarAtivoAlocado(nomeAtivoAlocadoEsperado), "Botão Editar Ativo");
 
                 Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner);
                 Dsl.Esperar(3000);
