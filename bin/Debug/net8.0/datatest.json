@@ -71,6 +71,14 @@
       ],
       "mensagensDeFeedback": [
         {
+          "mensagem": "O Plano foi alterado com sucesso!",
+          "atributo": "Mc-message-success"
+        },
+        {
+          "mensagem": "Plano deletado com sucesso",
+          "atributo": "Mc-message-success"
+        },
+        {
           "mensagem": "Disponibilidade recalculada com sucesso!",
           "atributo": "Mc-message-success"
         },

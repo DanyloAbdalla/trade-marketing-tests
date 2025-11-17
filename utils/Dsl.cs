@@ -379,7 +379,7 @@ public class Dsl
             });
 
             count++;
-            Esperar();
+            //Esperar();
         }
 
         return mensagensFeedback;
@@ -607,6 +607,27 @@ public class Dsl
     }
 
     /// <summary>
+    /// Método para remover apenas números de um texto
+    /// </summary>
+    /// <param name="texto"></param>
+    /// <param name="elemento"></param>
+    /// <returns>Retorna o texto sem os números, mantendo espaços e caracteres especiais, e removendo espaços duplos</returns>
+    /// <exception cref="Exception"></exception>
+    public static string RemoverApenasNumeros(string texto, string elemento)
+    {
+        try
+        {
+            var textoTratado = Regex.Replace(texto, @"\d", "");
+            textoTratado = Regex.Replace(textoTratado, @" +", " ");
+            return textoTratado.Trim();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + "\n" + elemento);
+        }
+    }
+
+    /// <summary>
     /// Método para remover números e espaços em branco de um texto
     /// </summary>
     /// <param name="texto"></param>
@@ -701,10 +722,10 @@ public class Dsl
         }
 
         Console.WriteLine("Mensagens atuais:");
-        mensagensAtuais.ForEach(m => Console.WriteLine($" - {m}"));
+        mensagensAtuais.ForEach(ma => Console.WriteLine($" - {ma.Mensagem}"));
 
         Console.WriteLine("Mensagens esperadas:");
-        mensagensEsperadas.ForEach(m => Console.WriteLine($" - {m}"));
+        mensagensEsperadas.ForEach(me => Console.WriteLine($" - {me.Mensagem}"));
     }
 
     /// <summary>

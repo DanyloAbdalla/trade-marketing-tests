@@ -199,7 +199,7 @@ public class GlobalVariables
     public static string SpanQuantidadeAtivosSelecionados { get; set; } = "//*[@class='estatisticas-superiores']//span[3]";
     public static string MatrizSimulacaoVazia { get; set; } = "//*[@class='matriz-simulacao-empty-state']";
     public static string MatrizSimulacao { get; set; } = "//*[@class='matriz-simulacao-container']";
-    public static string MensagemAvisoInventariosInexistentes { get; set; } = "//*[@class='matriz-simulacao-empty-state']//*[@class='ant-space-item']/div/div";
+    public static string MensagemAvisoInventarioIndisponivel { get; set; } = "(//*[@class='matriz-simulacao-empty-state']//*[@class='ant-space-item'])[1]/div/div";
     public static string MensagemAvisoAtivoOcupado { get; set; } = "//*[@class='ant-tooltip-inner']";
     #endregion
 
