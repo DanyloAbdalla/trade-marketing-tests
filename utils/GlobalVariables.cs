@@ -146,8 +146,8 @@ public class GlobalVariables
     public static string SelecionarIndustriaSemPlanta { get; set; } = "//div[contains(@class,'ant-select-dropdown')]//*[@id='73189']";
     public static string SelecionarIndustriaComPlanta { get; set; } = "//div[contains(@class,'ant-select-dropdown')]//*[@id='76331']";
     public static string PreencherCampanha { get; set; } = "//*[@data-testid='nomeCampanha']";
-    public static string InicioVigenciaSimulacao { get; set; } = "//*[contains(text(),'Simulação')]/../../../../..//*[contains(text(),'Inicio Vigência')]/../..//div[contains(@class,'date-picker')]";
-    public static string FimVigenciaSimulacao { get; set; } = "//*[contains(text(),'Simulação')]/../../../../..//*[contains(text(),'Fim Vigência')]/../..//div[contains(@class,'date-picker')]";
+    public static string InicioVigenciaSimulacao { get; set; } = "//input[@data-testid='inicioVigencia']";
+    public static string FimVigenciaSimulacao { get; set; } = "//input[@data-testid='fimVigencia']";
     public static string AvancarCalendarioMesInicioVigencia { get; set; } = "(//*[contains(@class,'header-next-btn')])[1]";
     public static string AvancarCalendarioMesFimVigencia { get; set; } = "(//*[contains(@class,'header-next-btn')])[2]";
     public static string FecharDetalhamento { get; set; } = "//button/*[text()='Fechar Detalhamento']";
