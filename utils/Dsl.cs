@@ -4,6 +4,7 @@ using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Interactions;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace MeuClienteWebTestProject;
 
@@ -31,16 +32,15 @@ public class Dsl
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(30),
-            PollingInterval = TimeSpan.FromMilliseconds(50)
+            Timeout = TimeSpan.FromSeconds(10),
+            PollingInterval = TimeSpan.FromMilliseconds(250)
         };
 
-        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
 
         try
         {
             fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
-            Esperar(500);
         }
         catch (Exception ex)
         { Console.WriteLine("Erro ao esperar a visibilidade do elemento na página: " + "\n" + ex.Message); }
@@ -59,25 +59,6 @@ public class Dsl
 
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(30),
-            PollingInterval = TimeSpan.FromMilliseconds(50)
-        };
-
-        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-
-        try
-        {
-            IWebElement element = webDriver.FindElement(By.XPath(XPath));
-            if (fluentWait.Until(ExpectedConditions.StalenessOf(element)) || fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)))) { return; }
-        }
-        catch (Exception ex)
-        { Console.WriteLine("Erro ao esperar a invisibilidade do elemento na página: " + "\n" + ex.Message); }
-    }
-
-    public static bool EsperarInvisibilidadeDoElementoMCMessageContainer(IWebDriver webDriver, string XPath)
-    {
-        var fluentWait = new DefaultWait<IWebDriver>(webDriver)
-        {
             Timeout = TimeSpan.FromSeconds(10),
             PollingInterval = TimeSpan.FromMilliseconds(250)
         };
@@ -86,17 +67,10 @@ public class Dsl
 
         try
         {
-            return fluentWait.Until(d =>
-            {
-                var elementos = d.FindElements(By.XPath(XPath));
-                return elementos.Count == 0 || elementos.All(e => !e.Displayed);
-            });
+            fluentWait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(By.XPath(XPath))));
         }
-        catch (WebDriverTimeoutException)
-        {
-            Console.WriteLine("Timeout ao esperar a invisibilidade do elemento: " + XPath);
-            return false;
-        }
+        catch (Exception ex)
+        { Console.WriteLine("Erro ao esperar a invisibilidade do elemento na página: " + "\n" + ex.Message); }
     }
 
     /// <summary>
@@ -111,11 +85,11 @@ public class Dsl
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(30),
-            PollingInterval = TimeSpan.FromMilliseconds(100)
+            Timeout = TimeSpan.FromSeconds(10),
+            PollingInterval = TimeSpan.FromMilliseconds(250)
         };
 
-        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
 
         try
         {
@@ -137,11 +111,11 @@ public class Dsl
     {
         var fluentWait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(30),
-            PollingInterval = TimeSpan.FromMilliseconds(100)
+            Timeout = TimeSpan.FromSeconds(10),
+            PollingInterval = TimeSpan.FromMilliseconds(250)
         };
 
-        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
 
         try
         {
@@ -160,7 +134,26 @@ public class Dsl
     {
         EsperarVisibilidadeDoElemento(webDriver, XPath);
         EsperarInvisibilidadeDoElemento(webDriver, XPath);
-        //Esperar(500);
+    }
+
+    public static void EsperaPorElementosDaPagina(IWebDriver webDriver, string XPath)
+    {
+        var fluentWait = new DefaultWait<IWebDriver>(webDriver)
+        {
+            Timeout = TimeSpan.FromSeconds(10),
+            PollingInterval = TimeSpan.FromMilliseconds(250)
+        };
+
+        fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+        try
+        {
+            fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
+            fluentWait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(By.XPath(XPath))));
+            Esperar();
+        }
+        catch (Exception ex)
+        { Console.WriteLine("Erro ao esperar o elemento na página: " + "\n" + ex.Message); }
     }
 
     public static IWebElement EncontrarElemento(IWebDriver webDriver, string XPath, string elemento)
@@ -173,7 +166,7 @@ public class Dsl
                 PollingInterval = TimeSpan.FromMilliseconds(250)
             };
 
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
 
             IWebElement element = fluentWait.Until(ExpectedConditions.ElementExists(By.XPath(XPath)));
 
@@ -187,6 +180,9 @@ public class Dsl
 
     public static bool LocalizarElemento(IWebDriver webDriver, string XPath)
     {
+        var implicitWaitOriginal = webDriver.Manage().Timeouts().ImplicitWait;
+        webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
+
         try
         {
             var fluentWait = new DefaultWait<IWebDriver>(webDriver)
@@ -195,10 +191,10 @@ public class Dsl
                 PollingInterval = TimeSpan.FromMilliseconds(250)
             };
 
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
 
             var elemento = fluentWait.Until(ExpectedConditions.ElementExists(By.XPath(XPath)));
-            return elemento.Displayed || elemento.Enabled;
+            return elemento.Displayed;
         }
         catch (NoSuchElementException)
         { return false; }
@@ -206,24 +202,8 @@ public class Dsl
         { return false; }
         catch (WebDriverTimeoutException)
         { return false; }
-    }
-
-    public static bool ElementoExiste(IWebDriver webDriver, string XPath)
-    {
-        try
-        {
-            var elementoExiste = webDriver.FindElement(By.XPath(XPath));
-            if (elementoExiste is not null)
-                return true;
-        }
-        catch (NoSuchElementException)
-        { return false; }
-        catch (StaleElementReferenceException)
-        { return false; }
-        catch (WebDriverTimeoutException)
-        { return false; }
-
-        return false;
+        finally
+        { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
     }
 
     /// <summary>
@@ -357,15 +337,15 @@ public class Dsl
         var mensagensFeedback = new List<MensagemFeedback>();
         string atributoValor;
         string mensagemTexto;
-        bool temMensagem = true;
+        bool temMensagemNova = true;
         int count = 1;
 
-        while (temMensagem)
+        while (temMensagemNova)
         {
             string xpathElemento = $"({XPath})[{count}]";
-            temMensagem = LocalizarElemento(webDriver, xpathElemento);
+            temMensagemNova = LocalizarElemento(webDriver, xpathElemento);
 
-            if (temMensagem == false)
+            if (temMensagemNova == false)
                 break;
 
             var elemento = EncontrarElemento(webDriver, xpathElemento, "Mensagem Feedback");
@@ -379,7 +359,6 @@ public class Dsl
             });
 
             count++;
-            //Esperar();
         }
 
         return mensagensFeedback;
@@ -420,7 +399,6 @@ public class Dsl
     {
         try
         {
-            //EsperarVisibilidadeDoElemento(webDriver, XPath);
             string valor = webDriver.FindElement(By.XPath(XPath)).GetAttribute(nomeAtributo);
 
             return valor;
@@ -433,7 +411,6 @@ public class Dsl
     {
         try
         {
-            //EsperarVisibilidadeDoElemento(webDriver, XPath);
             var valor = elementId.GetAttribute(nomeAtributo);
 
             return valor;
@@ -581,13 +558,13 @@ public class Dsl
             {
                 if (diaAtual == 1)
                 {
-                    xpathElemento = $"{xpathElementoCalendarioBotton}//td[@class='ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view']//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Início Vigencia");
+                    xpathElemento = $"{xpathElementoCalendarioBotton}//td[contains(@class,'ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view')]//div[text()='{diaAtual}']";
+                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia");
                 }
                 else
                 {
                     xpathElemento = $"{xpathElementoCalendarioBotton}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Início Vigencia");
+                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia");
                 }
             }
             else if (ContarExistenciaDoElemento(webDriver, xpathElementoCalendarioTop) == 1)
@@ -595,12 +572,12 @@ public class Dsl
                 if (diaAtual == 1)
                 {
                     xpathElemento = $"{xpathElementoCalendarioTop}//td[@class='ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view']//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Início Vigencia Trade");
+                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia Trade");
                 }
                 else
                 {
                     xpathElemento = $"{xpathElementoCalendarioTop}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Início Vigencia Trade");
+                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia Trade");
                 }
             }
         }
@@ -709,23 +686,18 @@ public class Dsl
 
     public static void ValidarMensagemDeFeedbacak(List<MensagemFeedback> mensagensEsperadas, List<MensagemFeedback> mensagensAtuais)
     {
-        var erro = mensagensAtuais.FirstOrDefault(m => m.Atributo == "MC-message-error");
+        var erros = mensagensAtuais.Where(m => m.Atributo == "MC-message-error").ToList();
 
-        if (erro != null)
+        if (erros.Any())
         {
-            Assert.Fail($" Mensagem de erro apresentada: '{erro.Mensagem}' com atributo '{erro.Atributo}'");
+            string mensagensErro = string.Join(Environment.NewLine, erros.Select(e => e.Mensagem));
+            Assert.Fail($"Foram encontrados erros:\n{mensagensErro}");
         }
 
         foreach (var atual in mensagensAtuais)
         {
             Assert.That(mensagensEsperadas.Any(esperada => esperada.Mensagem == atual.Mensagem && esperada.Atributo == atual.Atributo), Is.True);
         }
-
-        Console.WriteLine("Mensagens atuais:");
-        mensagensAtuais.ForEach(ma => Console.WriteLine($" - {ma.Mensagem}"));
-
-        Console.WriteLine("Mensagens esperadas:");
-        mensagensEsperadas.ForEach(me => Console.WriteLine($" - {me.Mensagem}"));
     }
 
     /// <summary>
@@ -860,5 +832,31 @@ public class Dsl
     public static void RecarregarPagina(IWebDriver webDriver)
     {
         webDriver.Navigate().Refresh();
+    }
+
+    /// <summary>
+    /// Método para calcular a quantidade de dias entre duas datas
+    /// </summary>
+    /// <param name="inicioStr"></param>
+    /// <param name="fimStr"></param>
+    /// <returns>Retorna a quantidade de dias entre as duas datas, incluindo o dia inicial e o dia final</returns>
+    public static int CalcularDiasEntreDatas(string inicioStr, string fimStr)
+    {
+        string[] formatosAceitos = { "dd/MM/yyyy", "dd/MMM/yyyy" };
+
+        if (DateTime.TryParseExact(inicioStr, formatosAceitos, CultureInfo.InvariantCulture,
+                                   DateTimeStyles.None, out DateTime inicio) &&
+            DateTime.TryParseExact(fimStr, formatosAceitos, CultureInfo.InvariantCulture,
+                                   DateTimeStyles.None, out DateTime fim))
+        {
+            if (fim < inicio)
+                throw new ArgumentException("A data final não pode ser anterior à data inicial.");
+
+            return (fim - inicio).Days + 1;
+        }
+        else
+        {
+            throw new FormatException("As datas fornecidas não estão no formato esperado 'dd/MMM/yyyy'.");
+        }
     }
 }

@@ -63,21 +63,21 @@
         "Comprovação"
       ],
       "lojas": [
-        "L1 - Loja 01",
-        "L2 - Loja 02",
-        "L3 - Loja 03",
-        "L4 - Loja 04",
-        "L5 - Loja 05"
+        "Loja 01",
+        "Loja 02",
+        "Loja 03",
+        "Loja 04",
+        "Loja 05"
       ],
       "inventarios": [
-        "E01 - Ponta de Gôndola",
-        "E02 - Ponta de Gôndola",
-        "E03 - Ponta de Gôndola",
-        "- Ponta de Gôndola",
-        "E01 - Cestão 01",
-        "E02 - Cestão 01",
-        "E03 - Cestão 01",
-        "- Cestão 01"
+        "- E01 - Cestão 01",
+        "- E02 - Cestão 01",
+        "- E03 - Cestão 01",
+        "- Cestão 01",
+        "- E01 - Ponta de Gôndola",
+        "- E02 - Ponta de Gôndola",
+        "- E03 - Ponta de Gôndola",
+        "- Ponta de Gôndola"
       ],
       "mensagensDeFeedback": [
         {

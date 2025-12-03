@@ -108,6 +108,7 @@ public class PlanosTest
             .SelecionarLojas()
             .GerarPrePlano()
             .SalvarPlano()
+            .ValidarReceitasDoPlano()
             .FecharDadosDoPlano()
             .BuscarPlanos()
             .AbrirEdicaoDoPlano()
@@ -128,16 +129,13 @@ public class PlanosTest
     [Test, Order(2)]
     public void TestCriarPlanoComAtivosTipoMidiaFisica()
     {
-        string nomeCampanha = DataLoader.ObterDados("negociacoes_planos", "TestCriarPlanoComAtivosTipoMidiaFisica", "nomeCampanha");
-
         if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
         {
             new PlanosContratosPage(webDriver, clienteUpSellAtual)
             .NovaSimulacaoDePlano()
             .PreencherCampoIndustria()
             .PreencherCampoCampanha()
-            .SelecionarAtivos()
-            .SelecionarLojas()
+            .SelecionarAtivosELojas()
             .PreencherQuantidadeAtivos()
             .GerarPrePlano()
             .SalvarPlano()
