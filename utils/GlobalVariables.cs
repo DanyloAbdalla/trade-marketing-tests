@@ -187,7 +187,7 @@ public class GlobalVariables
     public static string AlocarTodosAtivos { get; set; } = "//*[@data-testid='alocarTodos']";
     public static string QuantidadeItensAtivo { get; set; } = "//*[@data-testid='configurarQuantidadeItens']";
     public static string ReplicarConfiguracoes { get; set; } = "//*[@data-testid='replicarConfiguracoes']";
-    public static string MaisInformacoesPlano { get; set; } = "//*[text()='Mais Informações do Plano']/..";
+    public static string MaisInformacoesPlano { get; set; } = "//*[@class='ant-collapse-header-text' and text()='Mais Informações do Plano']";
     public static string ModalInventarioIndisponivel { get; set; } = "//*[@class='ant-modal-confirm-body']//*[@aria-label='close-circle']";
     public static string ModalInventarioIndisponivelOKButton { get; set; } = "//*[@class='ant-modal-confirm-btns']//button";
     public static string NovaSimulacaoTabSimulacao { get; set; } = "//div[@data-node-key='1']";

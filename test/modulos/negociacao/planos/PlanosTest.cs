@@ -89,12 +89,10 @@ public class PlanosTest
             .PreencherQuantidadeAtivos()
             .GerarPrePlano()
             .SalvarPlano()
-            .FecharDadosDoPlano()
-            .BuscarPlanos()
-            .AbrirEdicaoDoPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
             .FecharDadosDoPlano()
+            .BuscarPlanos()
             .ValidarStatusFarolDoPlano();
         }
         else
@@ -109,12 +107,9 @@ public class PlanosTest
             .GerarPrePlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
-            .FecharDadosDoPlano()
-            .BuscarPlanos()
-            .AbrirEdicaoDoPlano()
-            .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
             .FecharDadosDoPlano()
+            .BuscarPlanos()
             .ValidarStatusFarolDoPlano();
         }
     }
@@ -139,13 +134,10 @@ public class PlanosTest
             .PreencherQuantidadeAtivos()
             .GerarPrePlano()
             .SalvarPlano()
-            .FecharDadosDoPlano()
-            .RecarregarPlanos()
-            .BuscarPlanos()
-            .AbrirEdicaoDoPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
             .FecharDadosDoPlano()
+            .BuscarPlanos()
             .ValidarStatusFarolDoPlano();
         }
         else
@@ -159,13 +151,10 @@ public class PlanosTest
             .SelecionarLojas()
             .GerarPrePlano()
             .SalvarPlano()
-            .FecharDadosDoPlano()
-            .RecarregarPlanos()
-            .BuscarPlanos()
-            .AbrirEdicaoDoPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
             .FecharDadosDoPlano()
+            .BuscarPlanos()
             .ValidarStatusFarolDoPlano();
         }
 
