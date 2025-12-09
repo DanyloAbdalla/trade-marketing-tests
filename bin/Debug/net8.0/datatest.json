@@ -114,11 +114,11 @@
         },
         {
           "mensagem": "Não foram encontrados inventários que correspondam aos filtros aplicados.",
-          "atributo": "Mc-message-info"
+          "atributo": null
         },
         {
           "mensagem": "Inventário indisponível: já possui alocação em período conflitante",
-          "atributo": "Mc-message-info"
+          "atributo": null
         }
       ]
     },

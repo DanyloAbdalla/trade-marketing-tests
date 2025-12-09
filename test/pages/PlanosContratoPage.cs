@@ -1277,10 +1277,6 @@ public class PlanosContratosPage
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MatrizSimulacaoVazia);
 
                 List<MensagemFeedback> mensagensAtuais = Dsl.ObterMensagensDeFeedback(webDriver, GlobalVariables.MensagemAvisoInventarioIndisponivel);
-                foreach (var mensagemAtual in mensagensAtuais)
-                {
-                    mensagemAtual.Atributo = "Mc-message-info";
-                }
 
                 ValidarMensagensDoPlano(mensagensAtuais);
 
@@ -1294,10 +1290,6 @@ public class PlanosContratosPage
                 Dsl.Esperar(500);
 
                 mensagensAtuais = Dsl.ObterMensagensDeFeedback(webDriver, GlobalVariables.MensagemAvisoAtivoOcupado);
-                foreach (var mensagemAtual in mensagensAtuais)
-                {
-                    mensagemAtual.Atributo = "Mc-message-info";
-                }
 
                 ValidarMensagensDoPlano(mensagensAtuais);
                 break;
