@@ -73,10 +73,8 @@ public class Dsl
     {
         try
         {
-            IWebElement element = EncontrarElemento(webDriver, XPath, "");
             var fluentWait = CreateFluentWait(webDriver);
-            //fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
-            fluentWait.Until(ExpectedConditions.StalenessOf(element));
+            fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
         }
         catch (WebDriverTimeoutException ex)
         { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento" + "\n" + ex.Message); }
