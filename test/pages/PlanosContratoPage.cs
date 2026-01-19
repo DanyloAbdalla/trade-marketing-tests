@@ -466,7 +466,7 @@ public class PlanosContratosPage
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.GerarPrePlanoComWorkflowSelecionado, "Botão Gerar Pré-Plano com Workflow");
         }
 
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
+        //Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarRegistro);
 
         return this;
     }
