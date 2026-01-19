@@ -439,7 +439,6 @@ public class Dsl
     {
         try
         {
-            //EsperarVisibilidadeDoElemento(webDriver, XPath);
             Actions action = new Actions(webDriver);
             action.SendKeys(webDriver.FindElement(By.XPath(XPath)), textoValor).Perform();
         }

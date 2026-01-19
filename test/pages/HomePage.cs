@@ -53,15 +53,9 @@ public class HomePage
         Dsl.Esperar(2000);
 
         if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
-        {
             return new PlanosContratosPage(webDriver, clienteUpSellAtual);
-        }
         else if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela) > 0)
-        {
             FiltrarTodosPlanos();
-            //Console.WriteLine(primeiroTeste);
-            //Dsl.EsperarElementoFicarClicavel(webDriver, GlobalVariables.EditarPlano(primeiroTeste), "Botão Editar Plano");
-        }
 
         return new PlanosContratosPage(webDriver, clienteUpSellAtual);
     }
