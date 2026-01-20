@@ -29,12 +29,14 @@ pipelines:
             - apt-get install -y wget unzip
             - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             - apt install -y ./google-chrome-stable_current_amd64.deb
-            - wget -q https://storage.googleapis.com/chrome-for-testing-public/144.0.7559.59/linux64/chromedriver-linux64.zip
+            - CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+            - DRIVER_VERSION=$(echo $CHROME_VERSION | cut -d. -f1-3)
+            - wget -q https://storage.googleapis.com/chrome-for-testing-public/$DRIVER_VERSION/linux64/chromedriver-linux64.zip
             - unzip chromedriver-linux64.zip
-            - ls -al
-            - export CHROMEDRIVER_PATH="/usr/local/bin"
-            - mv chromedriver-linux64 $CHROMEDRIVER_PATH/chromedriver
-            - chmod +x $CHROMEDRIVER_PATH/chromedriver
+            - mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+            - chmod +x /usr/local/bin/chromedriver
+            - which chromedriver
+            
       - step:
           name: PlanosTest ClienteStart
           caches:

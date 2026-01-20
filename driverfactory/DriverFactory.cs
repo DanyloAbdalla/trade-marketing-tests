@@ -23,7 +23,7 @@ public class DriverFactory
         switch (browserType)
         {
             case BrowserType.Chrome:
-                if (!GlobalVariables.handLessMode)
+                if (!GlobalVariables.headLessMode)
                 {
                     chromeOptions.AddArgument("--start-maximized");
                 }
