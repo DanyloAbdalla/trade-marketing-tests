@@ -26,16 +26,29 @@ pipelines:
             - dotnetcore
           script:
             - apt-get update
+      
+            # 1️⃣ Instalar ferramentas base
             - apt-get install -y wget unzip curl gnupg
+      
+            # 2️⃣ Instalar dependências do Chrome (CRÍTICO)
+            - apt-get install -y libxss1 libappindicator1 libindicator7 fonts-liberation xdg-utils libgconf-2-4 libnss3 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libgbm1
+      
+            # 3️⃣ Instalar Google Chrome
             - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             - apt install -y ./google-chrome-stable_current_amd64.deb
+      
+            # 4️⃣ Validar instalação do Chrome
             - google-chrome --version
+      
+            # 5️⃣ Baixar e extrair ChromeDriver compatível
             - CHROME_VERSION=$(google-chrome --version | grep -oP '\d+' | head -1)
             - DRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_VERSION}")
             - wget -q https://storage.googleapis.com/chrome-for-testing-public/${DRIVER_VERSION}/linux64/chromedriver-linux64.zip
             - unzip chromedriver-linux64.zip
             - mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
             - chmod +x /usr/local/bin/chromedriver
+      
+            # 6️⃣ Validar instalação do ChromeDriver
             - which chromedriver
             - chromedriver --version
 
