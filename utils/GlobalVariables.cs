@@ -319,6 +319,10 @@ public class GlobalVariables
     public static string LoadDeTelaPainelIndustria { set; get; } = "(//*[contains(@id,'panel-11')]//*[contains(@class,'ant-spin-dot-item')])[1]";
     #endregion
 
+    #region Elementos de página - Planos - Tarefas
+    public static string LoadDeTelaTarefas { set; get; } = "(//*[contains(@id,'panel-workflow')]//*[contains(@class,'ant-spin-dot-item')])[1]";
+    #endregion
+
     #region Elementos de página - SmartIA
     public static string StatusCampanha { get; set; } = "//tbody/tr[2]/td[7]/div";
     public static string FiltrarCampanha { get; set; } = "//*[text()='Campanha']/following-sibling::span[@role='button']";

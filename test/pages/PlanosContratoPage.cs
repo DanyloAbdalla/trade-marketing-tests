@@ -179,7 +179,7 @@ public class PlanosContratosPage
 
 
     /// <summary>
-    /// Método para filtrar e selecionar os ativos
+    /// Método para filtrar e selecionar ativos no momento da simulação do plano
     /// </summary>
     /// <returns></returns>
     public PlanosContratosPage SelecionarAtivos()
@@ -226,9 +226,8 @@ public class PlanosContratosPage
     }
 
     /// <summary>
-    /// Método para preencher as quantidades dos ativos por loja
+    /// Método para preencher as quantidades dos ativos por loja no momento da simulação do plano
     /// </summary>
-    /// <param name="quantidadeAtivosPorLoja"></param>
     /// <returns></returns>
     public PlanosContratosPage PreencherQuantidadeAtivos()
     {
@@ -284,6 +283,7 @@ public class PlanosContratosPage
                     Dsl.Clicar(webDriver, GlobalVariables.EditarAtivoFisicoAlocadoSimulado, "Botão Editar Dados Ativo Alocado na Simulação");
                 }
 
+                //Depois de alocar o ativo clicando no botão "Cadeado", a quantidade de alocação é replicada para todas as lojas e endereços do ativos selecionados através da tela "Configuração de Vigências e Valores"
                 IWebElement headers = Dsl.EncontrarElemento(webDriver, GlobalVariables.ColunasAtivoAlocadoSimulado, "Colunas Infos Ativo Alocado na Simulação");
                 IList<IWebElement> theads = headers.FindElements(By.XPath("th"));
 
@@ -316,7 +316,7 @@ public class PlanosContratosPage
     }
 
     /// <summary>
-    /// Método para selecionar as lojas carregadas na simulação do plano, para alocação dos ativos
+    /// Método para selecionar as lojas no momento da simulação do plano
     /// </summary>
     /// <returns></returns>
     public PlanosContratosPage SelecionarLojas()
@@ -342,7 +342,7 @@ public class PlanosContratosPage
     }
 
     /// <summary>
-    /// Método para filtrar e selecionar os ativos e lojas nova tela de simulação
+    /// Método para selecionar lojas e ativos na nova tela de simulação
     /// </summary>
     /// <returns></returns>
     public PlanosContratosPage SelecionarAtivosELojas()
@@ -427,12 +427,13 @@ public class PlanosContratosPage
     public PlanosContratosPage AlocarAtivosNaSimulacao([Optional] string nomeLoja)
     {
         if (nomeTeste.Equals("TestCriarPlanoComAtivosTipoMidiaGrafica"))
-            Dsl.Clicar(webDriver, GlobalVariables.AlocarTodosAtivos, "Botão Alocar Todos os Ativos");
+            Dsl.Clicar(webDriver, GlobalVariables.AlocarTodosAtivos, "Botão Alocar Todos os Ativos (Cadeado)");
         else
         {
             foreach (string inventario in inventarios)
             {
-                Dsl.Clicar(webDriver, GlobalVariables.AlocarAtivo(nomeLoja, inventario), "Botão Alocar Ativo");
+                Dsl.ScrollParaElemento(webDriver, GlobalVariables.AlocarAtivo(nomeLoja, inventario));
+                Dsl.Clicar(webDriver, GlobalVariables.AlocarAtivo(nomeLoja, inventario), "Botão Alocar Ativo (Cadeado)");
                 Dsl.Esperar(500);
             }
         }
@@ -529,6 +530,8 @@ public class PlanosContratosPage
                     Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaBookFotografico);
                 else if (nomeAbaPlano.Equals("Painel da indústria"))
                     Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaPainelIndustria);
+                else if (nomeAbaPlano.Equals("Tarefas"))
+                    Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaTarefas);
             }
         }
         return this;
