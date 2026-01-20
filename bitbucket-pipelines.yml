@@ -33,7 +33,8 @@ pipelines:
             - CHROME_VERSION=$(google-chrome --version | grep -oP '\d+' | head -1)
             - DRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_VERSION}")
             - wget -q https://storage.googleapis.com/chrome-for-testing-public/${DRIVER_VERSION}/linux64/chromedriver-linux64.zip
-            - unzip chromedriver-linux64.zip -d /usr/local/bin/
+            - unzip chromedriver-linux64.zip
+            - mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
             - chmod +x /usr/local/bin/chromedriver
             - which chromedriver
             - chromedriver --version
