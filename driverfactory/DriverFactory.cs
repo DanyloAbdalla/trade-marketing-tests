@@ -10,7 +10,6 @@ public class DriverFactory
 {
     [ThreadStatic]
     private static IWebDriver webDriver;
-    private static ChromeOptions chromeOptions = new ChromeOptions();
 
     /// <summary>
     /// Método para criação do WebDriver para múltiplos browsers
@@ -23,18 +22,19 @@ public class DriverFactory
         switch (browserType)
         {
             case BrowserType.Chrome:
+                ChromeOptions chromeOptions = new ChromeOptions();
+
                 if (!GlobalVariables.headLessMode)
                 {
                     chromeOptions.AddArgument("--start-maximized");
                 }
                 else
                 {
-                    chromeOptions.AddArgument("--headless=new");
+                    chromeOptions.AddArgument("--headless");
                     chromeOptions.AddArgument("--no-sandbox");
                     chromeOptions.AddArgument("--disable-dev-shm-usage");
                     chromeOptions.AddArgument("--disable-gpu");
                     chromeOptions.AddArgument("--window-size=1920,1080");
-                    chromeOptions.AddArgument("--disable-software-rasterizer");
                     chromeOptions.AddArgument("--remote-allow-origins=*");
                     chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
                 }
