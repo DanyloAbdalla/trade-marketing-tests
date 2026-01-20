@@ -35,6 +35,7 @@ public class DriverFactory
                     chromeOptions.AddArgument("--disable-gpu");
                     chromeOptions.AddArgument("--window-size=1920,1080");
                     chromeOptions.AddArgument("--disable-software-rasterizer");
+                    chromeOptions.AddArgument("--remote-allow-origins=*");
                     chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
                 }
 
