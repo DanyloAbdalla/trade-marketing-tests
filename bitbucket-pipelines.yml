@@ -31,7 +31,7 @@ pipelines:
             - apt-get install -y wget unzip curl gnupg
       
             # 2️⃣ Instalar dependências do Chrome (CRÍTICO)
-            - apt-get install -y libxss1 libappindicator1 libindicator7 fonts-liberation xdg-utils libgconf-2-4 libnss3 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libgbm1
+            - apt-get install -y libxss1 fonts-liberation xdg-utils libnss3 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libgbm1
       
             # 3️⃣ Instalar Google Chrome
             - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
