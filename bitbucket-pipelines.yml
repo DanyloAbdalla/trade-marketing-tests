@@ -6,7 +6,7 @@
 # To run your pipeline on a Windows machine, create a self-hosted Windows runner.
 # For instructions on setting up a Windows runner, see https://support.atlassian.com/bitbucket-cloud/docs/set-up-runners-for-windows/
 
-image: mcr.microsoft.com/dotnet/sdk:8.0
+image: selenium/standalone-chrome:latest
 
 pipelines:
   custom:
@@ -20,26 +20,6 @@ pipelines:
             - dotnet restore
             - dotnet build --configuration Release
 
-      - step:
-          name: Setup Selenium Environment
-          caches:
-            - dotnetcore
-          script:
-            - apt-get update
-            - apt-get install -y wget unzip
-            - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            - apt install -y ./google-chrome-stable_current_amd64.deb
-            # pega a versão completa do Chrome
-            - CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
-            # usa a versão completa na URL
-            - wget -q https://storage.googleapis.com/chrome-for-testing-public/$CHROME_VERSION/linux64/chromedriver-linux64.zip
-            - unzip chromedriver-linux64.zip
-            # move o binário, não a pasta
-            - mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-            - chmod +x /usr/local/bin/chromedriver
-            - which chromedriver
-            - chromedriver --version
-            
       - step:
           name: PlanosTest ClienteStart
           caches:

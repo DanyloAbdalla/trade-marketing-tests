@@ -29,10 +29,12 @@ public class DriverFactory
                 }
                 else
                 {
-                    chromeOptions.AddArgument("--headless"); //desativa a abertura do navegador
-                    chromeOptions.AddArgument("--no-sandbox"); //desativa o recurso de segurança sandbox do Browser para o uso do mesmo em contêineres Docker
-                    chromeOptions.AddArgument("--disable-dev-shm-usage"); //direciona o Browser a usar o diretório /tmp, previnindo falhas em ambientes com memória compartilhada limitada em contêineres Docker
-                    chromeOptions.AddArgument("--start-maximized"); //inicia com o Browser maximizado
+                    chromeOptions.AddArgument("--headless=new");
+                    chromeOptions.AddArgument("--no-sandbox");
+                    chromeOptions.AddArgument("--disable-dev-shm-usage");
+                    chromeOptions.AddArgument("--disable-gpu");
+                    chromeOptions.AddArgument("--window-size=1920,1080");
+                    chromeOptions.AddArgument("--disable-software-rasterizer");
                     chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
                 }
 
