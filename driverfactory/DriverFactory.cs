@@ -27,7 +27,7 @@ public class DriverFactory
 
                 if (environment != null && environment == "true")
                 {
-                    //var service = ChromeDriverService.CreateDefaultService(driverPath: "/usr/local/bin");
+                    var service = ChromeDriverService.CreateDefaultService(driverPath: "/usr/local/bin");
                     chromeOptions.AddArgument("--headless");
                     chromeOptions.AddArgument("--no-sandbox");
                     chromeOptions.AddArgument("--disable-dev-shm-usage");
@@ -46,7 +46,7 @@ public class DriverFactory
 
                     try
                     {
-                        webDriver = new ChromeDriver(chromeOptions);
+                        webDriver = new ChromeDriver(service, chromeOptions);
                     }
                     catch (WebDriverException ex)
                     {
@@ -56,9 +56,7 @@ public class DriverFactory
                         Console.Error.WriteLine($"ChromeDriver Path: {Environment.GetEnvironmentVariable("PATH")}");
 
                         throw new InvalidOperationException(
-                            "Falha ao iniciar o ChromeDriver. Verifique se o ChromeDriver está instalado corretamente e acessível no PATH do sistema.",
-                            ex
-                        );
+                            "Falha ao iniciar o ChromeDriver. Verifique se o ChromeDriver está instalado corretamente e acessível no PATH do sistema.", ex);
                     }
 
                     webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(90);
