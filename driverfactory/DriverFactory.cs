@@ -50,6 +50,7 @@ public class DriverFactory
                     chromeOptions.AddArgument("--disable-background-networking");
                     chromeOptions.AddArgument("--disable-component-extensions-with-background-pages");
                     chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
+                    Console.WriteLine("Iniciando o ChromeDriver em modo invisível...");
 
                     try
                     {
