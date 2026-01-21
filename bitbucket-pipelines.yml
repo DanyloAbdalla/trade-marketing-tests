@@ -11,8 +11,6 @@ image: mcr.microsoft.com/dotnet/sdk:8.0
 definitions:
   caches:
     dotnetcore: ~/.nuget/packages
-  variables:
-    environment: "CD"
 
 pipelines:
   custom:
@@ -59,6 +57,7 @@ pipelines:
             # 6️⃣ Validar instalação do ChromeDriver
             - which chromedriver
             - chromedriver --version
+            - ls -l /usr/local/bin/chromedriver
 
             # 7️⃣ Encerrar processos do Chrome (se houver)
             - pkill -f google-chrome || true
@@ -68,7 +67,6 @@ pipelines:
       #     caches:
       #       - dotnetcore
       #     script:
-      #       - echo $environment
       #       - dotnet test --filter TestCategory=Start
 
       # - step:
@@ -76,7 +74,6 @@ pipelines:
       #     caches:
       #       - dotnetcore
       #     script:
-      #       - echo $environment
       #       - dotnet test --filter TestCategory=Pro
 
       # - step:
@@ -84,7 +81,6 @@ pipelines:
       #     caches:
       #       - dotnetcore
       #     script:
-      #       - echo $environment
       #       - dotnet test --filter TestCategory=Expert
 
       - step:
@@ -92,5 +88,4 @@ pipelines:
           caches:
             - dotnetcore
           script:
-            - echo $environment
             - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.DashboardOperacoesTest
