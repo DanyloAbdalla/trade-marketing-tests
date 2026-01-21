@@ -9,6 +9,8 @@ public class GlobalVariables
     public static string[] senhaUsuarios = { "Meucliente@st@123", "Meucliente@pr@123", "Meucliente@ex@123" };
     public static string emailUsuarioSemPlanta = "homologacao.sp@meucliente.app.br";
     public static string senhaUsuarioSemPlanta = "Meucliente@hml@123";
+    private static TimeSpan explicitWait;
+    public static TimeSpan ExplicitWait { get => explicitWait; set => explicitWait = value; }
     #endregion
 
     #region Elementos de página - Elementos Comuns
@@ -360,5 +362,6 @@ public class GlobalVariables
     public static string FecharReservaAtivoLojasCampanha { get; set; } = "(//button/*[text()='Fechar'])[2]";
     public static string QuantidadeReservadaAtivoCampanha { get; set; } = "//tbody/tr/td[5]/input";
     public static string QuantidadeLojasReservaCampanha { get; set; } = "(//*[@class='ant-modal-content'])[2]//tbody/tr";
+    
     #endregion
 }

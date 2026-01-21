@@ -15,7 +15,6 @@ namespace MeuClienteWebTestProject;
 public class Dsl
 {
     private static TimeSpan implicitWaitOriginal;
-    private static TimeSpan explicitWait = TimeSpan.FromSeconds(50);
 
     public static DefaultWait<IWebDriver> CreateFluentWait(IWebDriver webDriver)
     {
@@ -24,7 +23,7 @@ public class Dsl
 
         var wait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(30),
+            Timeout = TimeSpan.FromSeconds(GlobalVariables.ExplicitWait.TotalSeconds),
             PollingInterval = TimeSpan.FromMilliseconds(250)
         };
 
@@ -97,7 +96,7 @@ public class Dsl
     {
         try
         {
-            WebDriverWait wait = new WebDriverWait(webDriver, explicitWait);
+            WebDriverWait wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(XPath)));
         }
         catch (Exception ex)
@@ -116,7 +115,7 @@ public class Dsl
     {
         try
         {
-            WebDriverWait wait = new WebDriverWait(webDriver, explicitWait);
+            WebDriverWait wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(XPath))).Click();
         }
         catch (Exception ex)
@@ -134,7 +133,7 @@ public class Dsl
     {
         try
         {
-            WebDriverWait wait = new WebDriverWait(webDriver, explicitWait);
+            WebDriverWait wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
             IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.XPath(XPath)));
 
             return element;
