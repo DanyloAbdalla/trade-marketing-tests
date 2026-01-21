@@ -40,7 +40,6 @@ pipelines:
             - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             - apt install -y ./google-chrome-stable_current_amd64.deb
             - ps aux | grep chrome
-            - lsof -i :9222
       
             # 4️⃣ Validar instalação do Chrome
             - google-chrome --version
