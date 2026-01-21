@@ -51,13 +51,13 @@ pipelines:
             - DRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_VERSION}")
             - wget -q https://storage.googleapis.com/chrome-for-testing-public/${DRIVER_VERSION}/linux64/chromedriver-linux64.zip
             - unzip chromedriver-linux64.zip
-            - mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-            - chmod +x /usr/local/bin/chromedriver
+            - mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
+            - chmod +x /usr/bin/chromedriver
       
             # 6️⃣ Validar instalação do ChromeDriver
             - which chromedriver
             - chromedriver --version
-            - ls -l /usr/local/bin/chromedriver
+            - ls -l /usr/bin/chromedriver
 
             # 7️⃣ Encerrar processos do Chrome (se houver)
             - pkill -f google-chrome || true
