@@ -27,7 +27,7 @@ public class DriverFactory
 
                 if (environment != null && environment == "true")
                 {
-                    chromeOptions.AddArgument("--headless");
+                    chromeOptions.AddArgument("--headless=new");
                     chromeOptions.AddArgument("--no-sandbox");
                     chromeOptions.AddArgument("--disable-dev-shm-usage");
                     chromeOptions.AddArgument("--disable-gpu");
@@ -41,7 +41,6 @@ public class DriverFactory
                     chromeOptions.AddArgument("--disable-background-networking");
                     chromeOptions.AddArgument("--disable-component-extensions-with-background-pages");
                     chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
-                    Console.WriteLine("Iniciando o ChromeDriver em modo invisível...");
 
                     try
                     {
@@ -64,7 +63,6 @@ public class DriverFactory
                 else
                 {
                     chromeOptions.AddArgument("--start-maximized");
-                    Console.WriteLine("Iniciando o ChromeDriver em modo visível...");
                     webDriver = new ChromeDriver(chromeOptions);
                     webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
                     webDriver.Navigate().GoToUrl(GlobalVariables.urlDevPlataforma);
