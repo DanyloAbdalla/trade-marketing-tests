@@ -3,20 +3,12 @@ namespace MeuClienteWebTestProject;
 public class GlobalVariables
 {
     #region Projeto
-    public static bool headLessMode = true; //Executa, mostrando o Browser na tela, se headLessMode igual false
-    public static bool devMode = false;
-    public static bool hmlMode = true;
-    public static bool prodMode = false;
     public static string urlDevPlataforma = "https://dev.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
-    public static string urlPrdPlataforma = "https://login.meucliente.app.br/";
-    public static string[] clienteUpsell = { "ClienteStart", "ClientePro", "ClienteExpert" };
     public static string[] emailUsuarios = { "homologacao.start@meucliente.app.br", "homologacao.pro@meucliente.app.br", "homologacao.expert@meucliente.app.br" };
     public static string[] senhaUsuarios = { "Meucliente@st@123", "Meucliente@pr@123", "Meucliente@ex@123" };
     public static string emailUsuarioSemPlanta = "homologacao.sp@meucliente.app.br";
     public static string senhaUsuarioSemPlanta = "Meucliente@hml@123";
-    public static string emailUsuarioComPlanta = "homologacao.cp@meucliente.app.br";
-    public static string senhaUsuarioComPlanta = "Meucliente@hml@123";
     #endregion
 
     #region Elementos de página - Elementos Comuns

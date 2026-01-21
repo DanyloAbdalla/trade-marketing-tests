@@ -23,12 +23,14 @@ public class DriverFactory
         {
             case BrowserType.Chrome:
                 var chromeOptions = new ChromeOptions();
+                var environment = Environment.GetEnvironmentVariable("Environment");
 
-                if (!GlobalVariables.headLessMode)
+                if (environment != "CD")
                 {
                     chromeOptions.AddArgument("--start-maximized");
                     webDriver = new ChromeDriver(chromeOptions);
                     webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    webDriver.Navigate().GoToUrl(GlobalVariables.urlDevPlataforma);
                 }
                 else
                 {
@@ -66,14 +68,9 @@ public class DriverFactory
                     }
 
                     webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(90);
+                    webDriver.Navigate().GoToUrl(GlobalVariables.urlHmlPlataforma);
                 }
 
-                if (GlobalVariables.devMode)
-                    webDriver.Navigate().GoToUrl(GlobalVariables.urlDevPlataforma);
-                if (GlobalVariables.hmlMode)
-                    webDriver.Navigate().GoToUrl(GlobalVariables.urlHmlPlataforma);
-                if (GlobalVariables.prodMode)
-                    webDriver.Navigate().GoToUrl(GlobalVariables.urlPrdPlataforma);
                 break;
             default:
                 throw new NotSupportedException($"{browserType} is not supported.");
