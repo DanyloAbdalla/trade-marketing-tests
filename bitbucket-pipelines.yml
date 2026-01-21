@@ -28,6 +28,7 @@ pipelines:
             Environment: "CD"
           script:
             - apt-get update
+            - apt-get install -y net-tools
       
             # 1️⃣ Instalar ferramentas base
             - apt-get install -y wget unzip curl gnupg
@@ -56,6 +57,9 @@ pipelines:
             # 6️⃣ Validar instalação do ChromeDriver
             - which chromedriver
             - chromedriver --version
+
+            # 7️⃣ Encerrar processos do Chrome (se houver)
+            - pkill -f google-chrome || true
 
       # - step:
       #     name: PlanosTest ClienteStart
