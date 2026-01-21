@@ -49,7 +49,7 @@ public class HomePage
         Dsl.Clicar(webDriver, GlobalVariables.MenuNegociacao, "Menu Negociação");
         Dsl.Clicar(webDriver, GlobalVariables.CadastroPlanosContratos, "Cadastro de Planos");
 
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadListaPlanos);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadListaPlanos, "Load Tela Lista de Planos");
         Dsl.Esperar(2000);
 
         if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
@@ -73,7 +73,7 @@ public class HomePage
 
         Dsl.Clicar(webDriver, GlobalVariables.MenuCadastros, "Menu Cadastros");
 
-        Dsl.ScrollParaElemento(webDriver, GlobalVariables.CadastroSmartIa);
+        Dsl.ScrollParaElemento(webDriver, GlobalVariables.CadastroSmartIa, "Cadastro de Campanhas SmartIA");
         Dsl.Clicar(webDriver, GlobalVariables.CadastroSmartIa, "Cadastro de Campanhas SmartIA");
 
         return new SmartIaPage(webDriver);
@@ -97,7 +97,7 @@ public class HomePage
     /// <returns></returns>
     public HomePage VoltarParaDashboardOperacoes()
     {
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado);
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
         var ultimoCadastroAcessado = Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
         Dsl.Esperar();
 
@@ -117,8 +117,8 @@ public class HomePage
         Dsl.Clicar(webDriver, GlobalVariables.MenuUsuarioLogado, "Botão Usuário Logado");
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SairConta, "Botão Sair da Conta");
 
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioEmail);
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioSenha);
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioEmail, "Campo Usuário Email");
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.PreencherUsuarioSenha, "Campo Usuário Senha");
 
         return this;
     }
@@ -131,7 +131,7 @@ public class HomePage
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.FiltrarPlanosStatusVigencia, "Campo Filtro Vigência");
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarTodosPlanos, "Selecionar Todos Planos");
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadListaPlanos);
+        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadListaPlanos, "Load Tela Lista de Planos");
 
         return new PlanosContratosPage(webDriver, clienteUpSellAtual);
     }

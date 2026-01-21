@@ -58,7 +58,7 @@ public class DashboardOperacoesTest
         new HomePage(webDriver, clienteUpSellAtual)
             .VoltarParaDashboardOperacoes();
 
-        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados);
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TextoCardAtivosAlocados, "Texto Indíce de Aproveitamento de Ativos");
         Dsl.Esperar();
     }
 

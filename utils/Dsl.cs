@@ -23,7 +23,7 @@ public class Dsl
 
         var wait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(GlobalVariables.ExplicitWait.TotalSeconds),
+            Timeout = TimeSpan.FromSeconds(30),
             PollingInterval = TimeSpan.FromMilliseconds(250)
         };
 
@@ -46,7 +46,7 @@ public class Dsl
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
     /// <exception cref="Exception"></exception>
-    public static bool EsperarVisibilidadeDoElemento(IWebDriver webDriver, string XPath)
+    public static bool EsperarVisibilidadeDoElemento(IWebDriver webDriver, string XPath, string elemento)
     {
         try
         {
@@ -54,7 +54,7 @@ public class Dsl
             fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
         }
         catch (WebDriverTimeoutException ex)
-        { Console.WriteLine("Tempo esgotado para espera da visibilidade do elemento:" + "\n" + ex.Message); }
+        { Console.WriteLine("Tempo esgotado para espera da visibilidade do elemento:" + "\n" + ex.Message + "\n" + elemento); }
         catch (Exception ex)
         { Console.WriteLine("Erro ao esperar a visibilidade do elemento na página:" + "\n" + ex.Message); }
         finally
@@ -172,10 +172,11 @@ public class Dsl
     /// Método para aguardar o load da tela
     /// </summary>
     /// <param name="webDriver"></param>
-    /// <param name="XPath"></param>*
-    public static void EsperarLoadDaTela(IWebDriver webDriver, string XPath)
+    /// <param name="XPath"></param>
+    /// <param name="elemento"></param>
+    public static void EsperarLoadDaTela(IWebDriver webDriver, string XPath, string elemento)
     {
-        EsperarVisibilidadeDoElemento(webDriver, XPath);
+        EsperarVisibilidadeDoElemento(webDriver, XPath, elemento);
         EsperarInvisibilidadeDoElemento(webDriver, XPath);
     }
 
@@ -410,12 +411,13 @@ public class Dsl
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
     /// <param name="textoValor"></param>
+    /// <param name="elemento"></param>
     /// <exception cref="Exception"></exception>
-    public static void DigitarNoCampoTextoComboList(IWebDriver webDriver, string XPath, string textoValor)
+    public static void DigitarNoCampoTextoComboList(IWebDriver webDriver, string XPath, string textoValor, string elemento)
     {
         try
         {
-            EsperarVisibilidadeDoElemento(webDriver, XPath);
+            EsperarVisibilidadeDoElemento(webDriver, XPath, elemento);
 
             for (int i = 0; i < textoValor.Length; i++)
             {
@@ -768,9 +770,10 @@ public class Dsl
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
-    public static void ScrollParaElemento(IWebDriver webDriver, string XPath)
+    /// <param name="elemento"></param>
+    public static void ScrollParaElemento(IWebDriver webDriver, string XPath, string elemento)
     {
-        EsperarVisibilidadeDoElemento(webDriver, XPath);
+        EsperarVisibilidadeDoElemento(webDriver, XPath, elemento);
 
         IWebElement webElement = webDriver.FindElement(By.XPath(XPath));
 
