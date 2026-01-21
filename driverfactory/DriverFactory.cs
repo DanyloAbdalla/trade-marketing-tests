@@ -25,7 +25,7 @@ public class DriverFactory
                 var chromeOptions = new ChromeOptions();
                 var environment = Environment.GetEnvironmentVariable("Environment");
 
-                if (environment != "CD")
+                if (environment is null || environment != "CD")
                 {
                     chromeOptions.AddArgument("--start-maximized");
                     webDriver = new ChromeDriver(chromeOptions);
