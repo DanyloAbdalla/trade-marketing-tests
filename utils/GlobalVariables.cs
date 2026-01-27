@@ -32,7 +32,11 @@ public class GlobalVariables
     public static string RecarregarTela { get; set; } = "//button/*[text()='Recarregar tela']";
     public static string TituloModalConfirmacao { get; set; } = "//span[@class='ant-modal-confirm-title']";
     public static string CancelarAcao { get; set; } = "//button/*[text()='Cancelar']";
-    public static string AvancarCalendarioMes { get; set; } = "//*[@class='ant-picker-date-panel']/../../../..//*[not(contains(@class,'picker-dropdown-hidden'))]//div//div/div//div//button[contains(@class,'header-next-btn')]";
+    public static string Calendario { get; set; } = "//*[@class='ant-picker-date-panel']/../../../../div[not(contains(@class,'picker-dropdown-hidden'))]";
+    public static string AvancarCalendarioMes(string calendario) { return $"{calendario}//div//div/div//div//button[contains(@class,'header-next-btn')]"; }
+    public static string CalendarioData(string calendario, string dia) { return $"{calendario}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{dia}']"; }
+    public static string CalendarioDataInicioMes(string calendario, string dia) { return $"{calendario}//td[@class='ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view']//div[text()='{dia}']"; }
+    public static string CalendarioDataFimMes(string calendario, string dia) { return $"{calendario}//td[@class='ant-picker-cell ant-picker-cell-end ant-picker-cell-in-view']//div[text()='{dia}']"; }
     public static string AvancarMesesCalendariosBotton { get; set; } = "//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-bottomLeft ']//*[@class='ant-picker-header-next-btn']";
     public static string AvancarMesesCalendariosTop { get; set; } = "//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-topLeft ']//*[@class='ant-picker-header-next-btn']";
     #endregion

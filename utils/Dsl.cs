@@ -457,7 +457,7 @@ public class Dsl
     public static void PreencherCalendarios(IWebDriver webDriver, int quantidadeAvancarMeses, string elemento)
     {
         DateTime dataAtual = DateTime.Now;
-        string xpathElemento;
+        string xpathElementoData;
 
         if (quantidadeAvancarMeses == 0)
         {
@@ -476,20 +476,25 @@ public class Dsl
                 {
                     webDriver.FindElement(By.XPath(GlobalVariables.AvancarMesesCalendariosTop)).Click();
                 }*/
-                Clicar(webDriver, GlobalVariables.AvancarCalendarioMes, "Botão Avançar Mês Calendário");
-                Esperar(2000);
+                Clicar(webDriver, GlobalVariables.AvancarCalendarioMes(GlobalVariables.Calendario), "Botão Avançar Mês Calendário");
+                Esperar();
             }
 
-            var xpathElementoCalendario = "//*[@class='ant-picker-date-panel']";
+            //var xpathElementoCalendario = "//*[@class='ant-picker-date-panel']/../../../../div[not(contains(@class,'picker-dropdown-hidden'))]";
 
             if (dataAtual.Day == 1)
-                xpathElemento = $"{xpathElementoCalendario}//td[@class='ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view']//div[text()='{dataAtual.Day}']";
+                xpathElementoData = GlobalVariables.CalendarioDataInicioMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
             else if (EhUltimoDiaDoMes(dataAtual))
-                xpathElemento = $"{xpathElementoCalendario}//td[@class='ant-picker-cell ant-picker-cell-end ant-picker-cell-in-view']//div[text()='{dataAtual.Day}']";
+                xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
             else
-                xpathElemento = $"{xpathElementoCalendario}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{dataAtual.Day}']";
+                xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
 
-            Clicar(webDriver, xpathElemento, elemento);
+            //xpathElementoData = $"{xpathElementoCalendario}//td[@class='ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view']//div[text()='{dataAtual.Day}']";
+            //xpathElementoData = $"{xpathElementoCalendario}//td[@class='ant-picker-cell ant-picker-cell-end ant-picker-cell-in-view']//div[text()='{dataAtual.Day}']";
+            //xpathElementoData = $"{xpathElementoCalendario}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{dataAtual.Day}']";
+
+            Esperar();
+            Clicar(webDriver, xpathElementoData, elemento);
 
             //var xpathElementoCalendarioBotton = "//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-bottomLeft ']";
             //var xpathElementoCalendarioTop = "//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-topLeft ']";

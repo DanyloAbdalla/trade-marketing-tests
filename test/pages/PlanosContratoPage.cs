@@ -647,7 +647,7 @@ public class PlanosContratosPage
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarPlano((string)DataLoader.ObterDados("negociacoes_planos", "TestGlobalData", "nomeCampanha")), "Botão Editar Plano");
 
         Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaDadosPlano, "Load Aba Dados do Plano");
-        Dsl.Esperar(10000);
+        Dsl.Esperar(6000);
 
         if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
         {
@@ -680,9 +680,9 @@ public class PlanosContratosPage
         string inicioVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.InicioVigenciaPlano, "Campo Início Vigência do Plano", "value");
         string fimVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.FimVigenciaPlano, "Campo Fim Vigência do Plano", "value");
         string diaInicioVigenciaPlano = inicioVigenciaPlano.Substring(0, 2);
-        int dias = Dsl.CalcularDiasEntreDatas(inicioVigenciaPlano, fimVigenciaPlano);
+        int quantidadeDiasVigencia = Dsl.CalcularDiasEntreDatas(inicioVigenciaPlano, fimVigenciaPlano);
 
-        if (dias == 31 && diaInicioVigenciaPlano.Equals("01"))
+        if (diaInicioVigenciaPlano.Equals("01") && quantidadeDiasVigencia == 31)
         {
             avancarMesCalendarioInicioVigenciaEm = 2;
             avancarMesCalendarioFimVigenciaEm = 3;
@@ -694,9 +694,11 @@ public class PlanosContratosPage
         }
 
         Dsl.Clicar(webDriver, GlobalVariables.FimVigenciaPlano, "Campo Fim Vigencia Plano");
+        Dsl.Esperar();
         Dsl.PreencherCalendarios(webDriver, avancarMesCalendarioFimVigenciaEm, "Calendário Fim Vigência Plano");
 
         Dsl.Clicar(webDriver, GlobalVariables.InicioVigenciaPlano, "Campo Início Vigencia Plano");
+        Dsl.Esperar();
         Dsl.PreencherCalendarios(webDriver, avancarMesCalendarioInicioVigenciaEm, "Calendário Início Vigência Plano");
 
 
@@ -1159,12 +1161,18 @@ public class PlanosContratosPage
 
             if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
             {
+                Dsl.ScrollParaElemento(webDriver, GlobalVariables.MaisInformacoesPlano, "Menu Suspenso Mais Informações do Plano");
+                Dsl.Clicar(webDriver, GlobalVariables.MaisInformacoesPlano, "Menu Suspenso Mais Informações do Plano");
+
                 Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Setor, Setor, "Campo Setor");
                 Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarSetor, "Campo Setor Selecionar");
             }
 
             Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Departamento, Departamento, "Campo Departamento");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarDepartamento, "Campo Departamento Selecionar");
+
+            if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
+                Dsl.ScrollParaElemento(webDriver, GlobalVariables.Categoria, "Campo Categoria");
 
             Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Categoria, Categoria, "Campo Categoria");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarCategoria, "Campo Categoria Selecionar");
