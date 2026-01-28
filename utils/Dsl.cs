@@ -623,7 +623,7 @@ public class Dsl
             if (double.TryParse(valorTratado, NumberStyles.Any, new CultureInfo("pt-BR"), out double numeroDouble))
                 numero = numeroDouble;
             else
-                throw new FormatException("A string não tem um número válido");
+                throw new FormatException("O texto capturado não contém um número válido.");
 
             return numero;
         }
