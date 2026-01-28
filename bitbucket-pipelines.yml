@@ -27,10 +27,10 @@ pipelines:
       - step:
          name: PlanosTest ClienteStart
          caches:
-          - dotnetcore
+            - dotnetcore
          script:
-           - dotnet test --filter TestCategory=Start
-           
+            - dotnet test --filter TestCategory=Start
+
       - step:
           name: DashboardOperacoesTest
           caches:
