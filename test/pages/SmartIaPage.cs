@@ -36,7 +36,7 @@ public class SmartIaPage
     {
         Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Nova Campanha SmartIA");
         if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner) > 0)
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Nova Campanha SmartIA");
 
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.MenuCampanhas, "Menu Suspenso Campanhas");
         Dsl.Esperar();
@@ -214,8 +214,8 @@ public class SmartIaPage
         var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Realizar Varredura");
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
 
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Realizar Varredura");
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Realizar Varredura");
 
         return this;
     }
@@ -285,7 +285,7 @@ public class SmartIaPage
     {
         Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ReservarAtivosCampanha, "Botão Reservar Ativos na Campanha");
         if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados);
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados, "Aviso Inexistência de Dados na Seleção de Ativos");
 
         return this;
     }
@@ -380,7 +380,7 @@ public class SmartIaPage
         var mensagemSucessoAtual = Dsl.RemoverNumerosEspacosDeUmTexto(texto, "Mensagem Salvar Ativos Reservados");
 
         Dsl.ValidarMensagemDeSucessoEAlerta(mensagemSucessoAtual, mensagemSucessoEsperada);
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagem Salvar Ativos Reservados");
 
         return this;
     }

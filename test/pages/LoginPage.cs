@@ -51,7 +51,7 @@ public class LoginPage
         Dsl.Clicar(webDriver, GlobalVariables.SubmeterLogin, "Botão Login");
 
         if (webDriver.Url.Contains("dashboard"))
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadCarregandoDashboard);
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadCarregandoDashboard, "Load Carregando Dashboard");
 
         return new HomePage(webDriver, clienteUpSellAtual);
     }

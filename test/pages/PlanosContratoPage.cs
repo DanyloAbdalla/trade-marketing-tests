@@ -499,11 +499,11 @@ public class PlanosContratosPage
                 Dsl.ValidarTextosNoElemento(tituloAbaAtual, tituloAbaEsperado);
 
                 if (nomeAbaPlano.Equals("Anexos"))
-                    Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaAnexos, "Load Aba Anexos");
+                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaAnexos, "Load Aba Anexos");
                 else if (nomeAbaPlano.Equals("Book Fotográfico"))
-                    Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaBookFotografico, "Load Aba Book Fotográfico");
+                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaBookFotografico, "Load Aba Book Fotográfico");
                 else if (nomeAbaPlano.Equals("Painel da indústria"))
-                    Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadDeTelaPainelIndustria, "Load Aba Painel da Indústria");
+                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaPainelIndustria, "Load Aba Painel da Indústria");
             }
         }
         else
@@ -858,7 +858,7 @@ public class PlanosContratosPage
         Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Plano");
         List<MensagemFeedback> mensagensAtuais = Dsl.ObterMensagensDeFeedback(webDriver, GlobalVariables.MensagemDeFeedback);
         ValidarMensagensDoPlano(mensagensAtuais);
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback);
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Plano");
 
         if (clienteUpSellAtual == ClienteUpSell.ClienteStart || clienteUpSellAtual == ClienteUpSell.ClientePro)
             Dsl.ScrollParaElemento(webDriver, GlobalVariables.ReceitaAtivos, "Campo Receita de Ativos");
@@ -885,8 +885,8 @@ public class PlanosContratosPage
 
         ValidarMensagensDoPlano(mensagensAtuais);
 
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
-        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback);
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
 
         return this;
     }
@@ -964,8 +964,8 @@ public class PlanosContratosPage
 
                     ValidarMensagensDoPlano(mensagensAtuais);
 
-                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
-                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback);
+                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
+                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
                 }
                 break;
             case ClienteUpSell.ClientePro:
@@ -998,8 +998,8 @@ public class PlanosContratosPage
 
                 ValidarMensagensDoPlano(mensagensAtuais);
 
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback);
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
                 Dsl.Esperar(5000);
                 break;
         }
@@ -1053,8 +1053,8 @@ public class PlanosContratosPage
 
                 ValidarMensagensDoPlano(mensagensAtuais);
 
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback);
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
                 break;
             case ClienteUpSell.ClientePro:
             case ClienteUpSell.ClienteExpert:
@@ -1084,8 +1084,8 @@ public class PlanosContratosPage
 
                 ValidarMensagensDoPlano(mensagensAtuais);
 
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner);
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback);
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
                 break;
         }
 
@@ -1265,7 +1265,7 @@ public class PlanosContratosPage
                     Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Exclusão do Plano");
                     List<MensagemFeedback> mensagensAtuais = Dsl.ObterMensagensDeFeedback(webDriver, GlobalVariables.MensagemDeFeedback);
                     ValidarMensagensDoPlano(mensagensAtuais);
-                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback);
+                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Exclusão do Plano");
                 }
             }
         }

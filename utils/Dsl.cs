@@ -68,18 +68,19 @@ public class Dsl
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
+    /// <param name="elemento"></param>
     /// <exception cref="Exception"></exception>
-    public static void EsperarInvisibilidadeDoElemento(IWebDriver webDriver, string XPath)
+    public static void EsperarInvisibilidadeDoElemento(IWebDriver webDriver, string XPath, string elemento)
     {
         try
         {
             var fluentWait = CreateFluentWait(webDriver);
             fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
         }
-        catch (WebDriverTimeoutException ex)
-        { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento:" + "\n" + ex.Message); }
+        catch (WebDriverTimeoutException)
+        { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento: " + elemento); }
         catch (Exception ex)
-        { Console.WriteLine("Erro ao esperar a invisibilidade do elemento na página:" + "\n" + ex.Message); }
+        { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a invisibilidade do elemento " + elemento); }
         finally
         { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
     }
@@ -177,7 +178,7 @@ public class Dsl
     public static void EsperarLoadDaTela(IWebDriver webDriver, string XPath, string elemento)
     {
         EsperarVisibilidadeDoElemento(webDriver, XPath, elemento);
-        EsperarInvisibilidadeDoElemento(webDriver, XPath);
+        EsperarInvisibilidadeDoElemento(webDriver, XPath, elemento);
     }
 
     /// <summary>
