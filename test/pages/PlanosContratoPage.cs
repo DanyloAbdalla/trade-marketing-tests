@@ -888,6 +888,8 @@ public class PlanosContratosPage
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
         Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
 
+        Dsl.Esperar(5000);
+
         return this;
     }
 
@@ -956,7 +958,7 @@ public class PlanosContratosPage
                     AumentarQuantidadeAtivosPorLoja();
 
                     Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
-                    Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
+                    /*Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
                     Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
                     Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
@@ -965,7 +967,7 @@ public class PlanosContratosPage
                     ValidarMensagensDoPlano(mensagensAtuais);
 
                     Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
-                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
+                    Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");*/
                 }
                 break;
             case ClienteUpSell.ClientePro:
@@ -989,7 +991,7 @@ public class PlanosContratosPage
 
                 Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
-                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
+                /*Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
@@ -1000,9 +1002,11 @@ public class PlanosContratosPage
 
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
-                Dsl.Esperar(5000);
+                Dsl.Esperar(5000);*/
                 break;
         }
+
+        SalvarAtivoAlocado();
 
         return this;
     }
@@ -1044,7 +1048,7 @@ public class PlanosContratosPage
                 AumentarQuantidadeAtivosPorLoja();
 
                 Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
-                Dsl.Clicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
+                /*Dsl.Clicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
@@ -1054,7 +1058,7 @@ public class PlanosContratosPage
                 ValidarMensagensDoPlano(mensagensAtuais);
 
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");*/
                 break;
             case ClienteUpSell.ClientePro:
             case ClienteUpSell.ClienteExpert:
@@ -1074,7 +1078,7 @@ public class PlanosContratosPage
                 AumentarQuantidadeAtivosPorLoja();
 
                 Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
-                Dsl.Clicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
+                /*Dsl.Clicar(webDriver, GlobalVariables.SalvarAlocacaoLoja, "Botão Salvar Quantidades Alocadas do Ativo por Loja");
                 Dsl.Esperar(5000);
 
                 Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
@@ -1085,9 +1089,11 @@ public class PlanosContratosPage
                 ValidarMensagensDoPlano(mensagensAtuais);
 
                 Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadDeTelaSpiner, "Load Tela Salvar Ativo Alocado");
-                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.MensagemDeFeedback, "Mensagem de Feedback Após Salvar Ativo Alocado");*/
                 break;
         }
+        
+        SalvarAtivoAlocado();
 
         return this;
     }
