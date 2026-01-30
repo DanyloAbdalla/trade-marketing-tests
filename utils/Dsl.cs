@@ -5,6 +5,7 @@ using OpenQA.Selenium.Interactions;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Globalization;
+using System.Xml;
 
 namespace MeuClienteWebTestProject;
 
@@ -464,98 +465,54 @@ public class Dsl
     /// Avançando para os meses seguintes se quantidadeAvancarMeses for maior que 0
     /// </summary>
     /// <param name="webDriver"></param>
-    /// <param name="quantidadeAvancarMeses"></param>
+    /// <param name="mesVigenciaSelecionadaTem30Dias"></param>
     /// <param name="elemento"></param>
-    public static void PreencherCalendarios(IWebDriver webDriver, int quantidadeAvancarMeses, string elemento)
+    public static void PreencherCalendarios(IWebDriver webDriver, bool mesVigenciaSelecionadaTem30Dias, string elemento)
     {
         DateTime dataAtual = DateTime.Now;
         string xpathElementoData;
 
-        if (quantidadeAvancarMeses == 0)
-        {
-            webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[1]//div[text()='{dataAtual.Day}'])[1]")).Click();
-        }
-        else if (quantidadeAvancarMeses > 0)
-        {
-            for (int i = 0; i < quantidadeAvancarMeses; i++)
-            {
-                Clicar(webDriver, GlobalVariables.AvancarCalendarioMes(GlobalVariables.Calendario), "Botão Avançar Mês Calendário");
-                Esperar();
-            }
+        if (dataAtual.Day == 1)
+            xpathElementoData = GlobalVariables.CalendarioDataInicioMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        else if (EhUltimoDiaDoMes(dataAtual) || mesVigenciaSelecionadaTem30Dias)
+            xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        else
+            xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
 
-            if (dataAtual.Day == 1)
-                xpathElementoData = GlobalVariables.CalendarioDataInicioMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
-            else if (EhUltimoDiaDoMes(dataAtual))
-                xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
-            else
-                xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
-
-            Esperar();
-            Clicar(webDriver, xpathElementoData, elemento);
-        }
+        Esperar();
+        Clicar(webDriver, xpathElementoData, elemento);
     }
 
     /// <summary>
-    /// Método para selecionar datas de fim vingencia, baseado na data atual
+    /// Método para selecionar datas de vingencia, baseado na data atual
     /// Avançando para os meses seguintes se quantidadeAvancarMeses for maior que 0
     /// </summary>
     /// <param name="webDriver"></param>
-    /// <param name="quantidadeAvancarMeses"></param>
-    public static void PreencherCalendariosFimVigencia(IWebDriver webDriver, int quantidadeAvancarMeses)
+    /// <param name="mesVigenciaSelecionadaTem30Dias"></param>
+    /// <param name="elemento"></param>
+    public static void PreencherCalendarios(IWebDriver webDriver, string elemento)
     {
         DateTime dataAtual = DateTime.Now;
-        var diaAtual = dataAtual.Day;
-        string xpathElemento;
+        string xpathElementoData;
 
-        if (quantidadeAvancarMeses == 0)
+        if (dataAtual.Day == 1)
+            xpathElementoData = GlobalVariables.CalendarioDataInicioMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        else if (EhUltimoDiaDoMes(dataAtual))
+            xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        else
+            xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
+
+        Esperar();
+        Clicar(webDriver, xpathElementoData, elemento);
+    }
+
+    public static void AvancarMesesNoCalendario(IWebDriver webDriver, int quantidadeAvancarMeses)
+    {
+        for (int i = 0; i < quantidadeAvancarMeses; i++)
         {
-            webDriver.FindElement(By.XPath($"((//div[@class='ant-picker-body'])[2]//div[text()='{diaAtual}'])[1]")).Click();
-        }
-        else if (quantidadeAvancarMeses > 0)
-        {
-            for (int i = 0; i < quantidadeAvancarMeses; i++)
-            {
-                if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AvancarMesesCalendariosBotton) == 1)
-                {
-                    webDriver.FindElement(By.XPath(GlobalVariables.AvancarMesesCalendariosBotton)).Click();
-                    Esperar();
-                }
-                else if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AvancarMesesCalendariosTop) == 1)
-                {
-                    webDriver.FindElement(By.XPath(GlobalVariables.AvancarMesesCalendariosTop)).Click();
-                    Esperar();
-                }
-            }
-
-            var xpathElementoCalendarioBotton = "//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-bottomLeft ']";
-            var xpathElementoCalendarioTop = "//div[@class='ant-picker-dropdown ant-picker-dropdown-placement-topLeft ']";
-
-            if (ContarExistenciaDoElemento(webDriver, xpathElementoCalendarioBotton) == 1)
-            {
-                if (diaAtual == 1)
-                {
-                    xpathElemento = $"{xpathElementoCalendarioBotton}//td[contains(@class,'ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view')]//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia");
-                }
-                else
-                {
-                    xpathElemento = $"{xpathElementoCalendarioBotton}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia");
-                }
-            }
-            else if (ContarExistenciaDoElemento(webDriver, xpathElementoCalendarioTop) == 1)
-            {
-                if (diaAtual == 1)
-                {
-                    xpathElemento = $"{xpathElementoCalendarioTop}//td[@class='ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view']//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia Trade");
-                }
-                else
-                {
-                    xpathElemento = $"{xpathElementoCalendarioTop}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{diaAtual}']";
-                    Clicar(webDriver, xpathElemento, "Campo Data Fim Vigencia Trade");
-                }
-            }
+            Esperar();
+            Clicar(webDriver, GlobalVariables.AvancarCalendarioMes(GlobalVariables.Calendario), "Botão Avançar Mês Calendário");
+            Esperar();
         }
     }
 
@@ -833,5 +790,33 @@ public class Dsl
     public static bool EhUltimoDiaDoMes(DateTime data)
     {
         return data.Day == DateTime.DaysInMonth(data.Year, data.Month);
+    }
+
+    internal static bool VerificarSeFimVigenciaMesSelecionadoTem30Dias(int mesSelecionadoFimVigencia)
+    {
+        if (mesSelecionadoFimVigencia == 4) // Abril
+            return true;
+        if (mesSelecionadoFimVigencia == 6) // Junho
+            return true;
+        if (mesSelecionadoFimVigencia == 9) // Setembro
+            return true;
+        if (mesSelecionadoFimVigencia == 11) // Novembro
+            return true;
+
+        return false;
+    }
+
+    internal static bool VerificarSeInicioVigenciaMesSelecionadoTem30Dias(int mesSelecionadoInicioVigencia)
+    {
+        if (mesSelecionadoInicioVigencia == 4)
+            return true;
+        if (mesSelecionadoInicioVigencia == 6)
+            return true;
+        if (mesSelecionadoInicioVigencia == 9)
+            return true;
+        if (mesSelecionadoInicioVigencia == 11)
+            return true;
+
+        return false;
     }
 }

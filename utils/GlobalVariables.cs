@@ -33,6 +33,7 @@ public class GlobalVariables
     public static string TituloModalConfirmacao { get; set; } = "//span[@class='ant-modal-confirm-title']";
     public static string CancelarAcao { get; set; } = "//button/*[text()='Cancelar']";
     public static string Calendario { get; set; } = "//*[@class='ant-picker-date-panel']/../../../../div[not(contains(@class,'picker-dropdown-hidden'))]";
+    public static string MesCalendario { get; set; } = "//*[@class='ant-picker-date-panel']/../../../../div[not(contains(@class,'picker-dropdown-hidden'))]//button[contains(@class,'picker-month-btn')]";
     public static string AvancarCalendarioMes(string calendario) { return $"{calendario}//div//div/div//div//button[contains(@class,'header-next-btn')]"; }
     public static string CalendarioData(string calendario, string dia) { return $"{calendario}//td[@class='ant-picker-cell ant-picker-cell-in-view']//div[text()='{dia}']"; }
     public static string CalendarioDataInicioMes(string calendario, string dia) { return $"{calendario}//td[@class='ant-picker-cell ant-picker-cell-start ant-picker-cell-in-view']//div[text()='{dia}']"; }
@@ -234,8 +235,8 @@ public class GlobalVariables
     public static string SituacaoPlanoCancelar { get; set; } = "//*[text()='Cancelado']";
     public static string Desconto { get; set; } = "//*[@data-testid='desconto']";
     public static string AplicarDesconto { get; set; } = "//button/*[text()='Aplicar']";
-    public static string InicioVigenciaPlano { get; set; } = "//*[@data-testid='inicioVigencia']";
-    public static string FimVigenciaPlano { get; set; } = "//*[@data-testid='fimVigencia']";
+    public static string InicioVigenciaPlano { get; set; } = "//input[@data-testid='inicioVigencia']";
+    public static string FimVigenciaPlano { get; set; } = "//input[@data-testid='fimVigencia']";
     public static string ReceitaAtivos { get; set; } = "//*[@data-testid='receitaAtivos']";
     public static string ReceitaAtivosDesconto { get; set; } = "//*[@data-testid='receitaAtivosDesconto']";
     public static string ReceitaPlano { get; set; } = "//*[@data-testid='receita']";
@@ -279,9 +280,9 @@ public class GlobalVariables
     public static string LinhaTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../div[2]/div//tbody/tr[@data-row-key='0']";
     public static string ScrollTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//div[contains(@class,'ant-table-scroll-horizontal')]";
     public static string ScrollHorizontalTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//tbody[@class='ant-table-tbody']";
-    public static string AceleradorInicioVigenciaTrade { get; set; } = "//*[@data-testid='inicioVigenciaAcelerador']";
+    public static string AceleradorInicioVigenciaTrade { get; set; } = "//input[@data-testid='inicioVigenciaAcelerador']";
     public static string AceleradorQuantidadeAlocarTrade { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//*[@title='Alocar']/../..//input";
-    public static string AceleradorFimVigenciaTrade { get; set; } = "//*[@data-testid='fimVigenciaAcelerador']";
+    public static string AceleradorFimVigenciaTrade { get; set; } = "//input[@data-testid='fimVigenciaAcelerador']";
     public static string ColunaVeiculacaoTrade { get; set; } = "//div[@id='ativos-alocados-table']//thead//th[text()='Veiculação']";
     public static string ColunaVeiculacaoTradeCheckbox { get; set; } = "(//tbody[@class='ant-table-tbody']//input[@type='checkbox'])[1]";
     public static string ColunaDisponivelTrade { get; set; } = "//div[@id='ativos-alocados-table']//thead//th[text()='Disponível']";
@@ -293,8 +294,8 @@ public class GlobalVariables
     public static string QuantidadeLojasPorAtivo { get; set; } = "//*[contains(text(),'Total de lojas')]";
     public static string QuantidadeAlocacaoAtivo(string nomeAtivo) { return $"//*[@data-testid='quantidadeAlocacaoLoja-{nomeAtivo}']"; }
     public static string QuantidadeAlocacaoLoja(string nomeLoja) { return $"//*[@data-testid='quantidadeAlocacaoLoja-{nomeLoja}']"; }
-    public static string InicioVigenciaLoja(string nomeLoja) { return $"//*[@data-testid='inicioVigencia-{nomeLoja}']"; }
-    public static string FimVigenciaLoja(string nomeLoja) { return $"//*[@data-testid='fimVigencia-{nomeLoja}']"; }
+    public static string InicioVigenciaLoja(string nomeLoja) { return $"//input[@data-testid='inicioVigencia-{nomeLoja}']"; }
+    public static string FimVigenciaLoja(string nomeLoja) { return $"//input[@data-testid='fimVigencia-{nomeLoja}']"; }
     public static string SalvarAlocacaoLoja { get; set; } = "//*[@data-testid='salvarEdicaoAtivo']";
     public static string FecharAlocacaoAtivoPorLoja { get; set; } = "//*[@data-testid='fecharEdicaoAtivo']";
     public static string MensagemSucessoAlocacaoAtivo { get; set; } = "//*[contains(text(), 'Alocação atualizada')]";
