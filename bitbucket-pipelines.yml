@@ -31,12 +31,19 @@ pipelines:
       #   script:
       #      - dotnet test --filter TestCategory=Start
 
+      # - step:
+      #    name: PlanosTest ClientePro
+      #    caches:
+      #       - dotnetcore
+      #    script:
+      #       - dotnet test --filter TestCategory=Pro
+
       - step:
-         name: PlanosTest ClientePro
+         name: PlanosTest ClienteExpert
          caches:
             - dotnetcore
          script:
-            - dotnet test --filter TestCategory=Pro
+            - dotnet test --filter TestCategory=Expert
 
       #- step:
       #    name: DashboardOperacoesTest
