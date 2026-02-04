@@ -677,130 +677,22 @@ public class PlanosContratosPage
         int avancarMesCalendarioFimVigenciaEm;
         int avancarMesCalendarioInicioVigenciaEm;
 
-        CalcularAvancoMesesVigencia(out avancarMesCalendarioFimVigenciaEm, out avancarMesCalendarioInicioVigenciaEm);
+        Dsl.CalcularAvancoMesesVigencia(webDriver, out avancarMesCalendarioFimVigenciaEm, out avancarMesCalendarioInicioVigenciaEm);
 
         Dsl.Clicar(webDriver, GlobalVariables.FimVigenciaPlano, "Campo Fim Vigencia Plano");
         Dsl.Esperar();
         Dsl.AvancarMesesNoCalendario(webDriver, avancarMesCalendarioFimVigenciaEm);
-        int mesFimVigenciaSelecionado = ObterMesFimVigenciaSelecionadoPlano();
-        bool mesFimVigenciaSelecionadoTem30Dias = Dsl.VerificarSeFimVigenciaMesSelecionadoTem30Dias(mesFimVigenciaSelecionado);
-        Dsl.PreencherCalendarios(webDriver, mesFimVigenciaSelecionadoTem30Dias, "Calendário Fim Vigência Plano");
+        Dsl.PreencherCalendarios(webDriver, "Calendário Fim Vigência Plano");
 
         Dsl.Clicar(webDriver, GlobalVariables.InicioVigenciaPlano, "Campo Início Vigencia Plano");
         Dsl.Esperar();
         Dsl.AvancarMesesNoCalendario(webDriver, avancarMesCalendarioInicioVigenciaEm);
-        int mesInicioVigenciaSelecionado = ObterMesInicioVigenciaSelecionadoPlano();
-        bool mesInicioVigenciaSelecionadoTem30Dias = Dsl.VerificarSeInicioVigenciaMesSelecionadoTem30Dias(mesInicioVigenciaSelecionado);
-        Dsl.PreencherCalendarios(webDriver, mesInicioVigenciaSelecionadoTem30Dias, "Calendário Início Vigência Plano");
+        Dsl.PreencherCalendarios(webDriver, "Calendário Início Vigência Plano");
 
         return this;
     }
 
-    private int ObterMesFimVigenciaSelecionadoPlano()
-    {
-        if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Plano") == "Apr")
-            return 4;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Plano") == "Jun")
-            return 6;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Plano") == "Sep")
-            return 9;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Plano") == "Nov")
-            return 11;
-        else
-            return 0;
-    }
-
-    private int ObterMesInicioVigenciaSelecionadoPlano()
-    {
-        if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Plano") == "Apr")
-            return 4;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Plano") == "Jun")
-            return 6;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Plano") == "Sep")
-            return 9;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Plano") == "Nov")
-            return 11;
-        else
-            return 0;
-    }
-
-    private int ObterMesFimVigenciaSelecionadoTrade()
-    {
-        if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Trade") == "Apr")
-            return 4;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Trade") == "Jun")
-            return 6;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Trade") == "Sep")
-            return 9;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Fim Vigência do Trade") == "Nov")
-            return 11;
-        else
-            return 0;
-    }
-
-    private int ObterMesInicioVigenciaSelecionadoTrade()
-    {
-        if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Trade") == "Apr")
-            return 4;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Trade") == "Jun")
-            return 6;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Trade") == "Sep")
-            return 9;
-        else if (Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Campo Início Vigência do Trade") == "Nov")
-            return 11;
-        else
-            return 0;
-    }
-
-    private void CalcularAvancoMesesVigencia(out int avancarMesCalendarioFimVigenciaEm, out int avancarMesCalendarioInicioVigenciaEm)
-    {
-        string fimVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.FimVigenciaPlano, "Campo Fim Vigência do Plano", "value");
-        string inicioVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.InicioVigenciaPlano, "Campo Início Vigência do Plano", "value");
-        string diaFimVigenciaPlano = fimVigenciaPlano.Substring(0, 2);
-        string diaInicioVigenciaPlano = inicioVigenciaPlano.Substring(0, 2);
-        int quantidadeDiasVigencia = Dsl.CalcularDiasEntreDatas(inicioVigenciaPlano, fimVigenciaPlano);
-
-        if (diaInicioVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
-        {
-            avancarMesCalendarioFimVigenciaEm = 3;
-            avancarMesCalendarioInicioVigenciaEm = 2;
-        }
-        else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
-        {
-            avancarMesCalendarioFimVigenciaEm = 1;
-            avancarMesCalendarioInicioVigenciaEm = 2;
-        }
-        else
-        {
-            avancarMesCalendarioFimVigenciaEm = 2;
-            avancarMesCalendarioInicioVigenciaEm = 2;
-        }
-    }
-
-    private void CalcularAvancoMesesVigenciaTrade(string nomeLoja, out int avancarMesCalendarioFimVigenciaEm, out int avancarMesCalendarioInicioVigenciaEm)
-    {
-        string fimVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.FimVigenciaLoja(nomeLoja), "Campo Fim Vigência do Plano", "value");
-        string inicioVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.InicioVigenciaLoja(nomeLoja), "Campo Início Vigência do Plano", "value");
-        string diaInicioVigenciaPlano = inicioVigenciaPlano.Substring(0, 2);
-        string diaFimVigenciaPlano = fimVigenciaPlano.Substring(0, 2);
-        int quantidadeDiasVigencia = Dsl.CalcularDiasEntreDatas(inicioVigenciaPlano, fimVigenciaPlano);
-
-        if (diaInicioVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
-        {
-            avancarMesCalendarioFimVigenciaEm = 3;
-            avancarMesCalendarioInicioVigenciaEm = 2;
-        }
-        else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
-        {
-            avancarMesCalendarioFimVigenciaEm = 1;
-            avancarMesCalendarioInicioVigenciaEm = 2;
-        }
-        else
-        {
-            avancarMesCalendarioFimVigenciaEm = 2;
-            avancarMesCalendarioInicioVigenciaEm = 2;
-        }
-    }
+    
 
     /// <summary>
     /// Método para selecionar a vigencia do trade
@@ -812,44 +704,32 @@ public class PlanosContratosPage
     {
         int avancarMesCalendarioFimVigenciaEm;
         int avancarMesCalendarioInicioVigenciaEm;
-        int mesFimVigenciaSelecionado;
-        int mesInicioVigenciaSelecionado;
-        bool mesFimVigenciaSelecionadoTem30Dias;
-        bool mesInicioVigenciaSelecionadoTem30Dias;
 
         switch (clienteUpSellAtual)
         {
             case ClienteUpSell.ClienteStart:
-                CalcularAvancoMesesVigenciaTrade(nomeLoja, out avancarMesCalendarioFimVigenciaEm, out avancarMesCalendarioInicioVigenciaEm);
+                Dsl.CalcularAvancoMesesVigenciaTradeLoja(webDriver, nomeLoja, out avancarMesCalendarioFimVigenciaEm, out avancarMesCalendarioInicioVigenciaEm);
                 Dsl.ClicarNoElementoId(fimVigenciaTrade, "Campo Fim Vigência do Trade Loja");
                 Dsl.Esperar();
                 Dsl.AvancarMesesNoCalendario(webDriver, avancarMesCalendarioFimVigenciaEm);
-                mesFimVigenciaSelecionado = ObterMesFimVigenciaSelecionadoTrade();
-                mesFimVigenciaSelecionadoTem30Dias = Dsl.VerificarSeFimVigenciaMesSelecionadoTem30Dias(mesFimVigenciaSelecionado);
-                Dsl.PreencherCalendarios(webDriver, mesFimVigenciaSelecionadoTem30Dias, "Calendário Fim Vigência Trade");
+                Dsl.PreencherCalendarios(webDriver, "Calendário Fim Vigência Trade");
 
                 Dsl.ClicarNoElementoId(inicioVigenciaTrade, "Campo Início Vigência do Trade Loja");
                 Dsl.Esperar();
                 Dsl.AvancarMesesNoCalendario(webDriver, avancarMesCalendarioInicioVigenciaEm);
-                mesInicioVigenciaSelecionado = ObterMesInicioVigenciaSelecionadoTrade();
-                mesInicioVigenciaSelecionadoTem30Dias = Dsl.VerificarSeInicioVigenciaMesSelecionadoTem30Dias(mesInicioVigenciaSelecionado);
-                Dsl.PreencherCalendarios(webDriver, mesInicioVigenciaSelecionadoTem30Dias, "Calendário Início Vigência Trade");
+                Dsl.PreencherCalendarios(webDriver, "Calendário Início Vigência Trade");
                 break;
             case ClienteUpSell.ClientePro:
             case ClienteUpSell.ClienteExpert:
                 Dsl.ClicarNoElementoId(fimVigenciaTrade, "Campo Fim Vigência do Trade Acelerador");
                 Dsl.Esperar();
                 Dsl.AvancarMesesNoCalendario(webDriver, 3);
-                mesFimVigenciaSelecionado = ObterMesFimVigenciaSelecionadoTrade();
-                mesFimVigenciaSelecionadoTem30Dias = Dsl.VerificarSeFimVigenciaMesSelecionadoTem30Dias(mesFimVigenciaSelecionado);
-                Dsl.PreencherCalendarios(webDriver, mesFimVigenciaSelecionadoTem30Dias, "Calendário Fim Vigência Trade Acelerador");
+                Dsl.PreencherCalendarios(webDriver, "Calendário Fim Vigência Trade Acelerador");
 
                 Dsl.ClicarNoElementoId(inicioVigenciaTrade, "Campo Início Vigência do Trade Acelerador");
                 Dsl.Esperar();
                 Dsl.AvancarMesesNoCalendario(webDriver, 2);
-                mesInicioVigenciaSelecionado = ObterMesInicioVigenciaSelecionadoTrade();
-                mesInicioVigenciaSelecionadoTem30Dias = Dsl.VerificarSeInicioVigenciaMesSelecionadoTem30Dias(mesInicioVigenciaSelecionado);
-                Dsl.PreencherCalendarios(webDriver, mesInicioVigenciaSelecionadoTem30Dias, "Calendário Início Vigência Trade Acelerador");
+                Dsl.PreencherCalendarios(webDriver, "Calendário Início Vigência Trade Acelerador");
                 break;
         }
 
@@ -862,7 +742,17 @@ public class PlanosContratosPage
     /// <returns></returns>
     public PlanosContratosPage EditarVigenciaDoAtivoAlocado()
     {
-        switch (clienteUpSellAtual)
+        BuscarAtivosAlocadosNoPlano(ativosGraficos.FirstOrDefault());
+        Dsl.Esperar();
+
+        AbrirEdicaoDoAtivoAlocado(ativosGraficos.FirstOrDefault());
+        Dsl.Esperar();
+
+        EditarVigenciaLoja();
+
+        SalvarAtivoAlocado();
+
+        /*switch (clienteUpSellAtual)
         {
             case ClienteUpSell.ClienteStart:
                 foreach (var nomeAtivo in ativosGraficos)
@@ -886,7 +776,7 @@ public class PlanosContratosPage
 
                 SalvarAtivoAlocado();
                 break;
-        }
+        }*/
 
         return this;
     }

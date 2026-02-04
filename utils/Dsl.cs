@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Globalization;
 using System.Xml;
+using OpenQA.Selenium.DevTools.V128.Debugger;
 
 namespace MeuClienteWebTestProject;
 
@@ -462,43 +463,42 @@ public class Dsl
 
     /// <summary>
     /// Método para selecionar datas de vingencia, baseado na data atual
-    /// Avançando para os meses seguintes se quantidadeAvancarMeses for maior que 0
     /// </summary>
     /// <param name="webDriver"></param>
-    /// <param name="mesVigenciaSelecionadaTem30Dias"></param>
-    /// <param name="elemento"></param>
-    public static void PreencherCalendarios(IWebDriver webDriver, bool mesVigenciaSelecionadaTem30Dias, string elemento)
-    {
-        DateTime dataAtual = DateTime.Now;
-        string xpathElementoData;
-
-        if (dataAtual.Day == 1)
-            xpathElementoData = GlobalVariables.CalendarioDataInicioMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
-        else if (EhUltimoDiaDoMes(dataAtual) || mesVigenciaSelecionadaTem30Dias)
-            xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
-        else
-            xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
-
-        Esperar();
-        Clicar(webDriver, xpathElementoData, elemento);
-    }
-
-    /// <summary>
-    /// Método para selecionar datas de vingencia, baseado na data atual
-    /// Avançando para os meses seguintes se quantidadeAvancarMeses for maior que 0
-    /// </summary>
-    /// <param name="webDriver"></param>
-    /// <param name="mesVigenciaSelecionadaTem30Dias"></param>
     /// <param name="elemento"></param>
     public static void PreencherCalendarios(IWebDriver webDriver, string elemento)
     {
         DateTime dataAtual = DateTime.Now;
         string xpathElementoData;
+        bool mesApresentadoCaledarioTem30Dias = MesApresentadoTem30Dias(webDriver);
+        bool mesApresentadoCalendarioTem31Dias = MesApresentadoTem31Dias(webDriver);
+        bool mesApresentadoEhFevereiro = MesApresentadoFevereiro(webDriver);
 
         if (dataAtual.Day == 1)
             xpathElementoData = GlobalVariables.CalendarioDataInicioMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        else if (EhUltimoDiaDeFevereiro(dataAtual))
+        {
+            if (mesApresentadoCaledarioTem30Dias || mesApresentadoCalendarioTem31Dias)
+                xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
+            else
+                xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        }
         else if (EhUltimoDiaDoMes(dataAtual))
-            xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        {
+            if (mesApresentadoEhFevereiro)
+                xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, "28");
+            else if (mesApresentadoCaledarioTem30Dias)
+                xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, "30");
+            else if (dataAtual.Day < 31)
+                xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
+            else
+                xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
+        }
+        else if (mesApresentadoEhFevereiro)
+            if (dataAtual.Day == 28)
+                xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, "28");
+            else
+                xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
         else
             xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
 
@@ -792,31 +792,154 @@ public class Dsl
         return data.Day == DateTime.DaysInMonth(data.Year, data.Month);
     }
 
-    internal static bool VerificarSeFimVigenciaMesSelecionadoTem30Dias(int mesSelecionadoFimVigencia)
+    public static bool EhUltimoDiaDeFevereiro(DateTime data)
     {
-        if (mesSelecionadoFimVigencia == 4) // Abril
-            return true;
-        if (mesSelecionadoFimVigencia == 6) // Junho
-            return true;
-        if (mesSelecionadoFimVigencia == 9) // Setembro
-            return true;
-        if (mesSelecionadoFimVigencia == 11) // Novembro
+        if (data.Month == 2)
+        {
+            int ultimoDia = DateTime.DaysInMonth(data.Year, data.Month);
+            return data.Day == ultimoDia;
+        }
+
+        return false; // Não é fevereiro
+    }
+
+    public static bool MesApresentadoFevereiro(IWebDriver webDriver)
+    {
+        string mes = ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Avançar Mês Calendário");
+
+        if (mes == "Feb")
             return true;
 
         return false;
     }
 
-    internal static bool VerificarSeInicioVigenciaMesSelecionadoTem30Dias(int mesSelecionadoInicioVigencia)
+    internal static bool MesApresentadoTem30Dias(IWebDriver webDriver)
     {
-        if (mesSelecionadoInicioVigencia == 4)
+        int mesSelecionado = ObterMesCalendarioDe30Dias(webDriver);
+
+        if (mesSelecionado == 4) // Abril
             return true;
-        if (mesSelecionadoInicioVigencia == 6)
+        if (mesSelecionado == 6) // Junho
             return true;
-        if (mesSelecionadoInicioVigencia == 9)
+        if (mesSelecionado == 9) // Setembro
             return true;
-        if (mesSelecionadoInicioVigencia == 11)
+        if (mesSelecionado == 11) // Novembro
             return true;
 
         return false;
+    }
+
+    internal static bool MesApresentadoTem31Dias(IWebDriver webDriver)
+    {
+        int mesSelecionado = ObterMesCalendarioDe31Dias(webDriver);
+
+        if (mesSelecionado == 1) // Janeiro
+            return true;
+        if (mesSelecionado == 3) // Março
+            return true;
+        if (mesSelecionado == 5) // Maio
+            return true;
+        if (mesSelecionado == 7) // Julho
+            return true;
+        if (mesSelecionado == 8) // Agosto
+            return true;
+        if (mesSelecionado == 10) // Outubro
+            return true;
+        if (mesSelecionado == 12) // Dezembro
+            return true;
+
+        return false;
+    }
+
+    internal static int ObterMesCalendarioDe30Dias(IWebDriver webDriver)
+    {
+        string mes = ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Avançar Mês Calendário");
+
+        switch (mes)
+        {
+            case "Apr": return 4;
+            case "Abr": return 4;
+            case "Jun": return 6;
+            case "Sep":
+            case "Set": return 9;
+            case "Nov": return 11;
+            default: return 0;
+        }
+    }
+
+    internal static int ObterMesCalendarioDe31Dias(IWebDriver webDriver)
+    {
+        string mes = ObterTextoDoElemento(webDriver, GlobalVariables.MesCalendario, "Avançar Mês Calendário");
+
+        switch (mes)
+        {
+            case "Jan": return 1;
+            case "Mar": return 3;
+            case "May":
+            case "Mai": return 5;
+            case "Jul": return 7;
+            case "Aug": return 8;
+            case "Oct":
+            case "Out": return 10;
+            case "Dec":
+            case "Dez": return 12;
+            default: return 0;
+        }
+    }
+
+    internal static void CalcularAvancoMesesVigencia(IWebDriver webDriver, out int avancarMesCalendarioFimVigenciaEm, out int avancarMesCalendarioInicioVigenciaEm)
+    {
+        string fimVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.FimVigenciaPlano, "Campo Fim Vigência do Plano", "value");
+        string inicioVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.InicioVigenciaPlano, "Campo Início Vigência do Plano", "value");
+        string diaFimVigenciaPlano = fimVigenciaPlano.Substring(0, 2);
+        string diaInicioVigenciaPlano = inicioVigenciaPlano.Substring(0, 2);
+        int quantidadeDiasVigencia = Dsl.CalcularDiasEntreDatas(inicioVigenciaPlano, fimVigenciaPlano);
+
+        if ((diaInicioVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
+        || (DateTime.Parse(fimVigenciaPlano).Month == DateTime.Parse(inicioVigenciaPlano).Month))
+        {
+            avancarMesCalendarioFimVigenciaEm = 3;
+            avancarMesCalendarioInicioVigenciaEm = 2;
+        }
+        else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
+        {
+            avancarMesCalendarioFimVigenciaEm = 1;
+            avancarMesCalendarioInicioVigenciaEm = 2;
+        }
+        else
+        {
+            avancarMesCalendarioFimVigenciaEm = 2;
+            avancarMesCalendarioInicioVigenciaEm = 2;
+        }
+    }
+
+    internal static void CalcularAvancoMesesVigenciaTradeLoja(IWebDriver webDriver, string nomeLoja, out int avancarMesCalendarioFimVigenciaEm, out int avancarMesCalendarioInicioVigenciaEm)
+    {
+        string fimVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.FimVigenciaLoja(nomeLoja), "Campo Fim Vigência do Plano", "value");
+        string inicioVigenciaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.InicioVigenciaLoja(nomeLoja), "Campo Início Vigência do Plano", "value");
+        string diaInicioVigenciaPlano = inicioVigenciaPlano.Substring(0, 2);
+        string diaFimVigenciaPlano = fimVigenciaPlano.Substring(0, 2);
+        int quantidadeDiasVigencia = Dsl.CalcularDiasEntreDatas(inicioVigenciaPlano, fimVigenciaPlano);
+
+        if (diaInicioVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
+        {
+            avancarMesCalendarioFimVigenciaEm = 3;
+            avancarMesCalendarioInicioVigenciaEm = 2;
+        }
+        else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
+        {
+            avancarMesCalendarioFimVigenciaEm = 1;
+            avancarMesCalendarioInicioVigenciaEm = 2;
+        }
+        else if (DateTime.Parse(fimVigenciaPlano).Month == DateTime.Parse(inicioVigenciaPlano).Month)
+        {
+            avancarMesCalendarioFimVigenciaEm = 2;
+            avancarMesCalendarioInicioVigenciaEm = 1;
+        }
+        else
+        {
+            avancarMesCalendarioFimVigenciaEm = 2;
+            avancarMesCalendarioInicioVigenciaEm = 2;
+        }
     }
 }
