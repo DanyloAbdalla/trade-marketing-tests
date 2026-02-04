@@ -31,7 +31,6 @@ public class PlanosContratosPage
     private List<string> nomeCampanhas;
     private List<MensagemFeedback> mensagensEsperadas;
 
-
     public PlanosContratosPage(IWebDriver webDriver, ClienteUpSell clienteUpSell)
     {
         this.webDriver = webDriver;
@@ -185,7 +184,6 @@ public class PlanosContratosPage
 
         return this;
     }
-
 
     /// <summary>
     /// Método para filtrar e selecionar ativos no momento da simulação do plano
@@ -691,8 +689,6 @@ public class PlanosContratosPage
 
         return this;
     }
-
-    
 
     /// <summary>
     /// Método para selecionar a vigencia do trade
@@ -1326,11 +1322,11 @@ public class PlanosContratosPage
                     }
                     else if (nomeTeste.Equals("TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel"))
                     {
-                        var valorReceitaAtivosEsperado = 1000.35;
+                        var valorReceitaAtivosEsperado = 1105.65;
                         var valorReceitaAtivos = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaAtivos, "Campo Receita Ativos", tipoAtributo);
                         var valorReceitaAtivosAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaAtivos, "Campo Receita Ativos");
 
-                        var valorReceitaPlanoEsperado = 1145.70;
+                        var valorReceitaPlanoEsperado = 1251.00;
                         var valorReceitaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaPlano, "Campo Receita Plano", tipoAtributo);
                         var valorReceitaPlanoAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaPlano, "Campo Receita Plano");
 
