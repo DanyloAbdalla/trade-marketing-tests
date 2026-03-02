@@ -1322,11 +1322,11 @@ public class PlanosContratosPage
                     }
                     else if (nomeTeste.Equals("TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel"))
                     {
-                        var valorReceitaAtivosEsperado = 1105.65;
+                        var valorReceitaAtivosEsperado = 1053.00;
                         var valorReceitaAtivos = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaAtivos, "Campo Receita Ativos", tipoAtributo);
                         var valorReceitaAtivosAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaAtivos, "Campo Receita Ativos");
 
-                        var valorReceitaPlanoEsperado = 1251.00;
+                        var valorReceitaPlanoEsperado = 1198.35;
                         var valorReceitaPlano = Dsl.ObterDadosDoAtributoDoElemento(webDriver, GlobalVariables.ReceitaPlano, "Campo Receita Plano", tipoAtributo);
                         var valorReceitaPlanoAtual = Dsl.RemoverLetrasEspacosDeUmTexto(valorReceitaPlano, "Campo Receita Plano");
 

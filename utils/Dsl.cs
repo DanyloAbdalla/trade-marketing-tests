@@ -905,7 +905,7 @@ public class Dsl
         else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
         {
             avancarMesCalendarioFimVigenciaEm = 1;
-            avancarMesCalendarioInicioVigenciaEm = 2;
+            avancarMesCalendarioInicioVigenciaEm = 1;
         }
         else
         {
@@ -932,7 +932,7 @@ public class Dsl
         else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
         {
             avancarMesCalendarioFimVigenciaEm = 1;
-            avancarMesCalendarioInicioVigenciaEm = 2;
+            avancarMesCalendarioInicioVigenciaEm = 1;
         }
         else if (mesFimVigenciaPlano == mesInicioVigenciaPlano)
         {
