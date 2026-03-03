@@ -202,7 +202,7 @@ public class Dsl
         catch (NoSuchElementException ex)
         { throw new NoSuchElementException("Elemento \"" + elemento + "\" não localizado " + ex.Message); }
         catch (Exception ex)
-        { throw new Exception("Ocorreu o erro: " + ex.Message + " ao clicar no elemento " + elemento); }
+        { throw new Exception("Ocorreu o erro: " + ex.Message + " ao clicar no elemento " + elemento + " " + XPath); }
     }
 
     /// <summary>
