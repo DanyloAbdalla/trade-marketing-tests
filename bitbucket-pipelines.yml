@@ -24,27 +24,13 @@ pipelines:
             - dotnet restore
             - dotnet build --configuration Release
 
-      #- step:
-      #    name: PlanosTest ClienteStart
-      #   caches:
-      #      - dotnetcore
-      #    script:
-      #      - dotnet test --filter TestCategory=Start
+      - step:
+          name: PlanosTest ClienteStart
+          caches:
+            - dotnetcore
+          script:
+            - dotnet test --filter TestCategory=Start
 
-      # - step:
-      #    name: PlanosTest ClientePro
-      #    caches:
-      #       - dotnetcore
-      #    script:
-      #       - dotnet test --filter TestCategory=Pro
-
-
-      #- step:
-      #   name: DashboardOperacoesTest
-      #   caches:
-      #     - dotnetcore
-      #   script:
-      #     - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.DashboardOperacoesTest
       
       - step:
          name: PlanosTest ClienteExpert
@@ -52,3 +38,10 @@ pipelines:
             - dotnetcore
          script:
             - dotnet test --filter TestCategory=Expert
+      
+      #- step:
+      #   name: DashboardOperacoesTest
+      #   caches:
+      #     - dotnetcore
+      #   script:
+      #     - dotnet test --filter FullyQualifiedName~MeuClienteWebTestProject.DashboardOperacoesTest
