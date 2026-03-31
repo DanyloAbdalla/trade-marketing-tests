@@ -305,6 +305,7 @@ public class GlobalVariables
     public static string NomeAtivoAlocacao { get; set; } = "//*[@data-testid='nomeAtivo']//span[2]";
     public static string AbaAlocacaoPorLojaAtivo { get; set; } = "//*[contains(text(),'Alocação por Loja')]";
     public static string AplicarAceleradorPorLojaAtivoAlocado { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//button/*[text()='Aplicar']";
+    public static string ConfirmarAlteracaoPeriodo { get; set; } = "//*[contains(@class,'confirm-btns')]//button";
     #endregion
 
     #region Elementos de página - Planos - Anexos

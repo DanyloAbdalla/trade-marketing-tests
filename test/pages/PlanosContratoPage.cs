@@ -748,31 +748,7 @@ public class PlanosContratosPage
 
         SalvarAtivoAlocado();
 
-        /*switch (clienteUpSellAtual)
-        {
-            case ClienteUpSell.ClienteStart:
-                foreach (var nomeAtivo in ativosGraficos)
-                {
-                    AbrirEdicaoDoAtivoAlocado(nomeAtivo);
-
-                    EditarVigenciaLoja();
-
-                    SalvarAtivoAlocado();
-                }
-                break;
-            case ClienteUpSell.ClientePro:
-            case ClienteUpSell.ClienteExpert:
-                BuscarAtivosAlocadosNoPlano(ativosGraficos.FirstOrDefault());
-                Dsl.Esperar();
-
-                AbrirEdicaoDoAtivoAlocado(ativosGraficos.FirstOrDefault());
-                Dsl.Esperar();
-
-                EditarVigenciaLoja();
-
-                SalvarAtivoAlocado();
-                break;
-        }*/
+        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ConfirmarAlteracaoPeriodo, "Botão Entendi Modal Confirmar Alteração de Período no Ativo Alocado");
 
         return this;
     }
@@ -1085,36 +1061,6 @@ public class PlanosContratosPage
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SituacaoPlano, "Campo Situação Plano");
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SituacaoPlanoAprovar, "Campo Selecionar Situação Plano");
             Dsl.Esperar();
-
-            /*Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.TipoCampanha, tipoCampanha, "Campo Tipo Campanha");
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarTipoCampanha, "Campo Selecionar Tipo Campanha");
-
-            Dsl.DigitarNoCampoTexto(webDriver, GlobalVariables.QuantidadeParcelas, "1");
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.AbaDadosPlano, "Aba Dados Plano");
-
-            Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens, "Mensagens de Alerta Após Preencher Quantidade de Parcelas");
-            ValidarMensagensDoPlano(mensagemAlertaInformarParcelaEsperada);
-            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.Mensagens);
-
-            Dsl.ScrollParaElemento(webDriver, GlobalVariables.SalvarRegistro, "Botão Salvar Plano");
-
-            if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
-            {
-                Dsl.ScrollParaElemento(webDriver, GlobalVariables.MaisInformacoesPlano, "Menu Suspenso Mais Informações do Plano");
-                Dsl.Clicar(webDriver, GlobalVariables.MaisInformacoesPlano, "Menu Suspenso Mais Informações do Plano");
-
-                Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Setor, Setor, "Campo Setor");
-                Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarSetor, "Campo Setor Selecionar");
-            }
-
-            Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Departamento, Departamento, "Campo Departamento");
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarDepartamento, "Campo Departamento Selecionar");
-
-            if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
-                Dsl.ScrollParaElemento(webDriver, GlobalVariables.Categoria, "Campo Categoria");
-
-            Dsl.DigitarNoCampoTextoComboList(webDriver, GlobalVariables.Categoria, Categoria, "Campo Categoria");
-            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SelecionarCategoria, "Campo Categoria Selecionar");*/
         }
         else if (nomeTeste.Equals("TestCancelarPlano"))
         {
