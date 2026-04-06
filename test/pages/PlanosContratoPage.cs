@@ -748,7 +748,10 @@ public class PlanosContratosPage
 
         SalvarAtivoAlocado();
 
-        Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ConfirmarAlteracaoPeriodo, "Botão Entendi Modal Confirmar Alteração de Período no Ativo Alocado");
+        if(clienteUpSellAtual == ClienteUpSell.ClienteExpert)
+        {
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.ConfirmarAlteracaoPeriodo, "Botão Entendi Modal Confirmar Alteração de Período no Ativo Alocado");
+        }
 
         return this;
     }
