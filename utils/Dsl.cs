@@ -483,7 +483,7 @@ public class Dsl
             else
                 xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
         }
-        else if (EhUltimoDiaDoMes(dataAtual))
+        else if (EhUltimoDiaDoMes(dataAtual) || (mesApresentadoCaledarioTem30Dias && dataAtual.Day == 30))
         {
             if (mesApresentadoEhFevereiro)
                 xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, "28");
@@ -495,7 +495,7 @@ public class Dsl
                 xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, dataAtual.Day.ToString());
         }
         else if (mesApresentadoEhFevereiro)
-            if (dataAtual.Day == 28)
+            if (dataAtual.Day >= 28)
                 xpathElementoData = GlobalVariables.CalendarioDataFimMes(GlobalVariables.Calendario, "28");
             else
                 xpathElementoData = GlobalVariables.CalendarioData(GlobalVariables.Calendario, dataAtual.Day.ToString());
@@ -897,9 +897,14 @@ public class Dsl
         string mesInicioVigenciaPlano = inicioVigenciaPlano.Substring(3, 3);
         int quantidadeDiasVigencia = CalcularDiasEntreDatas(inicioVigenciaPlano, fimVigenciaPlano);
 
-        if ((diaInicioVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31) || (mesFimVigenciaPlano == mesInicioVigenciaPlano))
+        if (diaInicioVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31 && diaInicioVigenciaPlano != diaFimVigenciaPlano || (mesFimVigenciaPlano == mesInicioVigenciaPlano))
         {
             avancarMesCalendarioFimVigenciaEm = 3;
+            avancarMesCalendarioInicioVigenciaEm = 2;
+        }
+        else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia == 30)
+        {
+            avancarMesCalendarioFimVigenciaEm = 1;
             avancarMesCalendarioInicioVigenciaEm = 2;
         }
         else if (diaFimVigenciaPlano.Equals("01") && quantidadeDiasVigencia >= 31)
