@@ -25,19 +25,25 @@ pipelines:
             - dotnet build --configuration Release
 
       - step:
-          name: PlanosTest ClienteStart
-          caches:
-            - dotnetcore
-          script:
-            - dotnet test --filter TestCategory=Start
-
-      
-      - step:
          name: PlanosTest ClienteExpert
          caches:
             - dotnetcore
          script:
             - dotnet test --filter TestCategory=Expert
+
+      - step:
+          name: PlanosTest ClientePro
+          caches:
+            - dotnetcore
+          script:
+            - dotnet test --filter TestCategory=Pro
+
+      - step:
+          name: PlanosTest ClienteStart
+          caches:
+            - dotnetcore
+          script:
+            - dotnet test --filter TestCategory=Start
       
       #- step:
       #   name: DashboardOperacoesTest
