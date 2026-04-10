@@ -121,7 +121,7 @@ public class GlobalVariables
     public static string LoadCarregandoPlanos { get; set; } = "//div[text()='Carregando cadastro contrato...']";
     public static string LoadListaPlanos { get; set; } = "//h1[text()='Gestão de Planos']/../../../../..//*[@class='ant-spin-dot ant-spin-dot-spin']/i[1]";
     public static string LoadModalPlano { get; set; } = "//div[contains(@class,'contrato-loading-overlay')]";
-    public static string TabelaPlanos { get; set; } = "//table/tbody/tr";
+    public static string TabelaPlanos { get; set; } = "//h1[text()='Gestão de Planos']/../../../../..//tbody";
     public static string FiltrarPlanosStatusVigencia { get; set; } = "//div[contains(@class,'select-selector')]/span[2]";
     public static string SelecionarTodosPlanos { get; set; } = "//div[@class='rc-virtual-list']//div[@title='Todos']";
     public static string FiltrarPlanoPorCampanha { get; set; } = "//thead//th[@title='Nome Campanha']//span[@role='button']";
@@ -137,6 +137,7 @@ public class GlobalVariables
     public static string OkExclusao { get; set; } = "//*[text()='OK']";
     public static string ModalPlanos { get; set; } = "//*[@class='ant-modal-body' and @style='overflow-x: hidden; height: 85vh;']";
     public static string AbaPlano { get; set; } = "//*[contains(text(),'Dados do Plano')]";
+    public static string TotalReceitaPlanos { get; set; } = "//span[contains(text(), 'Total Receita')]";
     #endregion
 
     #region Elementos de página - Planos - Simulação
@@ -281,7 +282,7 @@ public class GlobalVariables
 
     #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
     public static string LoadDeTelaAlocacaoPorLoja { get; set; } = "(//*[@class='ativos-alocados-container']//*[contains(@class,'ant-spin-dot-item')])[1]";
-    public static string TabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../div[2]/div//tbody";
+    public static string TotalDeZeroLojasAtivoAlocado { get; set; } = "//span[text()='Total de lojas: ']//strong[text()='0']";
     public static string LinhaTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../div[2]/div//tbody/tr[@data-row-key='0']";
     public static string ScrollTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//div[contains(@class,'ant-table-scroll-horizontal')]";
     public static string ScrollHorizontalTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//tbody[@class='ant-table-tbody']";
