@@ -230,7 +230,7 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos - Dados do Plano
-    public static string LoadDeTelaDadosPlano { set; get; } = "//*[contains(@id,'panel-1')]//span[contains(@class,'ant-spin-dot-spin')]";
+    public static string LoadDeTelaDadosPlano { set; get; } = "//div[@class='contrato-tab-container']//span[@class='ant-spin-dot ant-spin-dot-spin']";
     public static string AbasPlano { get; set; } = "//div[@class='ant-tabs-nav-list']";
     public static string AbaDadosPlano { get; set; } = "//div[@class='ant-tabs-nav-list']//*[contains(text(),'Dados do Plano')]";
     public static string SituacaoPlano { get; set; } = "//*[@data-testid='situacao']";
@@ -263,6 +263,7 @@ public class GlobalVariables
     public static string EtapasWorkflowGraficoPlano { get; set; } = "//div[@class='ant-row etapas-container-grafico ']";
     public static string MensagemConfirmacaoInventarioIndisponivel { get; set; } = "//*[@class='ant-modal-confirm-body']/span[contains(@class,'confirm-title')]";
     public static string SalvarPlano { get; set; } = "//*[@data-testid='salvarPlano']";
+    public static string SalvarPlanoCarregando { get; set; } = "//*[@data-testid='salvarPlano' and contains(@class,'btn-loading')]";
     public static string FecharPlano { get; set; } = "//*[@data-testid='fecharPlano']";
     #endregion
 

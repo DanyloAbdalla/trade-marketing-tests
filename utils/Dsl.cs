@@ -93,8 +93,8 @@ public class Dsl
     {
         try
         {
-            var fluentWait = CreateFluentWait(webDriver);
-            fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
+            WebDriverWait driverWait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            driverWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
         }
         catch (WebDriverTimeoutException)
         { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento: " + elemento); }
@@ -102,6 +102,19 @@ public class Dsl
         { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a invisibilidade do elemento " + elemento); }
         finally
         { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
+    }
+
+    public static void WaitForElementToBeStale(IWebDriver webDriver, IWebElement element, string elementDescription)
+    {
+        try
+        {
+            WebDriverWait driverWait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            driverWait.Until(ExpectedConditions.StalenessOf(element));
+        }
+        catch (WebDriverTimeoutException)
+        { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento: " + elementDescription); }
+        catch (Exception ex)
+        { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a invisibilidade do elemento " + elementDescription); }
     }
 
     /// <summary>
@@ -155,6 +168,21 @@ public class Dsl
         {
             WebDriverWait wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
             IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.XPath(XPath)));
+
+            return element;
+        }
+        catch (WebDriverTimeoutException)
+        { throw new Exception("Elemento \"" + elemento + "\" não localizado"); }
+        catch (Exception ex)
+        { throw new Exception("Ocorreu o erro: " + ex.Message + " ao encontrar o elemento " + elemento); }
+    }
+    
+    public static IWebElement FindElement(IWebDriver webDriver, string XPath, string elemento)
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            IWebElement element = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
 
             return element;
         }

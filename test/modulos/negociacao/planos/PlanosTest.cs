@@ -387,7 +387,8 @@ public class PlanosTest
 
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
-        .AbrirEdicaoDoPlano()
+        .EditarPlanoFiltrado()
+        .EsperarCarregarDadosDoPlano()
         .EditarSituacaoDoPlano()
         .SalvarPlano()
         .FecharDadosDoPlano()

@@ -680,6 +680,30 @@ public class PlanosContratosPage
         return this;
     }
 
+    public PlanosContratosPage EditarPlanoFiltrado()
+    {
+        if (nomeTeste.Equals("TestCriarPlanoComAtivosTipoMidiaFisica"))
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarPlano(nomeCampanha), "Botão Editar Plano");
+        else if (nomeTeste.Equals("TestEditarPlanoComAlertaDeInventario"))
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarPlano(nomeCampanha), "Botão Editar Plano");
+        else
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.EditarPlano(nomeCampanha), "Botão Editar Plano");
+
+        return this;
+    }
+
+    public PlanosContratosPage EsperarCarregarDadosDoPlano()
+    {
+        Dsl.WaitForElementToBeStale(webDriver, Dsl.FindElement(webDriver, GlobalVariables.LoadDeTelaDadosPlano, "Load Aba Dados do Plano"), "Load Aba Dados do Plano");
+
+        if(Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.SalvarPlanoCarregando) > 0)
+        {
+            Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.SalvarPlanoCarregando, "Botão Salvar Plano Carregando");
+        }
+
+        return this;
+    }
+
     /// <summary>
     /// Método para selecionar a vigencia do plano
     /// </summary>
@@ -1078,7 +1102,7 @@ public class PlanosContratosPage
         else if (nomeTeste.Equals("TestCancelarPlano"))
         {
             Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SituacaoPlano, "Campo Situação do Plano");
-            Dsl.Clicar(webDriver, GlobalVariables.SituacaoPlanoCancelar, "Selecionar Situação Plano Cancelado");
+            Dsl.EsperarElementoParaClicar(webDriver, GlobalVariables.SituacaoPlanoCancelar, "Selecionar Situação Plano Cancelado");
         }
 
         return this;
@@ -1150,7 +1174,7 @@ public class PlanosContratosPage
         foreach (var nomeCampanha in nomeCampanhas)
         {
             Dsl.BuscarRegistros(webDriver, GlobalVariables.FiltrarPlanoPorCampanha, GlobalVariables.PesquisarNomeCampanha, GlobalVariables.BuscarRegistro, nomeCampanha);
-            var quantidadeLinhasTabela = Dsl.ContarLinhasEmTabela(webDriver, GlobalVariables.TabelaPlanos); 
+            var quantidadeLinhasTabela = Dsl.ContarLinhasEmTabela(webDriver, GlobalVariables.TabelaPlanos);
 
             if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) == 0)
             {
