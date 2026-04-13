@@ -23,8 +23,8 @@ public class Dsl
 
         var wait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(20),
-            PollingInterval = TimeSpan.FromMilliseconds(500)
+            Timeout = TimeSpan.FromSeconds(40),
+            PollingInterval = TimeSpan.FromMilliseconds(1000)
         };
 
         wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));

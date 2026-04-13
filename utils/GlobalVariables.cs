@@ -3,7 +3,6 @@ namespace MeuClienteWebTestProject;
 public class GlobalVariables
 {
     #region Projeto
-    public static string urlDevPlataforma = "https://stage.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
     public static string[] emailUsuarios = { "homologacao.start@meucliente.app.br", "homologacao.pro@meucliente.app.br", "homologacao.expert@meucliente.app.br" };
     public static string[] senhaUsuarios = { "Meucliente@st@123", "Meucliente@pr@123", "Meucliente@ex@123" };

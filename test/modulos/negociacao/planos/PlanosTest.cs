@@ -53,7 +53,7 @@ public class PlanosTest
         if (testeAnteriorPulouFalhou)
             Assert.Ignore("Pular teste, o teste anterior falhou");
         if (runSettings.ToSkip(nomeClasse, contextoDeTeste, nomeTeste))
-            Assert.Ignore("Teste ignorado pelas configurações de execução");
+            Assert.Ignore("Teste ignorado pelas configurações de execução\n");
 
         int indiceUsuario = clienteUpSellAtual switch
         {
@@ -95,8 +95,8 @@ public class PlanosTest
     [Test, Order(1)]
     public void TestCriarPlanoComAtivosTipoMidiaGrafica()
     {
-        primeiroTeste = true;
         var stopwatchTest = Stopwatch.StartNew();
+        primeiroTeste = true;
 
         if (clienteUpSellAtual == ClienteUpSell.ClienteExpert) //criando o plano através da nova tela de simulação
         {
@@ -133,7 +133,7 @@ public class PlanosTest
         }
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ public class PlanosTest
         }
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -206,7 +206,7 @@ public class PlanosTest
         .FecharDadosDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -230,7 +230,7 @@ public class PlanosTest
         .FecharDadosDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -255,7 +255,7 @@ public class PlanosTest
         .FecharDadosDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -280,7 +280,7 @@ public class PlanosTest
         .FecharDadosDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -305,7 +305,7 @@ public class PlanosTest
         .ValidarStatusFarolDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -345,7 +345,7 @@ public class PlanosTest
         }
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -370,7 +370,7 @@ public class PlanosTest
         .FecharDadosDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -395,7 +395,7 @@ public class PlanosTest
         .ValidarStatusFarolDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -414,7 +414,7 @@ public class PlanosTest
         .ConfirmarExclusaoDoPlano();
 
         stopwatchTest.Stop();
-        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed.TotalMinutes}");
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
