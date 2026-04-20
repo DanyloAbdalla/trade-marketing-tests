@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using OpenQA.Selenium;
@@ -52,7 +53,7 @@ public class PlanosTest
         if (testeAnteriorPulouFalhou)
             Assert.Ignore("Pular teste, o teste anterior falhou");
         if (runSettings.ToSkip(nomeClasse, contextoDeTeste, nomeTeste))
-            Assert.Ignore("Teste ignorado pelas configurações de execução");
+            Assert.Ignore("Teste ignorado pelas configurações de execução\n");
 
         int indiceUsuario = clienteUpSellAtual switch
         {
@@ -65,8 +66,23 @@ public class PlanosTest
         new LoginPage(webDriver, clienteUpSellAtual)
             .RealizarLogin(GlobalVariables.emailUsuarios[indiceUsuario], GlobalVariables.senhaUsuarios[indiceUsuario]);
 
-        new HomePage(webDriver, clienteUpSellAtual)
-            .AcessarCadastroPlanos(nomeTeste);
+        Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado");
+        if (!Dsl.ObterTextoDoElemento(webDriver, GlobalVariables.UltimoCadastroAcessado, "Label Último Cadastro Acessado").Contains("Plano"))
+        {
+            new HomePage(webDriver, clienteUpSellAtual)
+                .AcessarCadastroPlanos(nomeTeste);
+        }
+        else
+        {
+            if (clienteUpSellAtual == ClienteUpSell.ClientePro)
+            {
+                Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadListaPlanos, "Load Lista Planos");
+            }
+            else
+            {
+                Dsl.EsperarVisibilidadeDoElemento(webDriver, GlobalVariables.TotalReceitaPlanos, "Label Total Receita Planos");
+            }
+        }
     }
 
     /// <summary>
@@ -79,6 +95,7 @@ public class PlanosTest
     [Test, Order(1)]
     public void TestCriarPlanoComAtivosTipoMidiaGrafica()
     {
+        var stopwatchTest = Stopwatch.StartNew();
         primeiroTeste = true;
 
         if (clienteUpSellAtual == ClienteUpSell.ClienteExpert) //criando o plano através da nova tela de simulação
@@ -90,6 +107,7 @@ public class PlanosTest
             .SelecionarAtivosELojas()
             .PreencherQuantidadeAtivos()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -107,6 +125,7 @@ public class PlanosTest
             .PreencherQuantidadeAtivos()
             .SelecionarLojas()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -114,6 +133,9 @@ public class PlanosTest
             .BuscarPlanos()
             .ValidarStatusFarolDoPlano();
         }
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -126,6 +148,8 @@ public class PlanosTest
     [Test, Order(2)]
     public void TestCriarPlanoComAtivosTipoMidiaFisica()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
         {
             new PlanosContratosPage(webDriver, clienteUpSellAtual)
@@ -135,6 +159,7 @@ public class PlanosTest
             .SelecionarAtivosELojas()
             .PreencherQuantidadeAtivos()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -152,6 +177,7 @@ public class PlanosTest
             .PreencherQuantidadeAtivos()
             .SelecionarLojas()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -160,6 +186,8 @@ public class PlanosTest
             .ValidarStatusFarolDoPlano();
         }
 
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -172,12 +200,17 @@ public class PlanosTest
     [Test, Order(3)]
     public void TestEditarPlanoExistenteAlterandoVigenciaDoPlano()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
         .AbrirEdicaoDoPlano()
         .SelecionarVigenciaDoPlano()
         .SalvarPlano()
         .FecharDadosDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -190,6 +223,8 @@ public class PlanosTest
     [Test, Order(4)]
     public void TestEditarPlanoExistenteAlterandoVigenciaDoTrade()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
         .AbrirEdicaoDoPlano()
@@ -197,6 +232,9 @@ public class PlanosTest
         .EditarVigenciaDoAtivoAlocado()
         .SalvarPlano()
         .FecharDadosDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -209,6 +247,8 @@ public class PlanosTest
     [Test, Order(5)]
     public void TestEditarPlanoExistenteAlterandoQuantidadeAlocadaDoAtivoDisponivel()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
         .AbrirEdicaoDoPlano()
@@ -217,6 +257,9 @@ public class PlanosTest
         .SalvarPlano()
         .ValidarReceitasDoPlano()
         .FecharDadosDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -229,6 +272,8 @@ public class PlanosTest
     [Test, Order(6)]
     public void TestEditarPlanoExistenteIncluindoNovoAtivoDisponivel()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
         .AbrirEdicaoDoPlano()
@@ -237,6 +282,9 @@ public class PlanosTest
         .SalvarPlano()
         .ValidarReceitasDoPlano()
         .FecharDadosDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -249,6 +297,8 @@ public class PlanosTest
     [Test, Order(7)]
     public void TestAprovarPlano()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
         .AbrirEdicaoDoPlano()
@@ -257,6 +307,9 @@ public class PlanosTest
         .FecharDadosDoPlano()
         .RecarregarPlanos()
         .ValidarStatusFarolDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -269,6 +322,8 @@ public class PlanosTest
     [Test, Order(8)]
     public void TestCriarPlanoComAlertaDeInventario()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         if (clienteUpSellAtual == ClienteUpSell.ClienteExpert)
         {
             new PlanosContratosPage(webDriver, clienteUpSellAtual)
@@ -292,6 +347,9 @@ public class PlanosTest
             .ValidarIndisponibilidadeDeInventario()
             .FecharDadosDoPlano();
         }
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -304,6 +362,8 @@ public class PlanosTest
     [Test, Order(9)]
     public void TestEditarPlanoComAlertaDeInventario()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
         .AbrirEdicaoDoPlanoFiltrado()
@@ -312,6 +372,9 @@ public class PlanosTest
         .AbrirAbaAtivosAlocados()
         .ValidarAlertasDeIndisponibilidadeDeInventario()
         .FecharDadosDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -324,14 +387,20 @@ public class PlanosTest
     [Test, Order(10)]
     public void TestCancelarPlano()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .BuscarPlanos()
-        .AbrirEdicaoDoPlano()
+        .EditarPlanoFiltrado()
+        .EsperarCarregarDadosDoPlano()
         .EditarSituacaoDoPlano()
         .SalvarPlano()
         .FecharDadosDoPlano()
         .RecarregarPlanos()
         .ValidarStatusFarolDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -344,8 +413,13 @@ public class PlanosTest
     [Test, Order(11)]
     public void TestExcluirPlano()
     {
+        var stopwatchTest = Stopwatch.StartNew();
+
         new PlanosContratosPage(webDriver, clienteUpSellAtual)
         .ConfirmarExclusaoDoPlano();
+
+        stopwatchTest.Stop();
+        TestContext.WriteLine($"Tempo gasto no teste em minutos: {stopwatchTest.Elapsed}");
     }
 
     /// <summary>
@@ -365,28 +439,19 @@ public class PlanosTest
 
             primeiroTeste = false;
 
-            new HomePage(webDriver, clienteUpSellAtual).AcessarDashboardOperacoes();
+            Dsl.ValidarModaisAbertas(webDriver, clienteUpSellAtual);
+
+            Dsl.Esperar();
             new HomePage(webDriver, clienteUpSellAtual).RealizarLogout();
         }
         else if (statusTeste == TestStatus.Passed || statusTeste == TestStatus.Failed)
         {
             if (statusTeste == TestStatus.Failed)
             {
-                if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaAlocacaoPorLojaAtivo) > 0)
-                {
-                    //Se a modal da alocação por loja do ativo está aberta, a mesma é fechada para não comprometer a execução do próximo teste
-                    new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharAlocacaoPorLoja();
-
-                    if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaPlano) > 0)
-                    {
-                        //Se a modal do plano está aberta, a mesma é fechada para não comprometer a execução do próximo teste
-                        new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharDadosDoPlano();
-                    }
-                }
+                Dsl.ValidarModaisAbertas(webDriver, clienteUpSellAtual);
             }
 
             Dsl.Esperar();
-            new HomePage(webDriver, clienteUpSellAtual).AcessarDashboardOperacoes();
             new HomePage(webDriver, clienteUpSellAtual).RealizarLogout();
         }
     }

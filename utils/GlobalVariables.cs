@@ -3,7 +3,6 @@ namespace MeuClienteWebTestProject;
 public class GlobalVariables
 {
     #region Projeto
-    public static string urlDevPlataforma = "https://stage.meucliente.app.br/";
     public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
     public static string[] emailUsuarios = { "homologacao.start@meucliente.app.br", "homologacao.pro@meucliente.app.br", "homologacao.expert@meucliente.app.br" };
     public static string[] senhaUsuarios = { "Meucliente@st@123", "Meucliente@pr@123", "Meucliente@ex@123" };
@@ -121,7 +120,8 @@ public class GlobalVariables
     public static string LoadCarregandoPlanos { get; set; } = "//div[text()='Carregando cadastro contrato...']";
     public static string LoadListaPlanos { get; set; } = "//h1[text()='Gestão de Planos']/../../../../..//*[@class='ant-spin-dot ant-spin-dot-spin']/i[1]";
     public static string LoadModalPlano { get; set; } = "//div[contains(@class,'contrato-loading-overlay')]";
-    public static string TabelaPlanos { get; set; } = "//table/tbody/tr";
+    public static string TabelaPlanos { get; set; } = "//h1[text()='Gestão de Planos']/../../../../..//tbody";
+    public static string ConlunaNumeroContrato { get; set; } = "//table//*[@aria-label='N° Contrato']";
     public static string FiltrarPlanosStatusVigencia { get; set; } = "//div[contains(@class,'select-selector')]/span[2]";
     public static string SelecionarTodosPlanos { get; set; } = "//div[@class='rc-virtual-list']//div[@title='Todos']";
     public static string FiltrarPlanoPorCampanha { get; set; } = "//thead//th[@title='Nome Campanha']//span[@role='button']";
@@ -136,10 +136,11 @@ public class GlobalVariables
     public static string ExcluirPlanoMensagemConfirmacao { get; set; } = "//*[@class='ant-modal-confirm-body']/span[2]";
     public static string OkExclusao { get; set; } = "//*[text()='OK']";
     public static string ModalPlanos { get; set; } = "//*[@class='ant-modal-body' and @style='overflow-x: hidden; height: 85vh;']";
-    public static string AbaPlano { get; set; } = "//*[contains(text(),'Dados do Plano')]";
+    public static string TotalReceitaPlanos { get; set; } = "//span[contains(text(), 'Total Receita')]";
     #endregion
 
     #region Elementos de página - Planos - Simulação
+    public static string AbaSimulacao { get; set; } = "//*[contains(text(),'Simulação')]";
     public static string PreencherIndustria { get; set; } = "//*[@data-testid='nomeIndustria']//*/input";
     public static string SelecionarIndustriaClienteStart { get; set; } = "//div[contains(@class,'ant-select-dropdown')]//*[@id='116873']";
     public static string SelecionarIndustriaClientePro { get; set; } = "//div[contains(@class,'ant-select-dropdown')]//*[@id='73189']";
@@ -229,7 +230,7 @@ public class GlobalVariables
     #endregion
 
     #region Elementos de página - Planos - Dados do Plano
-    public static string LoadDeTelaDadosPlano { set; get; } = "//*[contains(@id,'panel-1')]//span[contains(@class,'ant-spin-dot-spin')]";
+    public static string LoadDeTelaDadosPlano { set; get; } = "//div[@class='contrato-tab-container']//span[@class='ant-spin-dot ant-spin-dot-spin']";
     public static string AbasPlano { get; set; } = "//div[@class='ant-tabs-nav-list']";
     public static string AbaDadosPlano { get; set; } = "//div[@class='ant-tabs-nav-list']//*[contains(text(),'Dados do Plano')]";
     public static string SituacaoPlano { get; set; } = "//*[@data-testid='situacao']";
@@ -262,6 +263,7 @@ public class GlobalVariables
     public static string EtapasWorkflowGraficoPlano { get; set; } = "//div[@class='ant-row etapas-container-grafico ']";
     public static string MensagemConfirmacaoInventarioIndisponivel { get; set; } = "//*[@class='ant-modal-confirm-body']/span[contains(@class,'confirm-title')]";
     public static string SalvarPlano { get; set; } = "//*[@data-testid='salvarPlano']";
+    public static string SalvarPlanoCarregando { get; set; } = "//*[@data-testid='salvarPlano' and contains(@class,'btn-loading')]";
     public static string FecharPlano { get; set; } = "//*[@data-testid='fecharPlano']";
     #endregion
 
@@ -281,7 +283,7 @@ public class GlobalVariables
 
     #region Elementos de página - Planos - Ativos Alocados - Editar Alocação do Ativo por Loja
     public static string LoadDeTelaAlocacaoPorLoja { get; set; } = "(//*[@class='ativos-alocados-container']//*[contains(@class,'ant-spin-dot-item')])[1]";
-    public static string TabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../div[2]/div//tbody";
+    public static string TotalDeZeroLojasAtivoAlocado { get; set; } = "//span[text()='Total de lojas: ']//strong[text()='0']";
     public static string LinhaTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../div[2]/div//tbody/tr[@data-row-key='0']";
     public static string ScrollTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//div[contains(@class,'ant-table-scroll-horizontal')]";
     public static string ScrollHorizontalTabelaLojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../..//tbody[@class='ant-table-tbody']";
@@ -293,7 +295,7 @@ public class GlobalVariables
     public static string ColunaDisponivelTrade { get; set; } = "//div[@id='ativos-alocados-table']//thead//th[text()='Disponível']";
     public static string LojasAtivoAlocados { get; set; } = "//*[contains(text(),'Alocação por Loja')]/../../../../../..//tbody";
     public static string AplicarDadosLojas { get; set; } = "(//button/*[text()='Aplicar'])[2]";
-    public static string BuscarAtivoAlocacao { get; set; } = "//*[@data-testid='nomeAtivo']//*/input";
+    public static string BuscarAtivoAlocacao { get; set; } = "//*[@data-testid='nomeAtivo']//input";
     public static string SelecionarAtivoAlocacao { get; set; } = "//div[@class='rc-virtual-list']//*[text()='Cestão 01 - ']";
     public static string IncluirAlocacaoAtivo { get; set; } = "(//*[@data-testid='incluirAtivo'])[2]";
     public static string QuantidadeLojasPorAtivo { get; set; } = "//*[contains(text(),'Total de lojas')]";

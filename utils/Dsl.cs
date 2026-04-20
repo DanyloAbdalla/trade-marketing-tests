@@ -23,8 +23,29 @@ public class Dsl
 
         var wait = new DefaultWait<IWebDriver>(webDriver)
         {
-            Timeout = TimeSpan.FromSeconds(20),
-            PollingInterval = TimeSpan.FromMilliseconds(500)
+            Timeout = TimeSpan.FromSeconds(40),
+            PollingInterval = TimeSpan.FromMilliseconds(1000)
+        };
+
+        wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+        return wait;
+    }
+
+    /// <summary>
+    /// Método para criar um wait fluente específico para múltiplas mensagens de feedback
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <returns></returns>
+    public static DefaultWait<IWebDriver> CreateFluentWaitPairMessage(IWebDriver webDriver)
+    {
+        implicitWaitOriginal = webDriver.Manage().Timeouts().ImplicitWait;
+        webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
+
+        var wait = new DefaultWait<IWebDriver>(webDriver)
+        {
+            Timeout = TimeSpan.FromSeconds(10),
+            PollingInterval = TimeSpan.FromMilliseconds(250)
         };
 
         wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
@@ -41,17 +62,44 @@ public class Dsl
     }
 
     /// <summary>
+    /// Método para aguardar a visibilidade de um elemento
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="XPath"></param>
+    /// <returns></returns>
+    public static bool ValidarMensagensDeErroOuAviso(IWebDriver webDriver)
+    {
+        try
+        {
+            var wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            return wait.Until(drv =>
+            {
+                var element = drv.FindElement(By.XPath("//div[div[@data-testid='Mc-message-error'] or div[@data-testid='Mc-message-warning']]"));
+                return element.Displayed;
+            });
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false; // não ficou visível dentro do timeout
+        }
+        catch (NoSuchElementException)
+        {
+            return false; // elemento não encontrado
+        }
+    }
+
+    /// <summary>
     /// Método para consultar o elemento a cada meio segundo, até que ele esteja vísivel em tela em uma espera de 10 segundos
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
     /// <exception cref="Exception"></exception>
-    public static bool EsperarVisibilidadeDoElemento(IWebDriver webDriver, string XPath, string elemento)
+    public static void EsperarVisibilidadeDoElemento(IWebDriver webDriver, string XPath, string elemento)
     {
         try
         {
-            var fluentWait = CreateFluentWait(webDriver);
-            fluentWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
+            WebDriverWait driverWait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            driverWait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
         }
         catch (WebDriverTimeoutException)
         { Console.WriteLine("Tempo esgotado para espera da visibilidade do elemento: " + elemento); }
@@ -59,8 +107,6 @@ public class Dsl
         { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a visibilidade do elemento " + elemento); }
         finally
         { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
-
-        return false;
     }
 
     /// <summary>
@@ -74,8 +120,8 @@ public class Dsl
     {
         try
         {
-            var fluentWait = CreateFluentWait(webDriver);
-            fluentWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
+            WebDriverWait driverWait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            driverWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(XPath)));
         }
         catch (WebDriverTimeoutException)
         { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento: " + elemento); }
@@ -83,6 +129,19 @@ public class Dsl
         { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a invisibilidade do elemento " + elemento); }
         finally
         { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
+    }
+
+    public static void WaitForElementToBeStale(IWebDriver webDriver, IWebElement element, string elementDescription)
+    {
+        try
+        {
+            WebDriverWait driverWait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            driverWait.Until(ExpectedConditions.StalenessOf(element));
+        }
+        catch (WebDriverTimeoutException)
+        { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento: " + elementDescription); }
+        catch (Exception ex)
+        { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a invisibilidade do elemento " + elementDescription); }
     }
 
     /// <summary>
@@ -145,26 +204,41 @@ public class Dsl
         { throw new Exception("Ocorreu o erro: " + ex.Message + " ao encontrar o elemento " + elemento); }
     }
 
+    public static IWebElement FindElement(IWebDriver webDriver, string XPath, string elemento)
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            IWebElement element = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(XPath)));
+
+            return element;
+        }
+        catch (WebDriverTimeoutException)
+        { throw new Exception("Elemento \"" + elemento + "\" não localizado"); }
+        catch (Exception ex)
+        { throw new Exception("Ocorreu o erro: " + ex.Message + " ao encontrar o elemento " + elemento); }
+    }
+
     /// <summary>
     /// Método para localizar um elemento mensagem na tela
     /// </summary>
     /// <param name="webDriver"></param>
     /// <param name="XPath"></param>
-    /// <returns>Retorna verdadeiro se o elemento for localizado, ou falso caso contrário</returns>
-    public static bool LocalizarElementoMensagem(IWebDriver webDriver, string XPath)
+    /// <returns>Retorna o elemento encontrado e um valor booleano indicando se a operação foi bem-sucedida</returns>
+    public static (IWebElement Element, bool Success) LocalizarElementoMensagem(IWebDriver webDriver, string XPath)
     {
         try
         {
-            var fluentWait = CreateFluentWait(webDriver);
+            var fluentWait = CreateFluentWaitPairMessage(webDriver);
             var elemento = fluentWait.Until(ExpectedConditions.ElementExists(By.XPath(XPath)));
-            return elemento.Displayed;
+            return (elemento, true);
         }
         catch (NoSuchElementException)
-        { return false; }
+        { return (null, false); }
         catch (StaleElementReferenceException)
-        { return false; }
+        { return (null, false); }
         catch (WebDriverTimeoutException)
-        { return false; }
+        { return (null, false); }
         finally
         { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
     }
@@ -221,6 +295,8 @@ public class Dsl
         }
     }
 
+
+
     /// <summary>
     /// Método para contar quantas vezes o elemento existe na tela
     /// </summary>
@@ -257,15 +333,24 @@ public class Dsl
     /// <param name="XPath"></param>
     /// <returns>Retorna um número inteiro</returns>
     /// <exception cref="Exception"></exception>/
-    public static long ContarLinhasEmTabela(IWebDriver webDriver, string XPath)
+    public static int ContarLinhasEmTabela(IWebDriver webDriver, string XPath)
     {
         try
         {
-            // Executando o script JavaScript para contar as linhas no elemento tbody
-            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)webDriver;
-            long trCount = (long)jsExecutor.ExecuteScript("return document.evaluate(arguments[0], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getElementsByTagName('tr').length;", XPath);
+            // Localiza o tbody
+            var tbody = webDriver.FindElement(By.XPath(XPath));
 
-            return trCount;
+            // Busca todas as linhas tr dentro do tbody
+            var linhas = tbody.FindElements(By.TagName("tr"));
+
+            // Filtra apenas as que possuem o atributo data-row-key
+            var linhasComDataRowKey = linhas.Where(tr =>
+            {
+                var dataRowKey = tr.GetAttribute("data-row-key");
+                return !string.IsNullOrEmpty(dataRowKey);
+            });
+
+            return linhasComDataRowKey.Count();
         }
         catch (Exception ex)
         { throw new Exception(ex.Message); }
@@ -318,20 +403,20 @@ public class Dsl
         var mensagensFeedback = new List<MensagemFeedback>();
         string atributoValor;
         string mensagemTexto;
-        bool temMensagemNova = true;
+        bool temNovaMensagem = true;
         int count = 1;
 
-        while (temMensagemNova)
+        while (temNovaMensagem)
         {
             string xpathElemento = $"({XPath})[{count}]";
-            temMensagemNova = LocalizarElementoMensagem(webDriver, xpathElemento);
+            var resultado = LocalizarElementoMensagem(webDriver, xpathElemento);
 
-            if (temMensagemNova == false)
+            if (resultado.Success == false)
                 break;
 
-            var elemento = EncontrarElemento(webDriver, xpathElemento, "Mensagem Feedback");
-            atributoValor = elemento.GetAttribute("data-testid");
-            mensagemTexto = elemento.Text;
+            //var elemento = EncontrarElemento(webDriver, xpathElemento, "Mensagem Feedback");
+            atributoValor = resultado.Element.GetAttribute("data-testid");
+            mensagemTexto = resultado.Element.Text;
 
             mensagensFeedback.Add(new MensagemFeedback
             {
@@ -426,8 +511,6 @@ public class Dsl
     {
         try
         {
-            EsperarVisibilidadeDoElemento(webDriver, XPath, elemento);
-
             for (int i = 0; i < textoValor.Length; i++)
             {
                 webDriver.FindElement(By.XPath(XPath)).SendKeys(textoValor[i].ToString());
@@ -619,12 +702,14 @@ public class Dsl
     /// <returns></returns>
     public static void ValidarMensagemDeFeedbacak(List<MensagemFeedback> mensagensEsperadas, List<MensagemFeedback> mensagensAtuais)
     {
-        var erros = mensagensAtuais.Where(m => m.Atributo == "MC-message-error").ToList();
+        //var erros = mensagensAtuais.Where(m => m.Atributo == "MC-message-error").ToList();
+        var errosOuWarnings = mensagensAtuais.Where(m => m.Atributo == "MC-message-error" || m.Atributo == "MC-message-warning").ToList();
 
-        if (erros.Any())
+
+        if (errosOuWarnings.Any())
         {
-            string mensagensErro = string.Join(Environment.NewLine, erros.Select(e => e.Mensagem));
-            Assert.Fail($"Foram encontrados erros:\n{mensagensErro}");
+            string mensagensErro = string.Join(Environment.NewLine, errosOuWarnings.Select(e => e.Mensagem));
+            Assert.Fail($"Foram encontrados erros ou warnings:\n{mensagensErro}");
         }
 
         foreach (var atual in mensagensAtuais)
@@ -687,11 +772,10 @@ public class Dsl
     /// <param name="textoValor"></param>
     public static void BuscarRegistros(IWebDriver webDriver, string xPathFiltrar, string xPathPreencherFiltro, string xPathBuscar, string textoValor)
     {
-        Esperar(2000);
         Clicar(webDriver, xPathFiltrar, "Botão Filtrar");
-        Esperar(500);
+        Esperar();
         webDriver.FindElement(By.XPath(xPathPreencherFiltro)).SendKeys(Keys.Control + "a" + Keys.Backspace);
-        Esperar(500);
+        Esperar();
         DigitarNoCampoTexto(webDriver, xPathPreencherFiltro, textoValor);
         Clicar(webDriver, xPathBuscar, "Botão Buscar");
 
@@ -706,8 +790,6 @@ public class Dsl
     /// <param name="elemento"></param>
     public static void ScrollParaElemento(IWebDriver webDriver, string XPath, string elemento)
     {
-        EsperarVisibilidadeDoElemento(webDriver, XPath, elemento);
-
         IWebElement webElement = webDriver.FindElement(By.XPath(XPath));
 
         Actions action = new Actions(webDriver);
@@ -809,6 +891,27 @@ public class Dsl
             return true;
 
         return false;
+    }
+
+    public static void ValidarModaisAbertas(IWebDriver webDriver, ClienteUpSell clienteUpSellAtual)
+    {
+        if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaAlocacaoPorLojaAtivo) > 0)
+        {
+            //Se a modal da alocação por loja do ativo está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+            new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharAlocacaoPorLoja();
+        }
+
+        if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaDadosPlano) > 0)
+        {
+            //Se a modal do plano está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+            new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharDadosDoPlano();
+        }
+
+        if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaSimulacao) > 0)
+        {
+            //Se a modal da simulação do plano está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+            new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharSimulacaoPlano();
+        }
     }
 
     internal static bool MesApresentadoTem30Dias(IWebDriver webDriver)

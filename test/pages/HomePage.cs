@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools;
 
 namespace MeuClienteWebTestProject;
 
@@ -40,22 +38,12 @@ public class HomePage
     /// <returns></returns>
     public PlanosContratosPage AcessarCadastroPlanos(string primeiroTeste)
     {
-        //Retorna para o Dashboard de Operações, se no último logout a plataforma parou em outra tela
-        VoltarParaDashboardOperacoes();
-
-        Dsl.Esperar();
         AbrirMenuVarejo();
-
+        Dsl.Esperar();
         Dsl.Clicar(webDriver, GlobalVariables.MenuNegociacao, "Menu Negociação");
         Dsl.Clicar(webDriver, GlobalVariables.CadastroPlanosContratos, "Cadastro de Planos");
-
-        Dsl.EsperarLoadDaTela(webDriver, GlobalVariables.LoadListaPlanos, "Load Tela Lista de Planos");
+        Dsl.EsperarInvisibilidadeDoElemento(webDriver, GlobalVariables.LoadListaPlanos, "Load Tela Lista de Planos");
         Dsl.Esperar(2000);
-
-        if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AvisoInexistenciaDados) > 0)
-            return new PlanosContratosPage(webDriver, clienteUpSellAtual);
-        else if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.PaginacaoTela) > 0)
-            FiltrarTodosPlanos();
 
         return new PlanosContratosPage(webDriver, clienteUpSellAtual);
     }
