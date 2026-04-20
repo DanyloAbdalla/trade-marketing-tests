@@ -107,6 +107,7 @@ public class PlanosTest
             .SelecionarAtivosELojas()
             .PreencherQuantidadeAtivos()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -124,6 +125,7 @@ public class PlanosTest
             .PreencherQuantidadeAtivos()
             .SelecionarLojas()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -157,6 +159,7 @@ public class PlanosTest
             .SelecionarAtivosELojas()
             .PreencherQuantidadeAtivos()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -174,6 +177,7 @@ public class PlanosTest
             .PreencherQuantidadeAtivos()
             .SelecionarLojas()
             .GerarPrePlano()
+            .AguardandoCricaoDoPlano()
             .SalvarPlano()
             .ValidarReceitasDoPlano()
             .ValidarPlanoCriado()
@@ -435,6 +439,8 @@ public class PlanosTest
 
             primeiroTeste = false;
 
+            Dsl.ValidarModaisAbertas(webDriver, clienteUpSellAtual);
+
             Dsl.Esperar();
             new HomePage(webDriver, clienteUpSellAtual).RealizarLogout();
         }
@@ -442,17 +448,7 @@ public class PlanosTest
         {
             if (statusTeste == TestStatus.Failed)
             {
-                if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaAlocacaoPorLojaAtivo) > 0)
-                {
-                    //Se a modal da alocação por loja do ativo está aberta, a mesma é fechada para não comprometer a execução do próximo teste
-                    new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharAlocacaoPorLoja();
-
-                    if (Dsl.ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaPlano) > 0)
-                    {
-                        //Se a modal do plano está aberta, a mesma é fechada para não comprometer a execução do próximo teste
-                        new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharDadosDoPlano();
-                    }
-                }
+                Dsl.ValidarModaisAbertas(webDriver, clienteUpSellAtual);
             }
 
             Dsl.Esperar();

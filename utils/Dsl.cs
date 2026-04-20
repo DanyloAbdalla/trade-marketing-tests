@@ -62,6 +62,33 @@ public class Dsl
     }
 
     /// <summary>
+    /// Método para aguardar a visibilidade de um elemento
+    /// </summary>
+    /// <param name="webDriver"></param>
+    /// <param name="XPath"></param>
+    /// <returns></returns>
+    public static bool ValidarMensagensDeErroOuAviso(IWebDriver webDriver)
+    {
+        try
+        {
+            var wait = new WebDriverWait(webDriver, GlobalVariables.ExplicitWait);
+            return wait.Until(drv =>
+            {
+                var element = drv.FindElement(By.XPath("//div[div[@data-testid='Mc-message-error'] or div[@data-testid='Mc-message-warning']]"));
+                return element.Displayed;
+            });
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false; // não ficou visível dentro do timeout
+        }
+        catch (NoSuchElementException)
+        {
+            return false; // elemento não encontrado
+        }
+    }
+
+    /// <summary>
     /// Método para consultar o elemento a cada meio segundo, até que ele esteja vísivel em tela em uma espera de 10 segundos
     /// </summary>
     /// <param name="webDriver"></param>
@@ -176,7 +203,7 @@ public class Dsl
         catch (Exception ex)
         { throw new Exception("Ocorreu o erro: " + ex.Message + " ao encontrar o elemento " + elemento); }
     }
-    
+
     public static IWebElement FindElement(IWebDriver webDriver, string XPath, string elemento)
     {
         try
@@ -267,6 +294,8 @@ public class Dsl
             throw new Exception("Ocorreu o erro " + ex.Message + " ao clicar no elemento " + elemento);
         }
     }
+
+
 
     /// <summary>
     /// Método para contar quantas vezes o elemento existe na tela
@@ -673,12 +702,14 @@ public class Dsl
     /// <returns></returns>
     public static void ValidarMensagemDeFeedbacak(List<MensagemFeedback> mensagensEsperadas, List<MensagemFeedback> mensagensAtuais)
     {
-        var erros = mensagensAtuais.Where(m => m.Atributo == "MC-message-error").ToList();
+        //var erros = mensagensAtuais.Where(m => m.Atributo == "MC-message-error").ToList();
+        var errosOuWarnings = mensagensAtuais.Where(m => m.Atributo == "MC-message-error" || m.Atributo == "MC-message-warning").ToList();
 
-        if (erros.Any())
+
+        if (errosOuWarnings.Any())
         {
-            string mensagensErro = string.Join(Environment.NewLine, erros.Select(e => e.Mensagem));
-            Assert.Fail($"Foram encontrados erros:\n{mensagensErro}");
+            string mensagensErro = string.Join(Environment.NewLine, errosOuWarnings.Select(e => e.Mensagem));
+            Assert.Fail($"Foram encontrados erros ou warnings:\n{mensagensErro}");
         }
 
         foreach (var atual in mensagensAtuais)
@@ -860,6 +891,27 @@ public class Dsl
             return true;
 
         return false;
+    }
+
+    public static void ValidarModaisAbertas(IWebDriver webDriver, ClienteUpSell clienteUpSellAtual)
+    {
+        if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaAlocacaoPorLojaAtivo) > 0)
+        {
+            //Se a modal da alocação por loja do ativo está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+            new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharAlocacaoPorLoja();
+        }
+
+        if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaDadosPlano) > 0)
+        {
+            //Se a modal do plano está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+            new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharDadosDoPlano();
+        }
+
+        if (ContarExistenciaDoElemento(webDriver, GlobalVariables.AbaSimulacao) > 0)
+        {
+            //Se a modal da simulação do plano está aberta, a mesma é fechada para não comprometer a execução do próximo teste
+            new PlanosContratosPage(webDriver, clienteUpSellAtual).FecharSimulacaoPlano();
+        }
     }
 
     internal static bool MesApresentadoTem30Dias(IWebDriver webDriver)

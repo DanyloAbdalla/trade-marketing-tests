@@ -136,11 +136,11 @@ public class GlobalVariables
     public static string ExcluirPlanoMensagemConfirmacao { get; set; } = "//*[@class='ant-modal-confirm-body']/span[2]";
     public static string OkExclusao { get; set; } = "//*[text()='OK']";
     public static string ModalPlanos { get; set; } = "//*[@class='ant-modal-body' and @style='overflow-x: hidden; height: 85vh;']";
-    public static string AbaPlano { get; set; } = "//*[contains(text(),'Dados do Plano')]";
     public static string TotalReceitaPlanos { get; set; } = "//span[contains(text(), 'Total Receita')]";
     #endregion
 
     #region Elementos de página - Planos - Simulação
+    public static string AbaSimulacao { get; set; } = "//*[contains(text(),'Simulação')]";
     public static string PreencherIndustria { get; set; } = "//*[@data-testid='nomeIndustria']//*/input";
     public static string SelecionarIndustriaClienteStart { get; set; } = "//div[contains(@class,'ant-select-dropdown')]//*[@id='116873']";
     public static string SelecionarIndustriaClientePro { get; set; } = "//div[contains(@class,'ant-select-dropdown')]//*[@id='73189']";
