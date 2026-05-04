@@ -105,8 +105,6 @@ public class Dsl
         { Console.WriteLine("Tempo esgotado para espera da visibilidade do elemento: " + elemento); }
         catch (Exception ex)
         { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a visibilidade do elemento " + elemento); }
-        finally
-        { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
     }
 
     /// <summary>
@@ -127,8 +125,6 @@ public class Dsl
         { Console.WriteLine("Tempo esgotado para espera da invisibilidade do elemento: " + elemento); }
         catch (Exception ex)
         { Console.WriteLine("Ocorreu o erro: " + ex.Message + " ao esperar a invisibilidade do elemento " + elemento); }
-        finally
-        { webDriver.Manage().Timeouts().ImplicitWait = implicitWaitOriginal; }
     }
 
     public static void WaitForElementToBeStale(IWebDriver webDriver, IWebElement element, string elementDescription)
