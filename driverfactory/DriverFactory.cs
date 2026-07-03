@@ -8,9 +8,6 @@ namespace MeuClienteWebTestProject;
 /// </summary>
 public class DriverFactory
 {
-    [ThreadStatic]
-    private static IWebDriver webDriver;
-
     /// <summary>
     /// Método para criação do WebDriver para múltiplos browsers
     /// </summary>
@@ -19,6 +16,8 @@ public class DriverFactory
     /// <exception cref="NotSupportedException"></exception>
     public static IWebDriver CreateDriver(BrowserType browserType)
     {
+        IWebDriver webDriver;
+
         switch (browserType)
         {
             case BrowserType.Chrome:

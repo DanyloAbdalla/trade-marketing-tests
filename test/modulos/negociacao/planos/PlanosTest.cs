@@ -8,9 +8,9 @@ namespace MeuClienteWebTestProject;
 /// <summary>
 /// Classe com os testes para o Cadastro de Planos\Contratos
 /// </summary>
-[TestFixture("ClienteStart", Category = "Start")]
-[TestFixture("ClientePro", Category = "Pro")]
-[TestFixture("ClienteExpert", Category = "Expert")]
+[TestFixture("ClienteStart")]
+[TestFixture("ClientePro")]
+[TestFixture("ClienteExpert")]
 public class PlanosTest
 {
     private RunSettings runSettings;
@@ -53,7 +53,7 @@ public class PlanosTest
         if (testeAnteriorPulouFalhou)
             Assert.Ignore("Pular teste, o teste anterior falhou");
         if (runSettings.ToSkip(nomeClasse, contextoDeTeste, nomeTeste))
-            Assert.Ignore("Teste ignorado pelas configurações de execução\n");
+            Assert.Ignore("Teste ignorado pelas configurações de execução");
 
         int indiceUsuario = clienteUpSellAtual switch
         {
