@@ -3,7 +3,7 @@ using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 /// <summary>
 /// Classe com os testes para o Cadastro de Planos\Contratos

@@ -1,6 +1,6 @@
 using OpenQA.Selenium;
 
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 /// <summary>
 /// Classe com métodos específicos de manipulação\interação dos elementos, pertinentes a tela Home da plataforma

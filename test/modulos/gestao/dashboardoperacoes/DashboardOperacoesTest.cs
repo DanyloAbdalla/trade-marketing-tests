@@ -1,7 +1,7 @@
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 /// <summary>
 /// Classe com os testes para o DashBoard de Operações

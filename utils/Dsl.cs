@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 /// <summary>
 /// Classe que contem métodos para ajudar na manipulação\interação dos elementos

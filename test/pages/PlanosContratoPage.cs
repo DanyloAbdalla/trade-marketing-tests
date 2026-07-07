@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using System.Data;
 
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 /// <summary>
 /// Classe com métodos específicos de manipulação\interação dos elementos, pertinentes a tela Planos da plataforma

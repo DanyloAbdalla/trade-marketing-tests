@@ -1,4 +1,4 @@
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 public enum BrowserType
 {

@@ -1,13 +1,13 @@
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 public class GlobalVariables
 {
     #region Projeto
-    public static string urlHmlPlataforma = "https://stage.meucliente.app.br/";
-    public static string[] emailUsuarios = { "homologacao.start@meucliente.app.br", "homologacao.pro@meucliente.app.br", "homologacao.expert@meucliente.app.br" };
-    public static string[] senhaUsuarios = { "Meucliente@st@123", "Meucliente@pr@123", "Meucliente@ex@123" };
-    public static string emailUsuarioSemPlanta = "homologacao.sp@meucliente.app.br";
-    public static string senhaUsuarioSemPlanta = "Meucliente@hml@123";
+    public static string urlHmlPlataforma = "";
+    public static string[] emailUsuarios = { "" };
+    public static string[] senhaUsuarios = { "" };
+    public static string emailUsuarioSemPlanta = "";
+    public static string senhaUsuarioSemPlanta = "";
     private static TimeSpan explicitWait;
     public static TimeSpan ExplicitWait { get => explicitWait; set => explicitWait = value; }
     #endregion
@@ -356,7 +356,7 @@ public class GlobalVariables
     public static string EditarCampanha { get; set; } = "//tbody/tr[2]/td[9]/div[1]/button[1]";
     public static string MenuSuspensoVarejos { get; set; } = "//*[text()='Varejos']";
     public static string PesquisarVarejo { get; set; } = "//div/*[text()='Adicionar Varejo:']/following-sibling::div//input";
-    public static string SelecionarVarejo { get; set; } = "//div[@title='Meu Cliente']";
+    public static string SelecionarVarejo { get; set; } = "//div[@title='']";
     public static string AdicionarVarejo { get; set; } = "(//form/div/div[2]//button)[1]";
     public static string DisplayVarejoSelecionado { get; set; } = "//div[contains(@style,'display')]//span[text()='HOMOLOGAÇÃO SP']";
     public static string VarrerAtivos { get; set; } = "//button[@class='button-varredura-ativo']";

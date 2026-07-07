@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MeuClienteWebTestProject;
+namespace TradeMarketingWebTestProject;
 
 public class DataLoader
 {
